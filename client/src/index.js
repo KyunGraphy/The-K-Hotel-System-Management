@@ -5,9 +5,7 @@ import { RoomsManaContextProvider } from './contexts/RoomsManaContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <RoomsManaContextProvider>
-      <App />
-    </RoomsManaContextProvider>
-  </React.StrictMode>
+  <RoomsManaContextProvider>
+    <App />
+  </RoomsManaContextProvider>
 );

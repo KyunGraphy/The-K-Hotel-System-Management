@@ -12,7 +12,7 @@
 
 .statusbarLeft {
   position: relative;
-  width: 24%;
+  width: 30%;
 }
 
 .statusbarSearchDate {
@@ -22,10 +22,15 @@
   margin-bottom: 8px;
 }
 
-.statusbarFloor {
+.statusbarDepartment {
   display: flex;
-  gap: 12px;
-  flex-direction: column;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.statusbarDepartmentOptions {
+  outline: none;
+  flex: 1;
 }
 
 .statusbarSearchFloor {
@@ -59,7 +64,8 @@
 .statusbarRight {
   margin-left: 16px;
   display: flex;
-  justify-content: space-evenly;
+  gap: 12px;
+  justify-content: flex-start;
   flex: 1;
 }
 
@@ -73,25 +79,13 @@
   font-size: 16px;
   font-weight: 500;
   color: var(--bg);
-  height: 100%;
-  width: 120px;
-  border: 2px solid var(--bg);
   border-radius: 4px;
   cursor: pointer;
 }
 
-.statusbarRoomStatus--active {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  margin: 0 8px;
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  height: 100%;
-  width: 120px;
-  border-radius: 4px;
-  cursor: pointer;
+.statusbarRoomStatusBox {
+  margin: 0 4px;
+  width: 16px;
+  height: 16px;
   background-color: var(--bg);
 }

@@ -1,8 +1,7 @@
 import React from 'react'
-import { faBed, faCrown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './rooms.css'
 
-const Room = ({ room }) => {
+const Room = ({ rooms }) => {
   const statusMap = {
     'Available': 'bgGreen',
     'Booked': 'bgRed',
@@ -10,20 +9,15 @@ const Room = ({ room }) => {
     'Check Out': 'bgPurple',
     'Maintenance': 'bgGrey',
   }
-  const bgColor = statusMap[room.status]
+  // const bgColor = statusMap[]
 
   return (
-    <div className={`room ${bgColor}`}>
-      <div className='roomInfo'>
-        {room.number} <br />
-        {room.type}
-        <FontAwesomeIcon style={{ margin: '0 12px' }} icon={room.type === 'Royal Room' ? faCrown : faBed} />
-      </div>
-      <div className='roomPrice'>$ {room.price}</div>
-      <div className='roomDepartment'>
-        {/* {`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`} <br />
-        {`${date.getHours()}:${date.getMinutes()}`} */}
-        {room.department}
+    <div className='room'>
+      <div className='roomFloor'>{rooms.title} Floor</div>
+      <div className='roomField'>
+        {rooms.rooms.map((room, index) => (
+          <span key={index}>{(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}</span>
+        ))}
       </div>
     </div>
   )
