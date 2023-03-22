@@ -1,0 +1,63 @@
+.rooms {
+  box-sizing: border-box;
+  margin: 20px 0;
+  padding: 10px 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 5px 5px 18px #888888;
+}
+
+.room {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 255px;
+  height: 150px;
+  color: #fff;
+  font-weight: 500;
+  margin: 12px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 18px #888888;
+  cursor: pointer;
+}
+
+.noRoom {
+  font-weight: bold;
+  font-style: italic;
+  margin: 16px auto;
+}
+
+.bgGreen {
+  background-color: #128c7e;
+}
+
+.bgRed {
+  background-color: #800834;
+}
+
+.bgOrange {
+  background-color: #ee4540;
+}
+
+.bgPurple {
+  background-color: #5d4b63;
+}
+
+.bgGrey {
+  background-color: #737373;
+}
+
+.roomDepartment {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.roomPrice {
+  font-size: 32px;
+  font-weight: bold;
+  color: gold;
+}

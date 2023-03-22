@@ -1,0 +1,10 @@
+.admin {
+  box-sizing: border-box;
+}
+
+.adminBody {
+  background-color: #f2dcd0;
+  display: flex;
+  gap: 8px;
+  position: relative;
+}

@@ -1,0 +1,49 @@
+.sidebar {
+  position: sticky;
+  top: 80px;
+  box-sizing: border-box;
+  width: 240px;
+  height: calc(100vh - 80px);
+  background: #384e71;
+  padding: 0 8px 20px 8px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebarItems > p {
+  /* background-color: #fff; */
+  font-size: 15px;
+  font-weight: 400;
+  padding: 20px 0 20px 4px;
+  margin: 8px auto;
+  position: relative;
+  cursor: pointer;
+}
+
+.sidebarItemManaAfter-active {
+  background: #e0e4cc;
+  color: #384e71;
+}
+
+.sidebarItemManaAfter::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background: #a7dbd8;
+  border-radius: 5px;
+}
+
+.sidebarLogOut {
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sidebarLogOut > ion-icon {
+  margin: 20px 12px 0 12px;
+}

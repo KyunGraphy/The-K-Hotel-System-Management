@@ -1,0 +1,97 @@
+.statusbar {
+  box-sizing: border-box;
+  position: sticky;
+  display: flex;
+  gap: 16px;
+  padding: 10px;
+  top: 80px;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 5px 5px 18px #888888;
+}
+
+.statusbarLeft {
+  position: relative;
+  width: 24%;
+}
+
+.statusbarSearchDate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.statusbarFloor {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.statusbarSearchFloor {
+  display: flex;
+  justify-content: space-between;
+}
+
+.statusbarLeft::after {
+  content: "";
+  position: absolute;
+  right: -16px;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #ccc;
+  border-radius: 5px;
+}
+
+.statusbarCalendar {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.statusbarSearchIcon {
+  font-size: 24px;
+  color: #384e71;
+}
+
+.statusbarRight {
+  margin-left: 16px;
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1;
+}
+
+.statusbarRoomStatus {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--bg);
+  height: 100%;
+  width: 120px;
+  border: 2px solid var(--bg);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.statusbarRoomStatus--active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 0 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  height: 100%;
+  width: 120px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--bg);
+}
