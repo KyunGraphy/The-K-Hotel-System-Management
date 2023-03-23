@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './statusbar.css'
+import './styles/statusbar.css'
 
 const Statusbar = ({ roomsStatus }) => {
   const [startDate, setStartDate] = useState(new Date());

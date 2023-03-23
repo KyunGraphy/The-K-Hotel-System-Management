@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Rooms from './Rooms'
-import './roomsMana.css'
+import './styles/roomsMana.css'
 import Statusbar from './Statusbar'
 
 import { listRoomsMock } from "../../../mocks/ListRooms.js";
 
 const RoomsMana = () => {
   const [listRooms, setListRooms] = useState(listRoomsMock);
-  const [filter, setFilter] = useState({
-    floor: 0,
-  });
   const [roomsStatus, setRoomsStatus] = useState([
     {
       status: 'Available',
@@ -19,12 +16,12 @@ const RoomsMana = () => {
     {
       status: 'Booked',
       count: listRoomsMock.filter((room) => room.status === 'Booked').length,
-      bg: '#800834',
+      bg: '#ff0000',
     },
     {
       status: 'Using',
       count: listRoomsMock.filter((room) => room.status === 'Using').length,
-      bg: '#ee4540',
+      bg: '#FF8C00',
     },
     {
       status: 'Check Out',
@@ -41,7 +38,7 @@ const RoomsMana = () => {
   return (
     <div className='roomsMana'>
       <Statusbar roomsStatus={roomsStatus} />
-      <Rooms listRooms={listRooms} />
+      <Rooms listRooms={listRooms} setListRooms={setListRooms} />
     </div>
   )
 }

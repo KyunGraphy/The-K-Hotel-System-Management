@@ -40,10 +40,13 @@
   flex-wrap: wrap;
 }
 
+.roomItem {
+  cursor: pointer;
+}
+
 .roomField > span {
   height: 64px;
   width: 114px;
-  background: #32cd32;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,11 +63,11 @@
 }
 
 .bgRed {
-  background-color: #800834;
+  background-color: #ff0000;
 }
 
 .bgOrange {
-  background-color: #ee4540;
+  background-color: #ff8c00;
 }
 
 .bgPurple {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Room from './Room'
-import './rooms.css'
+import './styles/rooms.css'
 
 const Rooms = ({ listRooms }) => {
   const [roomsByFloor, setRoomsByFloor] = useState([
@@ -38,6 +38,10 @@ const Rooms = ({ listRooms }) => {
     },
     {
       title: 8,
+      rooms: [],
+    },
+    {
+      title: 9,
       rooms: [],
     },
   ])

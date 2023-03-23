@@ -15,7 +15,10 @@ const Sidebar = ({ itemsManagement }) => {
           (index * 1 === currentItemManagement) ? (
             <p key={index} className='sidebarItemManaAfter sidebarItemManaAfter-active'>{item}</p>
           ) : (
-            <p key={index} className='sidebarItemManaAfter' onClick={() => handleClickItemMana(index * 1)}>{item}</p>
+            <p key={index}
+              className='sidebarItemManaAfter'
+              onClick={() => handleClickItemMana(index * 1)}
+            >{item}</p>
           )
         ))}
       </div>
