@@ -12,11 +12,12 @@
 }
 
 .roomInfo {
+  box-sizing: border-box;
   position: relative;
   background-color: white;
   height: 80vh;
-  width: 40vw;
-  padding: 20px;
+  width: 720px;
+  padding: 12px;
   border-radius: 12px;
 }
 
@@ -24,6 +25,57 @@
   position: absolute;
   top: 12px;
   right: 12px;
-  color: #333;
+  color: #384e71;
   cursor: pointer;
+}
+
+.rTitleInfo {
+  margin: 20px 0;
+  color: #384e71;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.rInfo {
+  color: #384e71;
+  display: flex;
+  font-size: 16px;
+  padding: 12px;
+  border: 3px solid #384e71;
+}
+
+.rInfoLeft,
+.rInfoRight {
+  width: 50%;
+}
+
+.rInfoLeft > div,
+.rInfoRight > div {
+  display: flex;
+  gap: 0.5em;
+  margin: 0.5em;
+}
+
+.rInfoLeft > div > label,
+.rInfoRight > div > label {
+  width: 140px;
+}
+
+.rInfoPrice {
+  position: relative;
+}
+
+.rPencil {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.rInfoData {
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
 }
