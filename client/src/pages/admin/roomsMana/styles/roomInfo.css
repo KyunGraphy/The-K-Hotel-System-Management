@@ -14,15 +14,19 @@
 .roomInfo {
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
   background-color: white;
-  height: 80vh;
-  width: 720px;
+  height: 90vh;
+  width: 840px;
   padding: 12px;
   border-radius: 12px;
 }
 
 .rClose {
   position: absolute;
+  font-size: 24px;
   top: 12px;
   right: 12px;
   color: #384e71;
@@ -30,7 +34,6 @@
 }
 
 .rTitleInfo {
-  margin: 20px 0;
   color: #384e71;
   text-align: center;
   font-size: 32px;
@@ -38,29 +41,94 @@
 }
 
 .rInfo {
+  box-sizing: border-box;
+  position: relative;
+  background: #efefef;
   color: #384e71;
   display: flex;
+  gap: 24px;
   font-size: 16px;
-  padding: 12px;
-  border: 3px solid #384e71;
+  padding: 18px 12px 4px 12px;
+  border: 2px solid #384e71;
   border-radius: 8px;
 }
 
-.rInfoLeft,
-.rInfoRight {
+.rInfoHeader {
+  background-color: #384e71;
+  color: #fff;
+  padding: 2px 12px;
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%);
+  left: 32px;
+  border-radius: 4px;
+  z-index: 100;
+}
+
+.rInfoBookSide,
+.rInfoCustomerSide {
   width: 50%;
 }
 
-.rInfoLeft > div,
-.rInfoRight > div {
+.rInfoService {
+  width: 100%;
+}
+
+.rInfoBookSide > div,
+.rInfoService > div,
+.rInfoCustomerSide > div {
   display: flex;
   gap: 0.5em;
   margin: 0.5em;
 }
 
-.rInfoLeft > div > label,
-.rInfoRight > div > label {
+.rInfoBookSide > div > label,
+.rInfoService > div > label,
+.rInfoCustomerSide > div > label {
   width: 140px;
+}
+
+.rInfoService > div > input {
+  width: 56px;
+}
+
+.rInfoService > div > button {
+  margin-left: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 100px;
+  background-color: #a7dbd8;
+  outline: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.rServiceTable {
+  width: 100%;
+  margin: 24px 0 12px 0;
+  border: 2px solid #384e71;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.rServiceTable th,
+.rServiceTable td {
+  border: 1px solid #384e71;
+  padding: 8px 0;
+  font-size: 14px;
+  text-align: center;
+}
+
+.rServicePrice {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  color: #f00;
+  font-weight: bold;
+  flex: 1;
 }
 
 .rInfoPrice {
@@ -77,6 +145,37 @@
 
 .rInfoData {
   box-sizing: border-box;
+  padding: 0 8px;
   width: 100%;
   outline: none;
+}
+
+.rBtn {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.rBtn > span {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.rBookedBtn {
+  background-color: #228b22;
+}
+
+.rBookedBtn:hover {
+  background-color: #008000;
+}
+
+.rCancelBtn {
+  background-color: #888;
+}
+.rCancelBtn:hover {
+  background-color: #696969;
 }
