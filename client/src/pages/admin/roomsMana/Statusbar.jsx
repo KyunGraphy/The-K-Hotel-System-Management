@@ -5,6 +5,12 @@ import './styles/statusbar.css'
 
 const Statusbar = ({ roomsStatus }) => {
   const [startDate, setStartDate] = useState(new Date());
+  const [selectedDepartment, setSelectedDepartment] = useState("The K Dong Khoi");
+
+  console.log(selectedDepartment)
+  const handleChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
 
   return (
     <div className='statusbar'>
@@ -19,7 +25,7 @@ const Statusbar = ({ roomsStatus }) => {
         </div>
         <div className='statusbarDepartment'>
           <label htmlFor="floor">Department: </label>
-          <select className='statusbarDepartmentOptions' defaultValue={'all'} id="floor">
+          <select className='statusbarDepartmentOptions' value={selectedDepartment} onChange={handleChange}>
             <option value="The K Dong Khoi">The K Dong Khoi</option>
             <option value="The K Van Thanh">The K Van Thanh</option>
             <option value="The K Thu Duc">The K Thu Duc</option>

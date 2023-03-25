@@ -2,21 +2,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import React, { useEffect, useState } from 'react'
+
 import './styles/roomInfo.css'
 
 const RoomInfo = ({ setOpenModal, roomModal }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [prePay, setPrePay] = useState(0);
-  const [note, setNote] = useState("");
 
-  console.log(roomModal)
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedServiceQuantity, setSelectedServiceQuantity] = useState(1);
+
+  console.log(selectedServiceQuantity)
+  console.log(selectedService)
+
+  const handleChange = (e) => {
+    setSelectedService(e.target.value);
+  };
 
   useEffect(() => {
-    function handleEscape(event) {
-      if (event.key === 'Escape') {
+    function handleEscape(e) {
+      if (e.key === 'Escape') {
         setOpenModal(false);
       }
     }
@@ -39,8 +45,10 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
         <div className="rTitleInfo">
           Room {(roomModal.number < 10) ? roomModal.number.toString().padStart(3, '0') : roomModal.number}
         </div>
+
         <div className="rInfo">
-          <div className="rInfoLeft">
+          <nav className="rInfoHeader">Register Information</nav>
+          <div className="rInfoBookSide">
             <div className="">
               <label>Room type: </label>
               <div style={{ color: 'red' }}>
@@ -54,6 +62,9 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
                 <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
               </div>
             </div>
+          </div>
+
+          <div className="rInfoBookSide">
             <div className="">
               <label>Check-in date: </label>
               <div><DatePicker className="rInfoData" selected={startDate} onChange={(date) => setStartDate(date)} /></div>
@@ -63,33 +74,139 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
               <div><DatePicker className="rInfoData" selected={endDate} onChange={(date) => setEndDate(date)} /></div>
             </div>
           </div>
+        </div>
 
-          <div className="rInfoRight">
+        <div className="rInfo">
+          <nav className="rInfoHeader">Service Information</nav>
+          <div className="rInfoService">
             <div className="">
-              <label>Prepay: </label>
+              <label>Service: </label>
+              <div>
+                <select
+                  className="rInfoData"
+                  value={selectedService}
+                  onChange={handleChange}
+                >
+                  <option value="">--Please select an option--</option>
+                  <option value="water">Water(10000/bottle)</option>
+                  <option value="pepsi">Pepsi(12000/bottle)</option>
+                  <option value="budweiser">Budweiser(45000/bottle)</option>
+                  <option value="vodka">Vodka(70000/bottle)</option>
+                  <option value="motorbike">Rent Motorbike(150000/day)</option>
+                  <option value="car">Rent Car(400000/date)</option>
+                </select>
+              </div>
               <input
                 className="rInfoData"
                 type="number"
-                min="0"
-                step="10"
-                value={prePay}
-                onChange={(e) => setPrePay(e.target.value)}
+                value={selectedServiceQuantity}
+                onChange={(e) => setSelectedServiceQuantity(e.target.value)}
               />
+              <button>
+                <ion-icon name="add-circle"></ion-icon>
+                Add
+              </button>
+              <div className="rServicePrice">
+                <label>Total: </label>
+                <span>94000</span>
+              </div>
             </div>
-            <div className="">
-              <label>Note: </label>
-              <textarea
-                className="rInfoData"
-                style={{ resize: "none" }}
-                rows="4"
-                placeholder="Note..."
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-              />
+            <table className="rServiceTable">
+              <tr>
+                <th>#</th>
+                <th>Service</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>Pepsi</td>
+                <td>2</td>
+                <td>12000</td>
+                <td>24000</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Vodka</td>
+                <td>1</td>
+                <td>70000</td>
+                <td>70000</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Budweiser</td>
+                <td>2</td>
+                <td>45000</td>
+                <td>90000</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Rent Motorbike</td>
+                <td>3</td>
+                <td>120000</td>
+                <td>360000</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Rent Car</td>
+                <td>1</td>
+                <td>400000</td>
+                <td>400000</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Rent Car</td>
+                <td>1</td>
+                <td>400000</td>
+                <td>400000</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Rent Car</td>
+                <td>1</td>
+                <td>400000</td>
+                <td>400000</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div className="rInfo">
+          <nav className="rInfoHeader">Customer Information</nav>
+          <div className="rInfoCustomerSide">
+            <div>
+              <label>ID/Passport: </label>
+              <input className="rInfoData" />
+            </div>
+            <div>
+              <label>Name: </label>
+              <input className="rInfoData" />
+            </div>
+            <div>
+              <label>Address: </label>
+              <input className="rInfoData" />
+            </div>
+          </div>
+          <div className="rInfoCustomerSide">
+            <div>
+              <label>DOB: </label>
+              <input className="rInfoData" />
+            </div>
+            <div>
+              <label>Email: </label>
+              <input type="email" className="rInfoData" />
+            </div>
+            <div>
+              <label>Phone: </label>
+              <input type="tel" className="rInfoData" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
             </div>
           </div>
         </div>
-        <div className="customerInfo">
+
+        <div className="rBtn">
+          <span className="rBookedBtn">Booked</span>
+          <span className="rCancelBtn">Cancel</span>
         </div>
       </div>
     </div>
