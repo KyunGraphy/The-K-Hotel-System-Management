@@ -4,21 +4,19 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useEffect, useState } from 'react'
 
+import { listServicesMock } from "../../../mocks/ListServices.js";
 import './styles/roomInfo.css'
 
 const RoomInfo = ({ setOpenModal, roomModal }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const [selectedService, setSelectedService] = useState("");
+  const [prepay, setPrepay] = useState("");
+  const [selectedService, setSelectedService] = useState({ name: "Water", price: 10000 });
   const [selectedServiceQuantity, setSelectedServiceQuantity] = useState(1);
+  const [listOrderedServices, setListOrderedServices] = useState([]);
 
-  console.log(selectedServiceQuantity)
-  console.log(selectedService)
-
-  const handleChange = (e) => {
-    setSelectedService(e.target.value);
-  };
+  console.log(roomModal)
 
   useEffect(() => {
     function handleEscape(e) {
@@ -33,6 +31,37 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
       window.removeEventListener('keydown', handleEscape);
     };
   }, []);
+
+  const handleChooseService = (e) => {
+    const item = (e.target.value.split("-"))
+    setSelectedService({
+      name: item[0],
+      price: item[1],
+    });
+  };
+
+  const handleAddService = () => {
+    let service = {
+      name: selectedService.name,
+      price: selectedService.price,
+      quantity: selectedServiceQuantity,
+    }
+    setListOrderedServices([...listOrderedServices, service]);
+  };
+
+  const handleDeleteOrderItem = (i) => {
+    let newListService = [...listOrderedServices];
+    newListService.splice(i, 1)
+    setListOrderedServices(newListService);
+  };
+
+  const totalPrice = () => {
+    return listOrderedServices.reduce(getTotal, 0);
+
+    function getTotal(total, item) {
+      return total + item.price * item.quantity;
+    }
+  }
 
   return (
     <div className='roomInfoContainer'>
@@ -52,11 +81,17 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
             <div className="">
               <label>Room type: </label>
               <div style={{ color: 'red' }}>
+                {roomModal.department}
+              </div>
+            </div>
+            <div className="">
+              <label>Room type: </label>
+              <div style={{ color: 'red' }}>
                 {roomModal.type}
               </div>
             </div>
             <div className="rInfoPrice">
-              <label>Price: </label>
+              <label>Price per day: </label>
               <div>
                 <input className="rInfoData" value={`${roomModal.price} $`} readOnly disabled />
                 <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
@@ -65,6 +100,12 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
           </div>
 
           <div className="rInfoBookSide">
+            <div className="rInfoPrice">
+              <label>Pre pay: </label>
+              <div>
+                <input className="rInfoData" value={prepay} onChange={(e) => setPrepay(e.target.value)} />
+              </div>
+            </div>
             <div className="">
               <label>Check-in date: </label>
               <div><DatePicker className="rInfoData" selected={startDate} onChange={(date) => setStartDate(date)} /></div>
@@ -73,102 +114,6 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
               <label>Check-out date: </label>
               <div><DatePicker className="rInfoData" selected={endDate} onChange={(date) => setEndDate(date)} /></div>
             </div>
-          </div>
-        </div>
-
-        <div className="rInfo">
-          <nav className="rInfoHeader">Service Information</nav>
-          <div className="rInfoService">
-            <div className="">
-              <label>Service: </label>
-              <div>
-                <select
-                  className="rInfoData"
-                  value={selectedService}
-                  onChange={handleChange}
-                >
-                  <option value="">--Please select an option--</option>
-                  <option value="water">Water(10000/bottle)</option>
-                  <option value="pepsi">Pepsi(12000/bottle)</option>
-                  <option value="budweiser">Budweiser(45000/bottle)</option>
-                  <option value="vodka">Vodka(70000/bottle)</option>
-                  <option value="motorbike">Rent Motorbike(150000/day)</option>
-                  <option value="car">Rent Car(400000/date)</option>
-                </select>
-              </div>
-              <input
-                className="rInfoData"
-                type="number"
-                value={selectedServiceQuantity}
-                onChange={(e) => setSelectedServiceQuantity(e.target.value)}
-              />
-              <button>
-                <ion-icon name="add-circle"></ion-icon>
-                Add
-              </button>
-              <div className="rServicePrice">
-                <label>Total: </label>
-                <span>94000</span>
-              </div>
-            </div>
-            <table className="rServiceTable">
-              <tr>
-                <th>#</th>
-                <th>Service</th>
-                <th>Quantity</th>
-                <th>Unit Price</th>
-                <th>Amount</th>
-              </tr>
-              <tr>
-                <td>1</td>
-                <td>Pepsi</td>
-                <td>2</td>
-                <td>12000</td>
-                <td>24000</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Vodka</td>
-                <td>1</td>
-                <td>70000</td>
-                <td>70000</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Budweiser</td>
-                <td>2</td>
-                <td>45000</td>
-                <td>90000</td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Rent Motorbike</td>
-                <td>3</td>
-                <td>120000</td>
-                <td>360000</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Rent Car</td>
-                <td>1</td>
-                <td>400000</td>
-                <td>400000</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Rent Car</td>
-                <td>1</td>
-                <td>400000</td>
-                <td>400000</td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Rent Car</td>
-                <td>1</td>
-                <td>400000</td>
-                <td>400000</td>
-              </tr>
-            </table>
           </div>
         </div>
 
@@ -201,6 +146,71 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
               <label>Phone: </label>
               <input type="tel" className="rInfoData" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
             </div>
+          </div>
+        </div>
+
+        <div className="rInfo">
+          <nav className="rInfoHeader">Service Information</nav>
+          <div className="rInfoService">
+            <div className="">
+              <label>Service: </label>
+              <div>
+                <select
+                  className="rInfoData"
+                  onChange={handleChooseService}
+                >
+                  {listServicesMock.map((service, i) => (
+                    <option key={i} value={service.name + "-" + service.price}>
+                      {service.name} ({service.price})
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <input
+                className="rInfoData"
+                type="number"
+                value={selectedServiceQuantity}
+                onChange={(e) => setSelectedServiceQuantity(e.target.value)}
+              />
+              <button onClick={handleAddService}>
+                <ion-icon name="add-circle"></ion-icon>
+                Add
+              </button>
+              <div className="rServicePrice">
+                <label>Total: </label>
+                <span>{totalPrice()}</span>
+              </div>
+            </div>
+            <table className="rServiceTable">
+              <tr>
+                <th>#</th>
+                <th>Service</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+              {listOrderedServices.length === 0 && (
+                <td colSpan={5} className="noServiceText">No Services Order</td>
+              )}
+              {listOrderedServices.map((item, i) => (
+                <tr key={i + 1}>
+                  <td>{i + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <td>{item.price * item.quantity}</td>
+                  <td>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDeleteOrderItem(i)}
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </table>
           </div>
         </div>
 

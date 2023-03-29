@@ -14,8 +14,8 @@
 
 .roomInfo {
   box-sizing: border-box;
-  position: absolute;
-  top: 5vh;
+  position: relative;
+  top: 7vh;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -131,6 +131,12 @@
   color: #f00;
   font-weight: bold;
   flex: 1;
+}
+
+.noServiceText {
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .rInfoPrice {
