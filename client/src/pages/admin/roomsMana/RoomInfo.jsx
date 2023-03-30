@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { listServicesMock } from "../../../mocks/ListServices.js";
 import './styles/roomInfo.css'
@@ -12,7 +12,7 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
   const [endDate, setEndDate] = useState(new Date());
 
   const [prepay, setPrepay] = useState("");
-  const [selectedService, setSelectedService] = useState({ name: "Water", price: 10000 });
+  const [selectedService, setSelectedService] = useState({ name: "Water", price: 0.5 });
   const [selectedServiceQuantity, setSelectedServiceQuantity] = useState(1);
   const [listOrderedServices, setListOrderedServices] = useState([]);
 
@@ -46,6 +46,8 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
       price: selectedService.price,
       quantity: selectedServiceQuantity,
     }
+
+    setSelectedServiceQuantity(1)
     setListOrderedServices([...listOrderedServices, service]);
   };
 
@@ -55,13 +57,19 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
     setListOrderedServices(newListService);
   };
 
-  const totalPrice = () => {
-    return listOrderedServices.reduce(getTotal, 0);
+  const totalServicePrice = useCallback(() => {
+    return listOrderedServices.reduce(getServicePriceTotal, 0);
 
-    function getTotal(total, item) {
+    function getServicePriceTotal(total, item) {
       return total + item.price * item.quantity;
     }
-  }
+  }, [listOrderedServices])
+
+  const getDiffDays = useCallback(() => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay))
+    return diffDays + 1;
+  }, [startDate, endDate])
 
   return (
     <div className='roomInfoContainer'>
@@ -97,6 +105,10 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
                 <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
               </div>
             </div>
+            <div className="rRoomPrice">
+              <label>Total: </label>
+              <span>{getDiffDays() * roomModal.price} $</span>
+            </div>
           </div>
 
           <div className="rInfoBookSide">
@@ -108,11 +120,19 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
             </div>
             <div className="">
               <label>Check-in date: </label>
-              <div><DatePicker className="rInfoData" selected={startDate} onChange={(date) => setStartDate(date)} /></div>
+              <div><DatePicker
+                className="rInfoData"
+                selected={startDate}
+                onChange={(date) => setStartDate(date)}
+              /></div>
             </div>
             <div className="">
               <label>Check-out date: </label>
-              <div><DatePicker className="rInfoData" selected={endDate} onChange={(date) => setEndDate(date)} /></div>
+              <div><DatePicker
+                className="rInfoData"
+                selected={endDate}
+                onChange={(date) => setEndDate(date)}
+              /></div>
             </div>
           </div>
         </div>
@@ -161,7 +181,7 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
                 >
                   {listServicesMock.map((service, i) => (
                     <option key={i} value={service.name + "-" + service.price}>
-                      {service.name} ({service.price})
+                      {service.name} ({service.price}$)
                     </option>
                   ))}
                 </select>
@@ -170,6 +190,7 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
                 className="rInfoData"
                 type="number"
                 value={selectedServiceQuantity}
+                min={1}
                 onChange={(e) => setSelectedServiceQuantity(e.target.value)}
               />
               <button onClick={handleAddService}>
@@ -178,7 +199,7 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
               </button>
               <div className="rServicePrice">
                 <label>Total: </label>
-                <span>{totalPrice()}</span>
+                <span>{totalServicePrice().toFixed(2)} $</span>
               </div>
             </div>
             <table className="rServiceTable">
@@ -199,7 +220,7 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
                   <td>{item.name}</td>
                   <td>{item.quantity}</td>
                   <td>{item.price}</td>
-                  <td>{item.price * item.quantity}</td>
+                  <td>{(item.price * item.quantity).toFixed(2)}</td>
                   <td>
                     <button
                       style={{ cursor: "pointer" }}
@@ -214,9 +235,15 @@ const RoomInfo = ({ setOpenModal, roomModal }) => {
           </div>
         </div>
 
-        <div className="rBtn">
-          <span className="rBookedBtn">Booked</span>
-          <span className="rCancelBtn">Cancel</span>
+        <div className="rFooter">
+          <div className="rTotalPrice">
+            <label>Total: </label>
+            <span>{totalServicePrice() + getDiffDays() * roomModal.price} $</span>
+          </div>
+          <div className="rBtn">
+            <span className="rBookedBtn">Booked</span>
+            <span className="rCancelBtn">Cancel</span>
+          </div>
         </div>
       </div>
     </div>

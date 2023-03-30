@@ -1,30 +1,30 @@
 export const listServicesMock = [
   {
     name: 'Water',
-    price: 10000
+    price: 0.5
   },
   {
     name: 'Pepsi',
-    price: 15000
+    price: 0.8
   },
   {
     name: 'Red Bull',
-    price: 20000
+    price: 1
   },
   {
     name: 'Budweiser',
-    price: 45000
+    price: 2
   },
   {
     name: 'Soju',
-    price: 50000
+    price: 2.2
   },
   {
     name: 'Rent Motorbike',
-    price: 150000
+    price: 10
   },
   {
     name: 'Rent Car',
-    price: 500000
+    price: 25
   },
 ]

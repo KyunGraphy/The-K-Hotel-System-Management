@@ -124,7 +124,9 @@
   text-align: center;
 }
 
-.rServicePrice {
+.rServicePrice,
+.rRoomPrice,
+.rTotalPrice {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -156,6 +158,13 @@
   padding: 0 8px;
   width: 100%;
   outline: none;
+}
+
+.rFooter {
+  display: flex;
+  gap: 32px;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .rBtn {
