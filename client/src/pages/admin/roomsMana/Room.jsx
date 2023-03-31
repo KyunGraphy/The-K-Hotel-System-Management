@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import RoomInfo from './RoomInfo';
+import BookRoom from './BookRoom';
+import RoomPayment from './RoomPayment';
 import './styles/rooms.css'
 
 const Room = ({ rooms }) => {
@@ -34,7 +35,8 @@ const Room = ({ rooms }) => {
           </span>
         ))}
       </div>
-      {openModal && <RoomInfo setOpenModal={setOpenModal} roomModal={roomModal} />}
+      {(openModal && roomModal.status === "Available") && <BookRoom setOpenModal={setOpenModal} roomModal={roomModal} />}
+      {(openModal && roomModal.status === "Booked") && <RoomPayment setOpenModal={setOpenModal} roomModal={roomModal} />}
     </div>
   )
 }

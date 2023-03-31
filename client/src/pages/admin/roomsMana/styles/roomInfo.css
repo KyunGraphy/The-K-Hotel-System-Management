@@ -162,7 +162,7 @@
 
 .rFooter {
   display: flex;
-  gap: 32px;
+  gap: 48px;
   justify-content: space-around;
   align-items: center;
 }
@@ -170,7 +170,7 @@
 .rBtn {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
 }
 
 .rBtn > span {
