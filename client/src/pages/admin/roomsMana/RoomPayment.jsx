@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons"
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import './styles/roomInfo.css'
+import { listServicesMock } from "../../../mocks/ListServices";
 
 const RoomPayment = ({ setOpenModal, roomModal }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [selectedService, setSelectedService] = useState({ name: "Water", price: 0.5 });
+  const [selectedServiceQuantity, setSelectedServiceQuantity] = useState(1)
+  const [listOrderedServices, setListOrderedServices] = useState([]);
 
   useEffect(() => {
     function handleEscape(e) {
@@ -23,6 +27,45 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
       window.removeEventListener('keydown', handleEscape);
     };
   });
+
+  const handleChooseService = (e) => {
+    const item = (e.target.value.split("-"))
+    setSelectedService({
+      name: item[0],
+      price: item[1],
+    });
+  }
+
+  const handleAddService = () => {
+    let service = {
+      name: selectedService.name,
+      price: selectedService.price,
+      quantity: selectedServiceQuantity,
+    }
+
+    setSelectedServiceQuantity(1)
+    setListOrderedServices([...listOrderedServices, service]);
+  };
+
+  const handleDeleteOrderItem = (i) => {
+    let newListService = [...listOrderedServices];
+    newListService.splice(i, 1)
+    setListOrderedServices(newListService);
+  }
+
+  const totalServicePrice = useCallback(() => {
+    return listOrderedServices.reduce(getServicePriceTotal, 0);
+
+    function getServicePriceTotal(total, item) {
+      return total + item.price * item.quantity;
+    }
+  }, [listOrderedServices])
+
+  const getDiffDays = useCallback(() => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay))
+    return diffDays + 1;
+  }, [startDate, endDate])
 
   return (
     <div className='roomInfoContainer'>
@@ -60,7 +103,7 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
             </div>
             <div className="rRoomPrice">
               <label>Total: </label>
-              <span>123 $</span>
+              <span>{getDiffDays() * roomModal.price} $</span>
             </div>
           </div>
 
@@ -141,9 +184,33 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
           <nav className="rInfoHeader">Service Information</nav>
           <div className="rInfoService">
             <div className="">
+              <label>Service: </label>
+              <div>
+                <select
+                  className="rInfoData"
+                  onChange={handleChooseService}
+                >
+                  {listServicesMock.map((service, i) => (
+                    <option key={i} value={service.name + "-" + service.price}>
+                      {service.name} ({service.price}$)
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <input
+                className="rInfoData"
+                type="number"
+                value={selectedServiceQuantity}
+                min={1}
+                onChange={(e) => setSelectedServiceQuantity(e.target.value)}
+              />
+              <button onClick={handleAddService}>
+                <ion-icon name="add-circle"></ion-icon>
+                Add
+              </button>
               <div className="rServicePrice">
                 <label>Total: </label>
-                <span>123 $</span>
+                <span>{totalServicePrice().toFixed(2)} $</span>
               </div>
             </div>
             <table className="rServiceTable">
@@ -155,21 +222,26 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
                 <th>Amount</th>
                 <th></th>
               </tr>
-              {/* <td colSpan={5} className="noServiceText">No Services Order</td> */}
-              <tr>
-                <td>1</td>
-                <td>Water</td>
-                <td>2</td>
-                <td>0.5</td>
-                <td>1</td>
-                <td>
-                  <button
-                    style={{ cursor: "pointer" }}
-                  >
-                    X
-                  </button>
-                </td>
-              </tr>
+              {listOrderedServices.length === 0 && (
+                <td colSpan={5} className="noServiceText">No Services Order</td>
+              )}
+              {listOrderedServices.map((item, i) => (
+                <tr key={i + 1}>
+                  <td>{i + 1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.price}</td>
+                  <td>{(item.price * item.quantity).toFixed(2)}</td>
+                  <td>
+                    <button
+                      style={{ cursor: "pointer" }}
+                      onClick={() => handleDeleteOrderItem(i)}
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </table>
           </div>
         </div>
@@ -177,7 +249,7 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
         <div className="rFooter">
           <div className="rTotalPrice">
             <label>Total: </label>
-            <span>123 $</span>
+            <span>{totalServicePrice() + getDiffDays() * roomModal.price} $</span>
           </div>
           <div className="rBtn">
             <span className="rBookedBtn">Payment</span>
