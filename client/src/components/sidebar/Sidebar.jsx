@@ -8,27 +8,27 @@ const Sidebar = () => {
 
   const itemsManagement = [
     {
-      name: 'Rooms Management',
+      name: 'Rooms',
       path: 'room',
     },
     {
-      name: 'Reservation Management',
+      name: 'Reservation',
       path: 'reservation',
     },
     {
-      name: 'Business Management',
+      name: 'Business',
       path: 'business',
     },
     {
-      name: 'Finance Management',
+      name: 'Finance',
       path: 'business',
     },
     {
-      name: 'Service Management',
+      name: 'Service',
       path: 'service',
     },
     {
-      name: 'Staff Management',
+      name: 'Staff',
       path: 'staff',
     },
     {

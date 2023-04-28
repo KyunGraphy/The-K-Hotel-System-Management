@@ -4,26 +4,27 @@
   box-sizing: border-box;
   width: 240px;
   height: calc(100vh - 80px);
-  background: #384e71;
+  background: #fff;
   padding: 0 8px 20px 8px;
-  color: #fff;
+  color: #384e71;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .sidebarItems > p {
-  /* background-color: #fff; */
-  font-size: 15px;
-  font-weight: 400;
-  padding: 20px 0 20px 4px;
+  /* background-color: #384e71; */
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px 8px;
   margin: 8px auto;
   position: relative;
   cursor: pointer;
 }
 
 .sidebarItemManaAfter-active {
-  background: #e0e4cc;
+  background: #a7dbd8;
+  /* background: #e0e4cc; */
   color: #384e71;
 }
 
@@ -34,7 +35,8 @@
   bottom: -6px;
   width: 100%;
   height: 3px;
-  background: #a7dbd8;
+  background: #384e71;
+  /* background: #a7dbd8; */
   border-radius: 5px;
 }
 
