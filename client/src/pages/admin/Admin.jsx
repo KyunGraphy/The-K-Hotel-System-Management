@@ -3,18 +3,9 @@ import Navbar from '../../components/navbar/Navbar'
 import ScrollTop from '../../components/scrollTop/ScrollTop'
 import Sidebar from '../../components/sidebar/Sidebar'
 import './admin.css'
+import { Outlet } from 'react-router-dom'
 
-const Admin = ({ children }) => {
-  const itemsManagement = [
-    'Rooms Management',
-    'Services & Inventory Management',
-    'Customers Management',
-    'Employees Management',
-    'Booking Management',
-    'Payment Management',
-    'Statistic',
-  ]
-
+const Admin = () => {
   const [showGoToTop, setShowGoToTop] = useState();
 
   useEffect(() => {
@@ -33,8 +24,8 @@ const Admin = ({ children }) => {
     <div className='admin'>
       <Navbar role='admin' />
       <div className='adminBody'>
-        <Sidebar itemsManagement={itemsManagement} />
-        {children}
+        <Sidebar />
+        <Outlet />
       </div>
       {showGoToTop && (
         <ScrollTop />

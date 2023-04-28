@@ -7,7 +7,6 @@ const Statusbar = ({ roomsStatus }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDepartment, setSelectedDepartment] = useState("The K Dong Khoi");
 
-  console.log(selectedDepartment)
   const handleChange = (e) => {
     setSelectedDepartment(e.target.value);
   };

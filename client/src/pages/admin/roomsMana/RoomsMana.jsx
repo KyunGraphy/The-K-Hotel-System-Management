@@ -7,7 +7,7 @@ import { listRoomsMock } from "../../../mocks/ListRooms.js";
 
 const RoomsMana = () => {
   const [listRooms, setListRooms] = useState(listRoomsMock);
-  const [roomsStatus, setRoomsStatus] = useState([
+  const roomsStatus = [
     {
       status: 'Available',
       count: listRoomsMock.filter((room) => room.status === 'Available').length,
@@ -33,7 +33,7 @@ const RoomsMana = () => {
       count: listRoomsMock.filter((room) => room.status === 'Maintenance').length,
       bg: '#737373',
     },
-  ]);
+  ];
 
   return (
     <div className='roomsMana'>

@@ -11,7 +11,6 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
-  const [prepay, setPrepay] = useState("");
   const [selectedService, setSelectedService] = useState({ name: "Water", price: 0.5 });
   const [selectedServiceQuantity, setSelectedServiceQuantity] = useState(1);
   const [listOrderedServices, setListOrderedServices] = useState([]);
@@ -72,7 +71,9 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
   }, [startDate, endDate])
 
   return (
-    <div className='roomInfoContainer'>
+    <div className='roomInfoContainer' onClick={(e) => {
+      if (e.target.className === 'roomInfoContainer') setOpenModal(false)
+    }}>
       <div className="roomInfo">
         <FontAwesomeIcon
           icon={faCircleXmark}
@@ -104,19 +105,9 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
                 {roomModal.price} $
               </div>
             </div>
-            <div className="rRoomPrice">
-              <label>Total: </label>
-              <span>{getDiffDays() * roomModal.price} $</span>
-            </div>
           </div>
 
           <div className="rInfoBookSide">
-            <div className="rInfoPrice">
-              <label>Pre pay: </label>
-              <div>
-                <input className="rInfoData" value={prepay} onChange={(e) => setPrepay(e.target.value)} />
-              </div>
-            </div>
             <div className="">
               <label>Check-in date: </label>
               <div><DatePicker
@@ -132,6 +123,10 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
                 selected={endDate}
                 onChange={(date) => setEndDate(date)}
               /></div>
+            </div>
+            <div className="rRoomPrice">
+              <label>Total: </label>
+              <span>{getDiffDays() * roomModal.price} $</span>
             </div>
           </div>
         </div>
@@ -154,7 +149,7 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
           </div>
           <div className="rInfoCustomerSide">
             <div>
-              <label>DOB: </label>
+              <label>Country: </label>
               <input className="rInfoData" />
             </div>
             <div>

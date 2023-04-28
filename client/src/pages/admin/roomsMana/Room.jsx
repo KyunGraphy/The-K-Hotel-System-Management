@@ -3,6 +3,9 @@ import BookRoom from './BookRoom';
 import RoomPayment from './RoomPayment';
 import './styles/rooms.css'
 
+import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
+import { TbCrown } from "react-icons/tb";
+
 const Room = ({ rooms }) => {
   const [openModal, setOpenModal] = useState(false);
   const [roomModal, setRoomModal] = useState();
@@ -31,7 +34,11 @@ const Room = ({ rooms }) => {
           <span key={index}
             className={`${statusMap[room.status]} roomItem`}
             onClick={() => handleClickRoom(room)}
-          >{(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
+          >
+            {room?.type === 'Single' && <IoPersonOutline />}
+            {room?.type === 'Double' && <IoPeopleOutline />}
+            {room?.type === 'Royal' && <TbCrown />}
+            {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
           </span>
         ))}
       </div>

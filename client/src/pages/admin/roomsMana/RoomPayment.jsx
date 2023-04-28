@@ -68,7 +68,9 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
   }, [startDate, endDate])
 
   return (
-    <div className='roomInfoContainer'>
+    <div className='roomInfoContainer' onClick={(e) => {
+      if (e.target.className === 'roomInfoContainer') setOpenModal(false)
+    }}>
       <div className="roomInfo">
         <FontAwesomeIcon
           icon={faCircleXmark}
@@ -98,23 +100,11 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
               <label>Price per day: </label>
               <div>
                 <input className="rInfoData" value={`${roomModal.price} $`} readOnly disabled />
-                <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
               </div>
-            </div>
-            <div className="rRoomPrice">
-              <label>Total: </label>
-              <span>{getDiffDays() * roomModal.price} $</span>
             </div>
           </div>
 
           <div className="rInfoBookSide">
-            <div className="rInfoPrice">
-              <label>Pre pay: </label>
-              <div>
-                <input className="rInfoData" value="10 $" readOnly disabled />
-                <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
-              </div>
-            </div>
             <div className="">
               <label>Check-in date: </label>
               <div><DatePicker
@@ -132,6 +122,10 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
                 onChange={(date) => setEndDate(date)}
               /></div>
             </div>
+            <div className="rRoomPrice">
+              <label>Total: </label>
+              <span>{getDiffDays() * roomModal.price} $</span>
+            </div>
           </div>
         </div>
 
@@ -141,29 +135,24 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
             <div style={{ position: "relative" }}>
               <label>ID/Passport: </label>
               <input className="rInfoData" value="1234567890" readOnly disabled />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
             </div>
             <div style={{ position: "relative" }}>
               <label>Name: </label>
               <input className="rInfoData" value="Customer Name..." readOnly disabled />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
             </div>
             <div style={{ position: "relative" }}>
               <label>Address: </label>
               <input className="rInfoData" value="Customer address..." readOnly disabled />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
             </div>
           </div>
           <div className="rInfoCustomerSide">
             <div style={{ position: "relative" }}>
-              <label>DOB: </label>
-              <input className="rInfoData" value="Customer DOB" readOnly disabled />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
+              <label>Country: </label>
+              <input className="rInfoData" value="Customer Country" readOnly disabled />
             </div>
             <div style={{ position: "relative" }}>
               <label>Email: </label>
               <input type="email" className="rInfoData" value="customer@thek.com" readOnly disabled />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
             </div>
             <div style={{ position: "relative" }}>
               <label>Phone: </label>
@@ -175,7 +164,6 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
                 readOnly
                 disabled
               />
-              <div className="rPencil"><ion-icon name="pencil"></ion-icon></div>
             </div>
           </div>
         </div>

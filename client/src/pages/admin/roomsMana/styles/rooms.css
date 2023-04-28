@@ -40,16 +40,14 @@
   flex-wrap: wrap;
 }
 
-.roomItem {
-  cursor: pointer;
-}
-
 .roomField > span {
   height: 64px;
   width: 114px;
   display: flex;
+  gap: 8px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .noRoom {

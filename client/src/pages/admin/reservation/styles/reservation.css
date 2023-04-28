@@ -1,0 +1,75 @@
+.reservation {
+  height: fit-content;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 5px 5px 18px #888888;
+}
+
+.reservation > h2 {
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0.5em 0;
+}
+
+.reservationItem {
+  border: 2px solid #384e71;
+  border-radius: 12px;
+}
+
+.reservationHeader {
+  display: flex;
+  gap: 12px;
+  padding: 8px 32px;
+  font-style: italic;
+  font-weight: 600;
+  color: #fff;
+  background: #384e71;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.reservationHeader > div {
+  display: flex;
+  flex: 1;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.reservationInfo {
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.reservationInfo > div {
+  flex: 1;
+}
+
+.reservationTitle {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.reservationAssign {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.reservationAssign > button {
+  background: #32cd32;
+  color: #333;
+  flex: 1;
+  height: 24px;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.delReservation {
+  font-size: 18px;
+  cursor: pointer;
+}

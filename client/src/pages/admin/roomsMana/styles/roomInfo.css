@@ -18,11 +18,11 @@
   top: 7vh;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 32px;
   background-color: white;
   min-height: 90vh;
   width: 840px;
-  padding: 12px;
+  padding: 12px 24px;
   border-radius: 12px;
 }
 
@@ -145,14 +145,6 @@
   position: relative;
 }
 
-.rPencil {
-  position: absolute;
-  top: 50%;
-  right: 4px;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
 .rInfoData {
   box-sizing: border-box;
   padding: 0 8px;
@@ -178,7 +170,7 @@
   font-size: 18px;
   font-weight: bold;
   padding: 8px 20px;
-  border-radius: 4px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
