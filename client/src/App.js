@@ -11,6 +11,8 @@ import List from "./pages/list/List";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import ReservationMana from "./pages/admin/reservation/ReservationMana";
+import PageError from "./pages/admin/notFound/PageError.jsx";
+import StaffMana from "./pages/admin/staff/StaffMana";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/admin" element={<Admin />}>
           <Route path="room" element={<RoomsMana />} />
           <Route path="reservation" element={<ReservationMana />} />
+          <Route path="staff" element={<StaffMana />} />
+          <Route path=":id" element={<PageError />} />
         </Route>
       </Routes>
     </BrowserRouter>

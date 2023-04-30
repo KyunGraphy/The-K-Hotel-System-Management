@@ -1,4 +1,4 @@
-.reservation {
+.staff {
   min-height: calc(100vh - 80px);
   width: 100%;
   margin-bottom: 20px;
@@ -8,36 +8,56 @@
   box-shadow: 5px 5px 18px #888888;
 }
 
-.reservation > h2 {
+.staff > h2 {
   text-align: center;
   text-transform: uppercase;
   padding: 0.5em 0;
 }
 
-.reservationTools {
+.staffHeaderID {
+  min-width: 190px;
+}
+
+.staffHeaderPhone {
+  max-width: 100px;
+}
+
+.staffHeaderName {
+  min-width: 160px;
+}
+
+.staffHeaderEmail {
+  min-width: 160px;
+}
+
+.staffHeaderSalary {
+  max-width: 60px;
+}
+
+.staffTools {
   padding: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.delReservation {
+.addStaff {
   font-weight: 500;
-  color: #800000;
-  border: 1px solid #800000;
+  color: #008000;
+  border: 1px solid #008000;
   border-radius: 4px;
   padding: 4px 12px;
   transition: all 0.4s ease;
   cursor: pointer;
 }
 
-.delReservation:hover {
-  background: #800000;
+.addStaff:hover {
+  background: #008000;
   color: #fff;
 }
 
-/* Reservation Table */
-.reservationHeader {
+/* staff Table */
+.staffHeader {
   display: flex;
   padding: 12px 8px;
   font-style: italic;
@@ -46,12 +66,12 @@
   background: #384e71;
 }
 
-.reservationHeader > p {
+.staffHeader > p {
   padding-left: 24px;
   width: 20%;
 }
 
-.reservationData {
+.staffData {
   display: flex;
   padding: 12px 8px;
   font-size: 14px;
@@ -62,13 +82,13 @@
   border-top: none;
 }
 
-.reservationData > p {
+.staffData > p {
   position: relative;
   padding-left: 24px;
   width: 20%;
 }
 
-.reservationData > p::after {
+.staffData > p::after {
   position: absolute;
   content: " ";
   top: 50%;

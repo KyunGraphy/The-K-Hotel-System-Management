@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import './styles/reservation.css'
-import ReservationTable from './ReservationTable'
+import './styles/staff.css'
+import StaffTable from './StaffTable'
 
-const ReservationMana = () => {
+const StaffMana = () => {
   const [selectedDepartment, setSelectedDepartment] = useState("The K Dong Khoi");
 
   const handleChange = (e) => {
@@ -10,9 +10,9 @@ const ReservationMana = () => {
   };
 
   return (
-    <div className='reservation'>
-      <h2>Reservation</h2>
-      <div className='reservationTools'>
+    <div className='staff'>
+      <h2>staff</h2>
+      <div className='staffTools'>
         <div>
           <label htmlFor="floor">Department: </label>
           <select value={selectedDepartment} onChange={handleChange}>
@@ -25,13 +25,13 @@ const ReservationMana = () => {
             <option value="The K Van Hanh">The K Van Hanh</option>
           </select>
         </div>
-        <div className='delReservation'>Delete reservation</div>
+        <div className='addStaff'>Add new</div>
       </div>
-      <div className='reservationList'>
-        <ReservationTable />
+      <div className='staffList'>
+        <StaffTable />
       </div>
     </div>
   )
 }
 
-export default ReservationMana
+export default StaffMana

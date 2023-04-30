@@ -21,7 +21,7 @@ const Sidebar = () => {
     },
     {
       name: 'Finance',
-      path: 'business',
+      path: 'finance',
     },
     {
       name: 'Service',
