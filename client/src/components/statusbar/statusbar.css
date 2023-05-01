@@ -2,12 +2,14 @@
   box-sizing: border-box;
   position: sticky;
   display: flex;
+  align-items: center;
   gap: 16px;
   padding: 10px;
   top: 80px;
   width: 100%;
   background-color: #fff;
   box-shadow: 5px 5px 18px #888888;
+  z-index: 100;
 }
 
 .statusbarLeft {
@@ -47,6 +49,21 @@
   height: 100%;
   background: #ccc;
   border-radius: 5px;
+}
+
+.addRoomBtn {
+  font-weight: 500;
+  color: #008009;
+  border: 1px solid #008009;
+  border-radius: 4px;
+  padding: 4px 12px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.addRoomBtn:hover {
+  background: #008009;
+  color: #fff;
 }
 
 .statusbarCalendar {

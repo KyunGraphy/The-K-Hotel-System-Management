@@ -43,8 +43,8 @@
 
 .addStaff {
   font-weight: 500;
-  color: #008000;
-  border: 1px solid #008000;
+  color: #008009;
+  border: 1px solid #008009;
   border-radius: 4px;
   padding: 4px 12px;
   transition: all 0.4s ease;
@@ -52,7 +52,7 @@
 }
 
 .addStaff:hover {
-  background: #008000;
+  background: #008009;
   color: #fff;
 }
 
@@ -114,13 +114,13 @@
 }
 
 .viewBtn {
-  color: #febb02;
-  border: 1px solid #febb02;
+  color: #008009;
+  border: 1px solid #008009;
 }
 
 .viewBtn:hover {
   color: #fff;
-  background: #febb02;
+  background: #008009;
 }
 
 .delBtn {

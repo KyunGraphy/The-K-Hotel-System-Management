@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import BookRoom from './BookRoom';
-import RoomPayment from './RoomPayment';
-
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { TbCrown } from "react-icons/tb";
 
+import './styles/rooms.css'
 
 const Room = ({ room }) => {
+  const [openRoomTools, setOpenRoomTools] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [roomModal, setRoomModal] = useState();
 
@@ -20,7 +19,7 @@ const Room = ({ room }) => {
 
   const handleClickRoom = (room) => {
     setRoomModal(room);
-    setOpenModal(true);
+    setOpenRoomTools(!openRoomTools);
   };
 
   return (
@@ -33,10 +32,13 @@ const Room = ({ room }) => {
       {room?.type === 'Royal' && <TbCrown />}
       {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
 
-      {(openModal && roomModal.status === "Available") && <BookRoom setOpenModal={setOpenModal} roomModal={roomModal} />}
-      {(openModal && roomModal.status === "Booked") && <RoomPayment setOpenModal={setOpenModal} roomModal={roomModal} />}
+      {(openRoomTools && room.status === 'Available') && <div className='roomTools'>
+        <div>Edit</div>
+        <div>Maintenance</div>
+        <div>Delete</div>
+        <p>Cancel</p>
+      </div>}
     </span>
-
   )
 }
 

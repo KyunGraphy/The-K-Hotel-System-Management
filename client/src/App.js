@@ -13,6 +13,7 @@ import Register from "./pages/register/Register";
 import ReservationMana from "./pages/admin/reservation/ReservationMana";
 import PageError from "./pages/admin/notFound/PageError.jsx";
 import StaffMana from "./pages/admin/staff/StaffMana";
+import Business from "./pages/admin/business/Business";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
           <Route path="room" element={<RoomsMana />} />
           <Route path="reservation" element={<ReservationMana />} />
           <Route path="staff" element={<StaffMana />} />
+          <Route path="business" element={<Business />} />
+
           <Route path=":id" element={<PageError />} />
         </Route>
       </Routes>

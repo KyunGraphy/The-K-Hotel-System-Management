@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Rooms from './Rooms'
-import './styles/roomsMana.css'
+import './styles/business.css'
 
 import { listRoomsMock } from "../../../mocks/ListRooms.js";
 import Statusbar from '../../../components/statusbar/Statusbar';
 
-const RoomsMana = () => {
+const Business = () => {
   const [listRooms, setListRooms] = useState(listRoomsMock);
   const roomsStatus = [
     {
@@ -36,11 +36,11 @@ const RoomsMana = () => {
   ];
 
   return (
-    <div className='roomsMana'>
+    <div className='business'>
       <Statusbar roomsStatus={roomsStatus} />
       <Rooms listRooms={listRooms} setListRooms={setListRooms} />
     </div>
   )
 }
 
-export default RoomsMana
+export default Business

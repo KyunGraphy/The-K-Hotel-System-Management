@@ -88,7 +88,7 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
           <nav className="rInfoHeader">Register Information</nav>
           <div className="rInfoBookSide">
             <div className="">
-              <label>Room type: </label>
+              <label>Department: </label>
               <div style={{ color: 'red' }}>
                 {roomModal.department}
               </div>

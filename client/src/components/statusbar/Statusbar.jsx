@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './styles/statusbar.css'
+import './statusbar.css'
 
 const Statusbar = ({ roomsStatus }) => {
+  const location = useLocation();
+  const page = location.pathname.split('/')[2];
+
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDepartment, setSelectedDepartment] = useState("The K Dong Khoi");
 
@@ -44,6 +48,8 @@ const Statusbar = ({ roomsStatus }) => {
           </div>
         ))}
       </div>
+
+      {(page === 'business') && <div className='addRoomBtn'>Add New</div>}
     </div>
   )
 }
