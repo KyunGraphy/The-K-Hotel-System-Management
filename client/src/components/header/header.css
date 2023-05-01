@@ -112,12 +112,17 @@
   cursor: pointer;
 }
 
+.headerSearchDestination {
+  width: 150px;
+}
+
 .date {
   position: absolute;
   top: 50px;
   z-index: 2;
 }
 
+.destinations,
 .options {
   z-index: 2;
   position: absolute;
@@ -129,11 +134,21 @@
   box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
+.destinations > div {
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.destinations > div:hover {
+  background: #384e71;
+  color: #fff;
+}
+
 .optionItem {
   width: 200px;
   display: flex;
   justify-content: space-between;
-  margin: 10px;
+  padding: 10px;
 }
 
 .optionCounter {

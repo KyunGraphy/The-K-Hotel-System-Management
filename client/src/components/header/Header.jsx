@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = ({ type }) => {
   const [destination, setDestination] = useState("");
+  const [openDestination, setOpenDestination] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -25,14 +26,17 @@ const Header = ({ type }) => {
       key: "selection",
     },
   ]);
+
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
-    room: 1,
+    singleRoom: 0,
+    doubleRoom: 0,
   });
 
   const navigate = useNavigate();
+  console.log(destination)
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -83,18 +87,64 @@ const Header = ({ type }) => {
             </h1>
             <p className="headerDesc">
               Get rewarded for your travels – unlock instant savings of 10% or
-              more with a free Lamabooking account
+              more with a free account
             </p>
             <button className="headerBtn">Get Started !</button>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                <input
-                  type="text"
-                  placeholder="Where are you going?"
-                  className="headerSearchInput"
-                  onChange={(e) => setDestination(e.target.value)}
-                />
+                <span
+                  onClick={() => setOpenDestination(!openDestination)}
+                  className="headerSearchText headerSearchDestination"
+                >
+                  {destination ? destination : "Destination"}
+                </span>
+                {openDestination && (
+                  <div className="destinations">
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Dong Khoi")}
+                    >
+                      The K Dong Khoi
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Van Thanh")}
+                    >
+                      The K Van Thanh
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Thu Duc")}
+                    >
+                      The K Thu Duc
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Phu My Hung")}
+                    >
+                      The K Phu My Hung
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Cong Hoa")}
+                    >
+                      The K Cong Hoa
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Quang Trung")}
+                    >
+                      The K Quang Trung
+                    </div>
+                    <div
+                      className="optionItem"
+                      onClick={() => setDestination("The K Van Hanh")}
+                    >
+                      The K Van Hanh
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
@@ -121,7 +171,7 @@ const Header = ({ type }) => {
                 <span
                   onClick={() => setOpenOptions(!openOptions)}
                   className="headerSearchText"
-                >{`${options.adult} adult · ${options.children} children · ${options.room} room`}</span>
+                >{`${options.adult} adult · ${options.children} children · ${options.singleRoom} singleRoom · ${options.doubleRoom} doubleRoom`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
@@ -167,21 +217,42 @@ const Header = ({ type }) => {
                       </div>
                     </div>
                     <div className="optionItem">
-                      <span className="optionText">Room</span>
+                      <span className="optionText">Single Room</span>
                       <div className="optionCounter">
                         <button
-                          disabled={options.room <= 1}
+                          disabled={options.singleRoom <= 0}
                           className="optionCounterButton"
-                          onClick={() => handleOption("room", "d")}
+                          onClick={() => handleOption("singleRoom", "d")}
                         >
                           -
                         </button>
                         <span className="optionCounterNumber">
-                          {options.room}
+                          {options.singleRoom}
                         </span>
                         <button
                           className="optionCounterButton"
-                          onClick={() => handleOption("room", "i")}
+                          onClick={() => handleOption("singleRoom", "i")}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <div className="optionItem">
+                      <span className="optionText">Double Room</span>
+                      <div className="optionCounter">
+                        <button
+                          disabled={options.doubleRoom <= 0}
+                          className="optionCounterButton"
+                          onClick={() => handleOption("doubleRoom", "d")}
+                        >
+                          -
+                        </button>
+                        <span className="optionCounterNumber">
+                          {options.doubleRoom}
+                        </span>
+                        <button
+                          className="optionCounterButton"
+                          onClick={() => handleOption("doubleRoom", "i")}
                         >
                           +
                         </button>
