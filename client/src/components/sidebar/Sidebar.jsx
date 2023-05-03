@@ -32,8 +32,8 @@ const Sidebar = () => {
       path: 'staff',
     },
     {
-      name: 'Store',
-      path: 'store',
+      name: 'Purchase',
+      path: 'purchase',
     },
   ]
 
