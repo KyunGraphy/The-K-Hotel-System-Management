@@ -6,7 +6,7 @@ import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { TbCrown } from "react-icons/tb";
 
 
-const Room = ({ room }) => {
+const Room = ({ room, listRooms, setListRooms }) => {
   const [openModal, setOpenModal] = useState(false);
   const [roomModal, setRoomModal] = useState();
 
@@ -33,8 +33,19 @@ const Room = ({ room }) => {
       {room?.type === 'Royal' && <TbCrown />}
       {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
 
-      {(openModal && roomModal.status === "Available") && <BookRoom setOpenModal={setOpenModal} roomModal={roomModal} />}
-      {(openModal && roomModal.status === "Booked") && <RoomPayment setOpenModal={setOpenModal} roomModal={roomModal} />}
+      {(openModal && roomModal.status === "Available") && <BookRoom
+        setOpenModal={setOpenModal}
+        roomModal={roomModal}
+        listRooms={listRooms}
+        setListRooms={setListRooms}
+      />}
+
+      {(openModal && roomModal.status === "Booked") && <RoomPayment
+        setOpenModal={setOpenModal}
+        roomModal={roomModal}
+        listRooms={listRooms}
+        setListRooms={setListRooms}
+      />}
     </span>
 
   )

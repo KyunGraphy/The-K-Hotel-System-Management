@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import RoomByFloor from './RoomByFloor'
 import './styles/rooms.css'
 
-const Rooms = ({ listRooms }) => {
-  const [roomsByFloor, setRoomsByFloor] = useState([
+const Rooms = ({ listRooms, setListRooms }) => {
+  const roomsByFloor = [
     {
       title: 'Ground',
       rooms: [],
@@ -44,22 +44,22 @@ const Rooms = ({ listRooms }) => {
       title: 9,
       rooms: [],
     },
-  ])
+  ]
 
-  useEffect(() => {
-    let newRoomsByFloor = [...roomsByFloor];
-    for (let i = 0; i < listRooms.length; i++) {
-      const floor = (Math.floor(listRooms[i].number / 100))
-      newRoomsByFloor[floor].rooms.push(listRooms[i]);
-    }
-
-    setRoomsByFloor(newRoomsByFloor)
-  }, [listRooms])
+  for (let i = 0; i < listRooms.length; i++) {
+    const floor = (Math.floor(listRooms[i].number / 100))
+    roomsByFloor[floor].rooms.push(listRooms[i]);
+  }
 
   return (
     <div className='rooms'>
       {roomsByFloor?.map(rooms => (
-        <RoomByFloor key={rooms.title} rooms={rooms} />
+        <RoomByFloor
+          key={rooms.title}
+          rooms={rooms}
+          listRooms={listRooms}
+          setListRooms={setListRooms}
+        />
       ))}
     </div>
   )

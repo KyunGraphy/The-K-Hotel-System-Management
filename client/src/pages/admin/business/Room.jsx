@@ -4,7 +4,7 @@ import { TbCrown } from "react-icons/tb";
 
 import './styles/rooms.css'
 
-const Room = ({ room }) => {
+const Room = ({ room, listRooms, setListRooms }) => {
   const [openRoomTools, setOpenRoomTools] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [roomModal, setRoomModal] = useState();
@@ -22,6 +22,21 @@ const Room = ({ room }) => {
     setOpenRoomTools(!openRoomTools);
   };
 
+  const handleSetMaintenance = (roomId) => {
+    const newListRooms = listRooms.map(room => {
+      if (room.id === roomId) {
+        return {
+          ...room,
+          status: 'Maintenance'
+        }
+      }
+
+      return { ...room }
+    })
+
+    setListRooms(newListRooms)
+  }
+
   return (
     <span
       className={`${statusMap[room.status]} roomItem`}
@@ -34,7 +49,7 @@ const Room = ({ room }) => {
 
       {(openRoomTools && room.status === 'Available') && <div className='roomTools'>
         <div>Edit</div>
-        <div>Maintenance</div>
+        <div onClick={() => handleSetMaintenance(room.id)}>Maintenance</div>
         <div>Delete</div>
         <p>Cancel</p>
       </div>}

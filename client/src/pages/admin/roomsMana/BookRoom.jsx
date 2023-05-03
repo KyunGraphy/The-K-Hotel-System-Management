@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { listServicesMock } from "../../../mocks/ListServices.js";
 import './styles/roomInfo.css'
 
-const BookRoom = ({ setOpenModal, roomModal }) => {
+const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -20,7 +20,7 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
   useEffect(() => {
     function handleEscape(e) {
       if (e.key === 'Escape') {
-        setOpenModal(false);
+        closeModal()
       }
     }
 
@@ -70,6 +70,28 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
     return diffDays + 1;
   }, [startDate, endDate])
 
+  const handleSetBooked = (roomId) => {
+    closeModal();
+    const newListRooms = listRooms.map(room => {
+      if (room.id === roomId) {
+        console.log('booked')
+        return {
+          ...room,
+          status: 'Booked'
+        }
+      }
+
+      return { ...room }
+    })
+
+    setListRooms(newListRooms)
+  }
+
+  function closeModal() {
+    console.log('close modal')
+    setOpenModal(false);
+  }
+
   return (
     <div className='roomInfoContainer' onClick={(e) => {
       if (e.target.className === 'roomInfoContainer') setOpenModal(false)
@@ -78,7 +100,7 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
         <FontAwesomeIcon
           icon={faCircleXmark}
           className="rClose"
-          onClick={() => setOpenModal(false)}
+          onClick={closeModal}
         />
         <div className="rTitleInfo">
           Room {(roomModal.number < 10) ? roomModal.number.toString().padStart(3, '0') : roomModal.number}
@@ -235,7 +257,10 @@ const BookRoom = ({ setOpenModal, roomModal }) => {
             <span>{totalServicePrice() + getDiffDays() * roomModal.price} $</span>
           </div>
           <div className="rBtn">
-            <span className="rBookedBtn">Booked</span>
+            <span
+              className="rBookedBtn"
+              onClick={() => handleSetBooked(roomModal.id)}
+            >Booked</span>
             <span className="rCancelBtn">Cancel</span>
           </div>
         </div>
