@@ -19,14 +19,17 @@ const Room = ({ room, listRooms, setListRooms }) => {
   }
 
   const handleClickRoom = (room) => {
+    console.log('Set open modal')
     setRoomModal(room);
-    setOpenModal(true);
+    setOpenModal(!openModal);
   };
 
   return (
     <span
       className={`${statusMap[room.status]} rItem`}
-      onClick={() => handleClickRoom(room)}
+      onClick={() => {
+        if (openModal === false) handleClickRoom(room)
+      }}
     >
       {room?.type === 'Single' && <IoPersonOutline />}
       {room?.type === 'Double' && <IoPeopleOutline />}

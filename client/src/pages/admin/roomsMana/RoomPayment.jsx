@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import './styles/roomInfo.css'
 import { listServicesMock } from "../../../mocks/ListServices";
 
-const RoomPayment = ({ setOpenModal, roomModal }) => {
+const RoomPayment = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [selectedService, setSelectedService] = useState({ name: "Water", price: 0.5 });
@@ -66,6 +66,22 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
     const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay))
     return diffDays + 1;
   }, [startDate, endDate])
+
+  const handleSetAvailable = (roomId) => {
+    setOpenModal(false);
+    const newListRooms = listRooms.map(room => {
+      if (room.id === roomId) {
+        return {
+          ...room,
+          status: 'Available'
+        }
+      }
+
+      return { ...room }
+    })
+
+    setListRooms(newListRooms)
+  }
 
   return (
     <div className='rInfoContainer' onClick={(e) => {
@@ -240,8 +256,10 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
             <span>{totalServicePrice() + getDiffDays() * roomModal.price} $</span>
           </div>
           <div className="rBtn">
-            <span className="rBookedBtn">Payment</span>
-            <span className="rCancelBtn">Cancel</span>
+            <span
+              className="rBookedBtn"
+              onClick={() => handleSetAvailable(roomModal.id)}
+            >Payment</span>
           </div>
         </div>
       </div>

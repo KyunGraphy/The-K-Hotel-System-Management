@@ -20,7 +20,7 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
   useEffect(() => {
     function handleEscape(e) {
       if (e.key === 'Escape') {
-        closeModal()
+        setOpenModal(false);
       }
     }
 
@@ -71,10 +71,9 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
   }, [startDate, endDate])
 
   const handleSetBooked = (roomId) => {
-    closeModal();
+    setOpenModal(false);
     const newListRooms = listRooms.map(room => {
       if (room.id === roomId) {
-        console.log('booked')
         return {
           ...room,
           status: 'Booked'
@@ -87,11 +86,6 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
     setListRooms(newListRooms)
   }
 
-  function closeModal() {
-    console.log('close modal')
-    setOpenModal(false);
-  }
-
   return (
     <div className='rInfoContainer' onClick={(e) => {
       if (e.target.className === 'rInfoContainer') setOpenModal(false)
@@ -100,7 +94,7 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
         <FontAwesomeIcon
           icon={faCircleXmark}
           className="rClose"
-          onClick={closeModal}
+          onClick={setOpenModal(false)}
         />
         <div className="rTitleInfo">
           Room {(roomModal.number < 10) ? roomModal.number.toString().padStart(3, '0') : roomModal.number}
@@ -158,29 +152,29 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
           <div className="rInfoCustomerSide">
             <div>
               <label>ID/Passport: </label>
-              <input className="rInfoData" />
+              <input className="rInfoData" required />
             </div>
             <div>
               <label>Name: </label>
-              <input className="rInfoData" />
+              <input className="rInfoData" required />
             </div>
             <div>
               <label>Address: </label>
-              <input className="rInfoData" />
+              <input className="rInfoData" required />
             </div>
           </div>
           <div className="rInfoCustomerSide">
             <div>
               <label>Country: </label>
-              <input className="rInfoData" />
+              <input className="rInfoData" required />
             </div>
             <div>
               <label>Email: </label>
-              <input type="email" className="rInfoData" />
+              <input type="email" className="rInfoData" required />
             </div>
             <div>
               <label>Phone: </label>
-              <input type="tel" className="rInfoData" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+              <input type="tel" className="rInfoData" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
             </div>
           </div>
         </div>
@@ -228,7 +222,7 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
                 <th></th>
               </tr>
               {listOrderedServices.length === 0 && (
-                <td colSpan={5} className="noServiceText">No Services Order</td>
+                <tr><td colSpan={5} className="noServiceText">No Services Order</td></tr>
               )}
               {listOrderedServices.map((item, i) => (
                 <tr key={i + 1}>
@@ -260,8 +254,7 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
             <span
               className="rBookedBtn"
               onClick={() => handleSetBooked(roomModal.id)}
-            >Booked</span>
-            <span className="rCancelBtn">Cancel</span>
+            >Book room</span>
           </div>
         </div>
       </div>

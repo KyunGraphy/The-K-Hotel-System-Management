@@ -117,7 +117,7 @@
 }
 
 .rServiceTable th,
-.rServiceTable td {
+.rServiceTable > tr > td {
   border: 1px solid #384e71;
   padding: 8px 0;
   font-size: 14px;
@@ -165,16 +165,14 @@
   gap: 16px;
 }
 
-.rBtn > span {
+.rBookedBtn {
   color: #fff;
   font-size: 18px;
   font-weight: bold;
   padding: 8px 20px;
   border-radius: 10px;
+  border: none;
   cursor: pointer;
-}
-
-.rBookedBtn {
   background-color: #228b22;
 }
 
