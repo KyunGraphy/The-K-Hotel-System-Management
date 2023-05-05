@@ -20,7 +20,7 @@
   font-weight: 500;
 }
 
-.roomFloor {
+.bFloor {
   min-height: 64px;
   height: 100%;
   width: 114px;
@@ -32,7 +32,7 @@
   text-align: center;
 }
 
-.roomField {
+.bField {
   background: #fff;
   display: flex;
   flex: 1;
@@ -40,7 +40,7 @@
   flex-wrap: wrap;
 }
 
-.roomField > span {
+.bField > span {
   height: 64px;
   width: 114px;
   display: flex;
@@ -76,23 +76,23 @@
   background-color: #737373;
 }
 
-.roomDepartment {
+.bDepartment {
   font-size: 18px;
   font-weight: bold;
 }
 
-.roomPrice {
+.bPrice {
   font-size: 32px;
   font-weight: bold;
   color: gold;
 }
 
 /* Room Options */
-.roomItem {
+.bItem {
   position: relative;
 }
 
-.roomTools {
+.bTools {
   position: absolute;
   background: #fff;
   font-size: 12px;
@@ -106,14 +106,14 @@
   z-index: 10;
 }
 
-.roomTools > div,
-.roomTools > p {
+.bTools > div,
+.bTools > p {
   padding: 0.5em;
   transition: all 0.4s ease-in-out;
 }
 
-.roomTools > div:hover,
-.roomTools > p:hover {
+.bTools > div:hover,
+.bTools > p:hover {
   background: #384e71;
   color: #fff;
 }

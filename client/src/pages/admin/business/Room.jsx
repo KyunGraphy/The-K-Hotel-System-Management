@@ -39,7 +39,7 @@ const Room = ({ room, listRooms, setListRooms }) => {
 
   return (
     <span
-      className={`${statusMap[room.status]} roomItem`}
+      className={`${statusMap[room.status]} bItem`}
       onClick={() => handleClickRoom(room)}
     >
       {room?.type === 'Single' && <IoPersonOutline />}
@@ -47,7 +47,7 @@ const Room = ({ room, listRooms, setListRooms }) => {
       {room?.type === 'Royal' && <TbCrown />}
       {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
 
-      {(openRoomTools && room.status === 'Available') && <div className='roomTools'>
+      {(openRoomTools && room.status === 'Available') && <div className='bTools'>
         <div>Edit</div>
         <div onClick={() => handleSetMaintenance(room.id)}>Maintenance</div>
         <div>Delete</div>

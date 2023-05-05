@@ -20,7 +20,7 @@
   font-weight: 500;
 }
 
-.roomFloor {
+.rFloor {
   min-height: 64px;
   height: 100%;
   width: 114px;
@@ -32,7 +32,7 @@
   text-align: center;
 }
 
-.roomField {
+.rField {
   background: #fff;
   display: flex;
   flex: 1;
@@ -40,7 +40,7 @@
   flex-wrap: wrap;
 }
 
-.roomField > span {
+.rField > span {
   height: 64px;
   width: 114px;
   display: flex;
@@ -76,12 +76,12 @@
   background-color: #737373;
 }
 
-.roomDepartment {
+.rDepartment {
   font-size: 18px;
   font-weight: bold;
 }
 
-.roomPrice {
+.rPrice {
   font-size: 32px;
   font-weight: bold;
   color: gold;

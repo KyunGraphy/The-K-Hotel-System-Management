@@ -12,8 +12,8 @@ const RoomByFloor = ({ rooms, listRooms, setListRooms }) => {
 
   return (
     <div className='room'>
-      <div className='roomFloor'>{rooms.title} Floor</div>
-      <div className='roomField'>
+      <div className='bFloor'>{rooms.title} Floor</div>
+      <div className='bField'>
         {rooms.rooms.map((room, index) => (
           <Room
             key={index}

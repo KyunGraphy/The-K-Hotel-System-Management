@@ -25,7 +25,7 @@ const Room = ({ room, listRooms, setListRooms }) => {
 
   return (
     <span
-      className={`${statusMap[room.status]} roomItem`}
+      className={`${statusMap[room.status]} rItem`}
       onClick={() => handleClickRoom(room)}
     >
       {room?.type === 'Single' && <IoPersonOutline />}

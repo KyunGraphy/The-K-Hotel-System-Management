@@ -1,4 +1,4 @@
-.roomInfoContainer {
+.rInfoContainer {
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.418);
@@ -12,7 +12,7 @@
   overflow-y: auto;
 }
 
-.roomInfo {
+.rBoard {
   box-sizing: border-box;
   position: relative;
   top: 7vh;

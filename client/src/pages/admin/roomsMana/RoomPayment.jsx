@@ -68,10 +68,10 @@ const RoomPayment = ({ setOpenModal, roomModal }) => {
   }, [startDate, endDate])
 
   return (
-    <div className='roomInfoContainer' onClick={(e) => {
-      if (e.target.className === 'roomInfoContainer') setOpenModal(false)
+    <div className='rInfoContainer' onClick={(e) => {
+      if (e.target.className === 'rInfoContainer') setOpenModal(false)
     }}>
-      <div className="roomInfo">
+      <div className="rBoard">
         <FontAwesomeIcon
           icon={faCircleXmark}
           className="rClose"
