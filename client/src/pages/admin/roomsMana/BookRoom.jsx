@@ -94,7 +94,7 @@ const BookRoom = ({ setOpenModal, roomModal, listRooms, setListRooms }) => {
         <FontAwesomeIcon
           icon={faCircleXmark}
           className="rClose"
-          onClick={setOpenModal(false)}
+          onClick={() => setOpenModal(false)}
         />
         <div className="rTitleInfo">
           Room {(roomModal.number < 10) ? roomModal.number.toString().padStart(3, '0') : roomModal.number}

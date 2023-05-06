@@ -17,6 +17,7 @@ const Room = ({ room, listRooms, setListRooms }) => {
     'Check Out': 'bgPurple',
     'Maintenance': 'bgGrey',
   }
+  console.log(openModal)
 
   const handleClickRoom = (room) => {
     console.log('Set open modal')
