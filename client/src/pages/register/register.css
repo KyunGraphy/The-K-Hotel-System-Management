@@ -11,13 +11,13 @@
 
 .registerWrapper {
   position: relative;
-  width: 400px;
+  width: 700px;
   height: 600px;
   background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 4px solid rgba(255, 255, 255, 0.5);
   border-radius: 20px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(32px);
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,6 +27,11 @@
 .registerWrapper .formBox {
   width: 100%;
   padding: 40px;
+}
+
+.formField {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .registerWrapper .iconClose {
@@ -100,8 +105,9 @@
 
 .agreeTerms {
   font-size: 0.9em;
-  color: #162938;
   font-weight: 500;
+  color: #162938;
+  padding: 0.5em 2em;
   margin: -15px 0 15px;
 }
 
@@ -139,4 +145,30 @@
 
 .loginRegister p a:hover {
   text-decoration: underline;
+}
+
+/* Select country options */
+.countryOptions {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.75);
+  margin-top: 4px;
+  max-height: 144px;
+  max-width: 277px;
+  border-bottom-left-radius: 12px;
+  overflow: auto;
+}
+
+.countryOptions > p {
+  padding: 0.5em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.countryOptions > p:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.countryOptions > p > img {
+  height: 12px;
+  margin: 0 0.5em;
 }

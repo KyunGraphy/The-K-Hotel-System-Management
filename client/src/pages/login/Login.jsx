@@ -19,7 +19,7 @@ const Login = () => {
                 <ion-icon name="mail"></ion-icon>
               </span>
               <input type="email" required />
-              <label>Email</label>
+              <label>Username</label>
             </div>
             <div className="inputBox">
               <span className="icon">

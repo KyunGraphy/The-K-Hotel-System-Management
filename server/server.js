@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
 
 const app = express();
 dotenv.config();
@@ -23,11 +24,17 @@ mongoose.connection.on("disconnected", () => {
 });
 
 // middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://127.0.0.1:3000',
+    methods: ["GET", "POST"]
+  })
+);
 app.use(cookieParser());
 app.use(express.json())
 
 app.use('/api/auth', authRoute)
+app.use('/api/users', userRoute)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
