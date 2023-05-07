@@ -23,7 +23,7 @@ const ReservationSchema = new mongoose.Schema(
       required: true,
     },
     services: {
-      type: [String],
+      type: [Object],
     }
   },
   { timestamps: true }
