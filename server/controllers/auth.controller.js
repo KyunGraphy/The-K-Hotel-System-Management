@@ -35,7 +35,11 @@ export const login = async (req, res, next) => {
       return next(createError(400, "Wrong password or username!"));
 
     const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+        role: user.role || null,
+      },
       process.env.JWT_KEY
     );
 
@@ -45,7 +49,7 @@ export const login = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({ ...otherDetails });
+      .json(otherDetails);
   } catch (err) {
     next(err);
   }
