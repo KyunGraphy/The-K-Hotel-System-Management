@@ -3,14 +3,14 @@ import mongoose from 'mongoose';
 const RoomSchema = new mongoose.Schema(
   {
     number: {
-      type: String,
-      required: true,
-    },
-    type: {
       type: Number,
       required: true,
     },
-    desc: {
+    type: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -23,7 +23,7 @@ const RoomSchema = new mongoose.Schema(
       required: true,
     },
     status: {
-      type: Number,
+      type: String,
       required: true,
     },
     unavailableDate: {

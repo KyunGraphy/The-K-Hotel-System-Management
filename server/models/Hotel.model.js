@@ -10,7 +10,12 @@ const HotelSchema = new mongoose.Schema({
     required: true,
   },
   photos: {
-    type: [String],
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    }
   },
   description: {
     type: String,
