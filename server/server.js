@@ -6,6 +6,7 @@ import cors from 'cors';
 
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
+import hotelRoute from "./routes/hotel.route.js";
 
 const app = express();
 dotenv.config();
@@ -35,6 +36,7 @@ app.use(express.json())
 
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
+app.use('/api/hotel', hotelRoute)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
