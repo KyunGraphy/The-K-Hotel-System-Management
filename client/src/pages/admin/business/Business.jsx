@@ -23,11 +23,11 @@ const Business = () => {
       count: listRoomsMock.filter((room) => room.status === 'Using').length,
       bg: '#FF8C00',
     },
-    {
-      status: 'Check Out',
-      count: listRoomsMock.filter((room) => room.status === 'Check Out').length,
-      bg: '#5d4b63',
-    },
+    // {
+    //   status: 'Check Out',
+    //   count: listRoomsMock.filter((room) => room.status === 'Check Out').length,
+    //   bg: '#5d4b63',
+    // },
     {
       status: 'Maintenance',
       count: listRoomsMock.filter((room) => room.status === 'Maintenance').length,

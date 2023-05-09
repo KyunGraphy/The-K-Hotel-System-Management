@@ -127,7 +127,7 @@ export const listRoomsMock = [
     description: "",
     price: 60,
     maxPeople: 3,
-    status: 'Check Out',
+    status: 'Maintenance',
   },
   {
     id: 14,
@@ -147,7 +147,7 @@ export const listRoomsMock = [
     description: "",
     price: 100,
     maxPeople: 3,
-    status: 'Check Out',
+    status: 'Maintenance',
   },
   {
     id: 16,

@@ -9,7 +9,7 @@ const Finance = () => {
 
   return (
     <div className='finance'>
-      <h2>Finance</h2>
+      {/* <h2>Finance</h2> */}
       <div className='fHeader'>
         <div className='fHeaderOptions'>
           {headerOptions.map((item, index) => (

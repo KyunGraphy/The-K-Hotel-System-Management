@@ -49,7 +49,7 @@ const Statusbar = ({ roomsStatus }) => {
         ))}
       </div>
 
-      {(page === 'business') && <div className='addRoomBtn'>Add New</div>}
+      {(page === 'business') && <div className='addNewBtn'>Add New</div>}
     </div>
   )
 }

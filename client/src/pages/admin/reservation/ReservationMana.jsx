@@ -11,7 +11,7 @@ const ReservationMana = () => {
 
   return (
     <div className='reservation'>
-      <h2>Reservation</h2>
+      {/* <h2>Reservation</h2> */}
       <div className='reservationTools'>
         <div>
           <label htmlFor="floor">Department: </label>
@@ -25,7 +25,7 @@ const ReservationMana = () => {
             <option value="The K Van Hanh">The K Van Hanh</option>
           </select>
         </div>
-        <div className='delReservation'>Delete reservation</div>
+        <div className='addNewBtn'>Add New</div>
       </div>
       <div className='reservationList'>
         <ReservationTable />

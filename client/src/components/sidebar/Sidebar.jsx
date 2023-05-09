@@ -32,8 +32,8 @@ const Sidebar = () => {
       path: 'staff',
     },
     {
-      name: 'Purchase',
-      path: 'purchase',
+      name: 'Procurement',
+      path: 'procurement',
     },
   ]
 
@@ -60,7 +60,7 @@ const Sidebar = () => {
         navigate('/admin/staff')
         break;
       case 6:
-        navigate('/admin/store')
+        navigate('/admin/procurement')
         break;
       default:
         break;

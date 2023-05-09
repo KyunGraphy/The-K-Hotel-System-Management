@@ -51,19 +51,14 @@
   border-radius: 5px;
 }
 
-.addRoomBtn {
+.addNewBtn {
   font-weight: 500;
-  color: #008009;
-  border: 1px solid #008009;
+  color: #fff;
+  background: #008009;
   border-radius: 4px;
-  padding: 4px 12px;
+  padding: 0.5em 1em;
   transition: all 0.4s ease;
   cursor: pointer;
-}
-
-.addRoomBtn:hover {
-  background: #008009;
-  color: #fff;
 }
 
 .statusbarCalendar {

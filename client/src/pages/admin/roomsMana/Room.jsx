@@ -44,7 +44,7 @@ const Room = ({ room, listRooms, setListRooms }) => {
         setListRooms={setListRooms}
       />}
 
-      {(openModal && roomModal.status === "Booked") && <RoomPayment
+      {(openModal && (roomModal.status === "Booked" || roomModal.status === "Using")) && <RoomPayment
         setOpenModal={setOpenModal}
         roomModal={roomModal}
         listRooms={listRooms}
