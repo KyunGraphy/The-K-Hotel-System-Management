@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { TbCrown } from "react-icons/tb";
 
-import './styles/rooms.css'
-
 const Room = ({ room, listRooms, setListRooms }) => {
   const [openRoomTools, setOpenRoomTools] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [roomModal, setRoomModal] = useState();
 
   const statusMap = {
     'Available': 'bgGreen',
@@ -17,8 +14,20 @@ const Room = ({ room, listRooms, setListRooms }) => {
     'Maintenance': 'bgGrey',
   }
 
+  useEffect(() => {
+    function handleEscape(e) {
+      if (e.key === 'Escape') {
+        setOpenRoomTools(false);
+      }
+    }
+    window.addEventListener('keydown', handleEscape);
+
+    return () => {
+      window.removeEventListener('keydown', handleEscape);
+    };
+  });
+
   const handleClickRoom = (room) => {
-    setRoomModal(room);
     setOpenRoomTools(!openRoomTools);
   };
 
@@ -38,22 +47,26 @@ const Room = ({ room, listRooms, setListRooms }) => {
   }
 
   return (
-    <span
-      className={`${statusMap[room.status]} bItem`}
+    <div
+      className={`${statusMap[room.status]} room`}
       onClick={() => handleClickRoom(room)}
     >
-      {room?.type === 'Single' && <IoPersonOutline />}
-      {room?.type === 'Double' && <IoPeopleOutline />}
-      {room?.type === 'Royal' && <TbCrown />}
-      {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
-
-      {(openRoomTools && room.status === 'Available') && <div className='bTools'>
+      <p>
+        {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
+      </p>
+      <p>
+        {room.type === 'Single' && <IoPersonOutline />}
+        {room.type === 'Double' && <IoPeopleOutline />}
+        {room.type === 'Royal' && <TbCrown />}
+        {room.type}
+      </p>
+      {(openRoomTools && room.status === 'Available') && <div className='roomTools'>
         <div>Edit</div>
         <div onClick={() => handleSetMaintenance(room.id)}>Maintenance</div>
         <div>Delete</div>
         <p>Cancel</p>
       </div>}
-    </span>
+    </div>
   )
 }
 

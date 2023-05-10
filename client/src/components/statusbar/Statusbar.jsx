@@ -9,6 +9,7 @@ const Statusbar = ({ roomsStatus }) => {
   const page = location.pathname.split('/')[2];
 
   const [startDate, setStartDate] = useState(new Date());
+  console.log(startDate)
   const [selectedDepartment, setSelectedDepartment] = useState("The K Dong Khoi");
 
   const handleChange = (e) => {
@@ -18,17 +19,21 @@ const Statusbar = ({ roomsStatus }) => {
   return (
     <div className='statusbar'>
       <div className='statusbarLeft'>
-        <div className='statusbarSearchDate'>
-          <label>Date: </label>
-          <div className='statusbarCalendar'>
-            <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} disabled /></div>
+        <div className='statusbarSearchRoom'>
+          <label>Search room: </label>
+          <input
+            type='text'
+            className='statusbarFilter'
+          />
+          {/* <div className='statusbarCalendar'>
+            <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /></div>
             <div><ion-icon name="calendar-outline"></ion-icon></div>
-          </div>
-          {/* <div className='statusbarSearchIcon'><ion-icon name="search-outline"></ion-icon></div> */}
+          </div> */}
+          <div className='statusbarSearchIcon'><ion-icon name="search-outline"></ion-icon></div>
         </div>
         <div className='statusbarDepartment'>
           <label htmlFor="floor">Department: </label>
-          <select className='statusbarDepartmentOptions' value={selectedDepartment} onChange={handleChange}>
+          <select className='statusbarFilter' value={selectedDepartment} onChange={handleChange}>
             <option value="The K Dong Khoi">The K Dong Khoi</option>
             <option value="The K Van Thanh">The K Van Thanh</option>
             <option value="The K Thu Duc">The K Thu Duc</option>

@@ -17,20 +17,21 @@
   width: 30%;
 }
 
-.statusbarSearchDate {
+.statusbarSearchRoom {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5em;
   margin-bottom: 8px;
 }
 
 .statusbarDepartment {
   display: flex;
-  gap: 6px;
+  gap: 0.5em;
   justify-content: space-between;
 }
 
-.statusbarDepartmentOptions {
+.statusbarFilter {
   outline: none;
   flex: 1;
 }

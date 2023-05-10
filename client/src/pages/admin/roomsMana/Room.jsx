@@ -1,15 +1,9 @@
-import React, { useState } from 'react'
-import BookRoom from './BookRoom';
-import RoomPayment from './RoomPayment';
+import React from 'react'
 
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { TbCrown } from "react-icons/tb";
 
-
-const Room = ({ room, listRooms, setListRooms }) => {
-  const [openModal, setOpenModal] = useState(false);
-  const [roomModal, setRoomModal] = useState();
-
+const Room = ({ room }) => {
   const statusMap = {
     'Available': 'bgGreen',
     'Booked': 'bgRed',
@@ -17,41 +11,19 @@ const Room = ({ room, listRooms, setListRooms }) => {
     'Check Out': 'bgPurple',
     'Maintenance': 'bgGrey',
   }
-  console.log(openModal)
-
-  const handleClickRoom = (room) => {
-    console.log('Set open modal')
-    setRoomModal(room);
-    setOpenModal(!openModal);
-  };
 
   return (
-    <span
-      className={`${statusMap[room.status]} rItem`}
-      onClick={() => {
-        if (openModal === false) handleClickRoom(room)
-      }}
-    >
-      {room?.type === 'Single' && <IoPersonOutline />}
-      {room?.type === 'Double' && <IoPeopleOutline />}
-      {room?.type === 'Royal' && <TbCrown />}
-      {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
-
-      {(openModal && roomModal.status === "Available") && <BookRoom
-        setOpenModal={setOpenModal}
-        roomModal={roomModal}
-        listRooms={listRooms}
-        setListRooms={setListRooms}
-      />}
-
-      {(openModal && (roomModal.status === "Booked" || roomModal.status === "Using")) && <RoomPayment
-        setOpenModal={setOpenModal}
-        roomModal={roomModal}
-        listRooms={listRooms}
-        setListRooms={setListRooms}
-      />}
-    </span>
-
+    <div className={`${statusMap[room.status]} room`}>
+      <p>
+        {(room.number < 10) ? room.number.toString().padStart(3, '0') : room.number}
+      </p>
+      <p>
+        {room.type === 'Single' && <IoPersonOutline />}
+        {room.type === 'Double' && <IoPeopleOutline />}
+        {room.type === 'Royal' && <TbCrown />}
+        {room.type}
+      </p>
+    </div>
   )
 }
 

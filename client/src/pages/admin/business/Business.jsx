@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Rooms from './Rooms'
+
 import './styles/business.css'
 
 import { listRoomsMock } from "../../../mocks/ListRooms.js";
