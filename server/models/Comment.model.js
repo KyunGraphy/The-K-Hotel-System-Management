@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const CommentSchema = new mongoose.Schema({
-  hotelID: {
-    type: String,
-    require: true,
-  },
   userID: {
     type: String,
     require: true,
@@ -15,9 +11,10 @@ const CommentSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    require: true,
   },
 }, {
   timestamps: true,
 })
 
-export default mongoose.model('Comments', CommentSchema);
+export default mongoose.model('Comment', CommentSchema);

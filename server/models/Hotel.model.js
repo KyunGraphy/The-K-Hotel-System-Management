@@ -24,6 +24,9 @@ const HotelSchema = new mongoose.Schema({
   rooms: {
     type: [String],
   },
+  comments: {
+    type: [String],
+  },
 })
 
 export default mongoose.model("Hotel", HotelSchema);
