@@ -12,14 +12,13 @@ const ReservationSchema = new mongoose.Schema(
     },
     roomID: {
       type: String,
-      required: true,
     },
     checkInDate: {
-      type: Date,
+      type: Number,
       required: true,
     },
     checkOutDate: {
-      type: Date,
+      type: Number,
       required: true,
     },
     services: {
