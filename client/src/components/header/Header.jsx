@@ -36,7 +36,6 @@ const Header = ({ type }) => {
   });
 
   const navigate = useNavigate();
-  console.log(destination)
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {

@@ -57,5 +57,5 @@ app.use((err, req, res, next) => {
 
 app.listen(8800, () => {
   connect();
-  console.log('Connecting to server')
+  console.log(`Connecting to server port ${8800}`);
 });

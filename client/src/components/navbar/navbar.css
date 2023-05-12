@@ -53,7 +53,7 @@
 .navUserOptions {
   position: absolute;
   width: max-content;
-  top: 60px;
+  top: 56px;
   right: -10px;
   background-color: #384e71;
   color: #fff;
@@ -62,17 +62,19 @@
 
 .navUserOptions > p {
   position: relative;
+  color: #febb02;
   margin: 8px;
   font-size: 16px;
+  font-weight: 500;
   padding: 6px 32px 6px 6px;
   border-radius: 4px;
   transition: all 0.3s ease;
   cursor: pointer;
-  /* background-color: #ccc; */
 }
 
 .navUserOptions > p:hover {
   background: #febb02;
+  color: #384e71;
 }
 
 .navUserOptionsAfter::after {

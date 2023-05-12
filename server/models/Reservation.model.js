@@ -10,8 +10,33 @@ const ReservationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    adult: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
+    children: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    singleRoom: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    doubleRoom: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    royalRoom: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
     roomID: {
-      type: String,
+      type: [String],
     },
     checkInDate: {
       type: Number,
