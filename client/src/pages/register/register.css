@@ -103,6 +103,20 @@
   line-height: 57px;
 }
 
+.inputBox > .warning {
+  display: flex;
+  gap: 4px;
+  position: absolute;
+  bottom: -2.5em;
+  right: -1em;
+  align-items: center;
+  font-size: 12px;
+  padding: 0.5em;
+  color: #febb02;
+  background: rgba(22, 41, 56, 0.7);
+  border-radius: 4px;
+}
+
 .agreeTerms {
   font-size: 0.9em;
   font-weight: 500;

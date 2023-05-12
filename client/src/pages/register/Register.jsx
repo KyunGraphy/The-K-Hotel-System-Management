@@ -1,28 +1,61 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useFetch from '../../hooks/useFetch';
 
 import './register.css';
+import axios from 'axios';
 
 const Register = () => {
   const { data, loading } = useFetch('https://restcountries.com/v3.1/all?fields=name,flags')
+  const navigate = useNavigate()
 
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [confirmFailed, setConfirmFailed] = useState(false)
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
+  const [registerForm, setRegisterForm] = useState({
+    username: undefined,
+    password: undefined,
+    email: undefined,
+    name: undefined,
+    address: undefined,
+    phone: undefined,
+    country: undefined,
+  });
 
   useEffect(() => {
     function handleCloseCountryOptions(e) {
-      if (e.target.className !== 'countryInput') {
-        return setOpenCountryOptions(false);
-      }
-      return setOpenCountryOptions(true);
+      (e.target.className !== 'countryInput') ? setOpenCountryOptions(false) : setOpenCountryOptions(true);
     }
 
     window.addEventListener('click', handleCloseCountryOptions);
-
     return () => {
       window.removeEventListener('click', handleCloseCountryOptions);
     };
   });
+
+  useEffect(() => {
+    (confirmPassword === registerForm.password || registerForm.password === undefined) ?
+      setConfirmFailed(false) : setConfirmFailed(true)
+  }, [confirmPassword, registerForm.password])
+
+  const handleNation = (country, flag) => {
+    setRegisterForm((prev) => ({
+      ...prev, country: {
+        common: country,
+        flags: flag
+      }
+    }))
+  }
+
+  const handleChange = (e) => {
+    setRegisterForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  }
+
+  const handleRegister = async () => {
+    await axios.post("/auth/register", registerForm)
+
+    navigate("/login")
+  }
 
   return (
     <div className='registerContainer'>
@@ -44,28 +77,51 @@ const Register = () => {
                     <span className="icon">
                       <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" required />
+                    <input
+                      id="username"
+                      type="text"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Username</label>
                   </div>
                   <div className="inputBox">
                     <span className="icon">
                       <ion-icon name="mail"></ion-icon>
                     </span>
-                    <input type="email" required />
+                    <input
+                      id="email"
+                      type="text"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Email</label>
                   </div>
                   <div className="inputBox">
                     <span className="icon">
                       <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" required />
+                    <input
+                      id="password"
+                      type="password"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Password</label>
                   </div>
                   <div className="inputBox">
+                    {confirmFailed && <div className='warning'>
+                      <ion-icon name="warning-outline"></ion-icon>
+                      Confirm password does not match
+                    </div>}
                     <span className="icon">
                       <ion-icon name="lock-closed"></ion-icon>
                     </span>
-                    <input type="password" required />
+                    <input
+                      type="password"
+                      onChange={e => setConfirmPassword(e.target.value)}
+                      required
+                    />
                     <label>Confirm Password</label>
                   </div>
                 </div>
@@ -74,21 +130,36 @@ const Register = () => {
                     <span className="icon">
                       <ion-icon name="person"></ion-icon>
                     </span>
-                    <input type="text" required />
+                    <input
+                      id="name"
+                      type="text"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Name</label>
                   </div>
                   <div className="inputBox">
                     <span className="icon">
                       <ion-icon name="location"></ion-icon>
                     </span>
-                    <input type="text" required />
+                    <input
+                      id="address"
+                      type="text"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Address</label>
                   </div>
                   <div className="inputBox">
                     <span className="icon">
                       <ion-icon name="call"></ion-icon>
                     </span>
-                    <input type="text" required />
+                    <input
+                      id="phone"
+                      type="text"
+                      onChange={e => handleChange(e)}
+                      required
+                    />
                     <label>Phone</label>
                   </div>
                   <div className="inputBox">
@@ -98,12 +169,16 @@ const Register = () => {
                     <input
                       type="text"
                       className='countryInput'
+                      value={registerForm.country?.common || ""}
                       required
                     />
                     <label>Country</label>
                     {openCountryOptions && (<div className='countryOptions'>
                       {data.map((item, index) => (
-                        <p key={index}>
+                        <p
+                          key={index}
+                          onClick={() => handleNation(item.name.common, item.flags.png)}
+                        >
                           <img alt='' src={item.flags.png} />
                           {item.name.common}
                         </p>
@@ -116,7 +191,11 @@ const Register = () => {
             <div className="agreeTerms">
               <label><input type="checkbox" /> I agree to the terms & conditions</label>
             </div>
-            <button type="submit" className="btn">Register</button>
+            <button
+              type="submit"
+              className="btn"
+              onClick={handleRegister}
+            >Register</button>
             <div className="loginRegister">
               <p>Already have an account <Link to='/login' className="registerLink">Login</Link></p>
             </div>

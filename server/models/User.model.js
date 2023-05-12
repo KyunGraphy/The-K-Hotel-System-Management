@@ -27,7 +27,12 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   country: {
-    type: String,
+    common: {
+      type: String
+    },
+    flags: {
+      type: String
+    }
   },
   isAdmin: {
     type: Boolean,
