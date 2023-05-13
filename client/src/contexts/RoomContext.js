@@ -31,6 +31,7 @@ const RoomReducer = (state, action) => {
 
 export const RoomProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RoomReducer, INITIAL_STATE)
+  console.log(state.roomId, state.hotelId)
 
   return (
     <RoomContext.Provider

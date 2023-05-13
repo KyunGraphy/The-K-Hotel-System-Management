@@ -16,7 +16,6 @@ const Room = ({ room }) => {
   const { dispatch } = useContext(RoomContext)
 
   const handleSetRoom = (roomId) => {
-    console.log(roomId)
     dispatch({ type: "SET_ROOM", payload: roomId })
   };
 

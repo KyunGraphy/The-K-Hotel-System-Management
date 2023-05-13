@@ -72,6 +72,7 @@
 .statusbarSearchIcon {
   font-size: 24px;
   color: #384e71;
+  cursor: pointer;
 }
 
 .statusbarRight {

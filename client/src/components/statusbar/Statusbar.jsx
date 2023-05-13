@@ -14,7 +14,7 @@ const Statusbar = ({ roomsStatus }) => {
 
   // const [startDate, setStartDate] = useState(new Date());
 
-  const { dispatch } = useContext(RoomContext)
+  const { hotelId, dispatch } = useContext(RoomContext)
   const handleChange = (e) => {
     dispatch({ type: "SET_HOTEL", payload: e.target.value || null })
   };
@@ -47,6 +47,7 @@ const Statusbar = ({ roomsStatus }) => {
                   <option
                     key={item._id}
                     value={item._id}
+                    selected={hotelId === item._id}
                   >{item.department}</option>
                 ))
               }

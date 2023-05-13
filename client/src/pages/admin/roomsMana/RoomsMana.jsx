@@ -9,7 +9,6 @@ import { RoomContext } from '../../../contexts/RoomContext';
 
 const RoomsMana = () => {
   const { hotelId, roomId } = useContext(RoomContext)
-  console.log(roomId, hotelId)
 
   const roomsStatus = [
     {
