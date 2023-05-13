@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { Calendar } from 'react-date-range';
 import { IoArrowBackCircle, IoWaterSharp } from "react-icons/io5";
 import { CiLock, CiTempHigh } from "react-icons/ci";
 import { FaRegLightbulb } from "react-icons/fa";
 import { BsLightningFill } from "react-icons/bs";
+import { RoomContext } from '../../../contexts/RoomContext';
 
 const RoomDetails = () => {
   const [unavaiDate, setUnvaiDate] = useState([]);
@@ -14,9 +15,18 @@ const RoomDetails = () => {
     setUnvaiDate(newunavaiDate);
   }
 
+  const { dispatch } = useContext(RoomContext)
+
+  const removeRoom = () => {
+    dispatch({ type: "REMOVE_ROOM" })
+  };
+
   return (
     <div className='roomsDetails'>
-      <IoArrowBackCircle className='backIcon' />
+      <IoArrowBackCircle
+        className='backIcon'
+        onClick={removeRoom}
+      />
       <h2 className='roomNumber'>Room 101</h2>
       <div className='roomBlock'>
         <div className='roomInfo'>

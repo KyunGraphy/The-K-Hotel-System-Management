@@ -45,7 +45,7 @@ export const getAllHotels = async (req, res, next) => {
 
 export const getHotelRooms = async (req, res, next) => {
   try {
-    const hotel = await Hotel.findById(req.params.id);
+    const hotel = await Hotel.findById(req.params.hotelId);
     const list = await Promise.all(
       hotel.rooms.map(room => {
         return Room.findById(room);

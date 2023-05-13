@@ -7,6 +7,6 @@ router.get('/', getAllHotels)
 router.get('/:hotelId', getOneHotels)
 router.post('/', createHotel)
 router.put('/:id', updateHotel)
-router.get('/room/:id', getHotelRooms)
+router.get('/room/:hotelId', getHotelRooms)
 
 export default router;

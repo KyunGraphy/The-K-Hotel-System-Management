@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Rooms from './Rooms'
 import './styles/rooms.css'
 
 import { listRoomsMock } from "../../../mocks/ListRooms.js";
 import Statusbar from '../../../components/statusbar/Statusbar';
 import RoomDetails from './RoomDetails';
+import { RoomContext } from '../../../contexts/RoomContext';
 
 const RoomsMana = () => {
-  const [listRooms, setListRooms] = useState(listRoomsMock);
-  const [openRoomDetails, setOpenRoomDetails] = useState(true);
+  const { hotelId, roomId } = useContext(RoomContext)
+  console.log(roomId, hotelId)
+
   const roomsStatus = [
     {
       status: 'Available',
@@ -39,12 +41,12 @@ const RoomsMana = () => {
 
   return (
     <div className='roomsMana'>
-      {openRoomDetails ? (
+      {roomId ? (
         <RoomDetails />
       ) : (
         <p>
           <Statusbar roomsStatus={roomsStatus} />
-          <Rooms listRooms={listRooms} />
+          <Rooms />
         </p>
       )}
     </div>
