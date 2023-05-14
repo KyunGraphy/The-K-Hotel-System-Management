@@ -12,12 +12,17 @@ const Statusbar = ({ roomsStatus }) => {
 
   const { loading, data } = useFetch("/hotel")
 
+  const [roomSearch, setRoomSearch] = useState("")
   // const [startDate, setStartDate] = useState(new Date());
 
   const { hotelId, dispatch } = useContext(RoomContext)
-  const handleChange = (e) => {
+  const handleSetHotel = (e) => {
     dispatch({ type: "SET_HOTEL", payload: e.target.value || null })
   };
+
+  const handleSearchRoom = () => {
+    dispatch({ type: "SEARCH_ROOM", payload: roomSearch || null })
+  }
 
   return (
     <div className='statusbar'>
@@ -29,19 +34,27 @@ const Statusbar = ({ roomsStatus }) => {
           <div className='statusbarSearchRoom'>
             <label>Search room: </label>
             <input
-              type='text'
+              type='number'
+              value={roomSearch}
+              onChange={(e) => setRoomSearch(e.target.value)}
+              placeholder='Type room number'
               className='statusbarFilter'
             />
             {/* <div className='statusbarCalendar'>
             <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /></div>
             <div><ion-icon name="calendar-outline"></ion-icon></div>
           </div> */}
-            <div className='statusbarSearchIcon'><ion-icon name="search-outline"></ion-icon></div>
+            <div
+              className='statusbarSearchIcon'
+              onClick={handleSearchRoom}
+            >
+              <ion-icon name="search-outline"></ion-icon>
+            </div>
           </div>
           <div className='statusbarDepartment'>
             <label htmlFor="floor">Department: </label>
-            <select className='statusbarFilter' onChange={handleChange}>
-              <option selected disabled>---</option>
+            <select className='statusbarFilter' onChange={handleSetHotel}>
+              <option selected value='' disabled>---</option>
               {
                 data.map(item => (
                   <option

@@ -4,9 +4,10 @@ import Room from './Room'
 import useFetch from '../../../hooks/useFetch'
 import { RoomContext } from '../../../contexts/RoomContext'
 
-const Rooms = ({ listRooms }) => {
-  const { hotelId } = useContext(RoomContext)
-  const { data, loading } = useFetch(`/hotel/room/${hotelId}`)
+const Rooms = () => {
+  const { hotelId, roomSearch } = useContext(RoomContext)
+
+  const { data, loading } = useFetch(`/hotel/room/${hotelId}/${roomSearch}`)
 
   return (
     <div className='rooms'>

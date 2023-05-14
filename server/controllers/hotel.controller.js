@@ -56,3 +56,20 @@ export const getHotelRooms = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getSearchRooms = async (req, res, next) => {
+  try {
+    const hotel = await Hotel.findById(req.params.hotelId);
+    const list = await Promise.all(
+      hotel.rooms.map(room => {
+        return Room.findById(room)
+      })
+    )
+    const searchList = list.filter(room => {
+      return room.number.toString().includes(req.params.search)
+    })
+    res.status(200).json(searchList);
+  } catch (err) {
+    next(err);
+  }
+};
