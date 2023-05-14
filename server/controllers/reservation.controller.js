@@ -1,4 +1,5 @@
 import Reservation from "../models/Reservation.model.js";
+import User from "../models/User.model.js";
 
 export const createReservation = async (req, res, next) => {
   req.body.userID = req.userId
@@ -21,9 +22,20 @@ export const getOneReservation = async (req, res, next) => {
   }
 };
 
-export const getAllReservation = async (req, res, next) => {
+export const getHotelReservation = async (req, res, next) => {
   try {
-    const list = await Reservation.find();
+    const reservation = await Reservation.find({ hotelID: req.params.hotelId });
+    const user = await Promise.all(
+      reservation.map(item => {
+        return User.findById(item.userID)
+      })
+    )
+    const list = reservation.map((item, i) => {
+      return {
+        ...item._doc,
+        name: user[i].name
+      }
+    })
     res.status(200).json(list);
   } catch (err) {
     next(err);

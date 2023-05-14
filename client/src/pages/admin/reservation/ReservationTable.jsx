@@ -1,51 +1,51 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./styles/reservation.css";
+import useFetch from '../../../hooks/useFetch';
+import { RoomContext } from '../../../contexts/RoomContext';
 
 const ReservationTable = () => {
+  const { hotelId } = useContext(RoomContext)
+  const { data, loading } = useFetch(`/reservation/hotel/${hotelId}`)
+  console.log(data)
+
   return (
     <div className='reservationTable'>
       <div className='reservationHeader'>
         <input type='checkbox' />
-        <p>User ID</p>
+        <p>User Name</p>
         <p>Room type</p>
+        <p>Description</p>
         <p>Check In Date</p>
         <p>Check Out Date</p>
         <p>Action</p>
       </div>
       <section>
-        <div className='reservationData'>
-          <input type='checkbox' />
-          <p>626c391cb07624ccb8571982</p>
-          <p>Single</p>
-          <p>Mon 1st Jan</p>
-          <p>Thu 4th Jan</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='delBtn'>Delete</div>
-          </p>
-        </div>
-        <div className='reservationData'>
-          <input type='checkbox' />
-          <p>626c391cb07624ccb8571982</p>
-          <p>Single</p>
-          <p>Mon 1st Jan</p>
-          <p>Thu 4th Jan</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='delBtn'>Delete</div>
-          </p>
-        </div>
-        <div className='reservationData'>
-          <input type='checkbox' />
-          <p>626c391cb07624ccb8571982</p>
-          <p>Single</p>
-          <p>Mon 1st Jan</p>
-          <p>Thu 4th Jan</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='delBtn'>Delete</div>
-          </p>
-        </div>
+        {loading ? (
+          <>Please wait...</>
+        ) : (
+          <>
+            {(data.length === 0) ? (
+              <>No room found</>
+            ) : (
+              <>
+                {data.map(item => (
+                  <div key={item._id} className='reservationData'>
+                    <input type='checkbox' />
+                    <p>{item.name}</p>
+                    <p>{item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room</p>
+                    <p>{item.adult} Adult <br /> {item.children} Children</p>
+                    <p>{item.checkInDate}</p>
+                    <p>{item.checkOutDate}</p>
+                    <p className='actBtn'>
+                      <div className='viewBtn'>View</div>
+                      <div className='delBtn'>Delete</div>
+                    </p>
+                  </div>
+                ))}
+              </>
+            )}
+          </>
+        )}
       </section>
     </div>
   )

@@ -10,12 +10,12 @@ const Statusbar = ({ roomsStatus }) => {
   const location = useLocation();
   const page = location.pathname.split('/')[2];
 
+  const { hotelId, dispatch } = useContext(RoomContext)
   const { loading, data } = useFetch("/hotel")
 
   const [roomSearch, setRoomSearch] = useState("")
   // const [startDate, setStartDate] = useState(new Date());
 
-  const { hotelId, dispatch } = useContext(RoomContext)
   const handleSetHotel = (e) => {
     dispatch({ type: "SET_HOTEL", payload: e.target.value || null })
   };

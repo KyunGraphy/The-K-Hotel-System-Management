@@ -48,7 +48,7 @@
 
 .reservationHeader > p {
   padding-left: 24px;
-  width: 20%;
+  width: 16%;
 }
 
 .reservationData {
@@ -65,7 +65,8 @@
 .reservationData > p {
   position: relative;
   padding-left: 24px;
-  width: 20%;
+  width: 16%;
+  background: #fff;
 }
 
 .reservationData > p::after {
@@ -87,7 +88,9 @@
 .viewBtn,
 .delBtn {
   width: 40%;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.4s ease;

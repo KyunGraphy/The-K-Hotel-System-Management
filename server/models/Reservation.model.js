@@ -30,11 +30,6 @@ const ReservationSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
-    royalRoom: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
     roomID: {
       type: [String],
     },
