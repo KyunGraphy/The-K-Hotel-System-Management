@@ -6,8 +6,14 @@ export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
   const reservation = new Reservation(req.body);
   try {
-    const savedReservation = await reservation.save();
-    res.status(200).json(savedReservation);
+    const user = await User.findOne({ _id: req.userId });
+    reservation.name = user.name
+    try {
+      const savedReservation = await reservation.save();
+      res.status(200).json(savedReservation);
+    } catch (err) {
+      next(err);
+    }
   } catch (err) {
     next(err);
   }

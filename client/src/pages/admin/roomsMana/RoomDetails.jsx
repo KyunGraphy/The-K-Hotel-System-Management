@@ -10,6 +10,7 @@ import useFetch from '../../../hooks/useFetch';
 
 const RoomDetails = () => {
   const [unavaiDate, setUnvaiDate] = useState([]);
+
   const handleSelect = (item) => {
     let newunavaiDate = [...unavaiDate, item.getTime()]
     console.log(item.getTime()); // native Date object

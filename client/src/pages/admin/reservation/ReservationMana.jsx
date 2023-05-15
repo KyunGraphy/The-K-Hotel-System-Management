@@ -3,10 +3,12 @@ import './styles/reservation.css'
 import ReservationTable from './ReservationTable'
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
+import AddReservation from './AddReservation';
 
 const ReservationMana = () => {
-  const { loading, data } = useFetch("/hotel")
+  const [addNewReserve, setAddNewReserve] = useState(false);
 
+  const { loading, data } = useFetch("/hotel")
   const { hotelId, dispatch } = useContext(RoomContext)
 
   const handleSetHotel = (e) => {
@@ -15,32 +17,42 @@ const ReservationMana = () => {
 
   return (
     <div className='reservation'>
-      {/* <h2>Reservation</h2> */}
+      <h2>Reservation</h2>
       {loading ? (
         <>Please wait...</>
       ) : (
-        <div className='reservationTools'>
-          <div>
-            <label htmlFor="floor">Department: </label>
-            <select onChange={handleSetHotel}>
-              <option selected value='' disabled>---</option>
-              {
-                data.map(item => (
-                  <option
-                    key={item._id}
-                    value={item._id}
-                    selected={hotelId === item._id}
-                  >{item.department}</option>
-                ))
-              }
-            </select>
-          </div>
-          <div className='addNewBtn'>Add New</div>
-        </div>
+        <>
+          {addNewReserve ? (
+            <AddReservation setAddNewReserve={setAddNewReserve} />
+          ) : (
+            <>
+              <div className='reservationTools'>
+                <div>
+                  <label>Department: </label>
+                  <select style={{ outline: 'none' }} onChange={handleSetHotel}>
+                    <option selected value='' disabled>---</option>
+                    {
+                      data.map(item => (
+                        <option
+                          key={item._id}
+                          value={item._id}
+                          selected={hotelId === item._id}
+                        >{item.department}</option>
+                      ))
+                    }
+                  </select>
+                </div>
+                <div
+                  className='addNewBtn'
+                  onClick={() => setAddNewReserve(true)}
+                >Add New</div>
+              </div>
+              <ReservationTable />
+            </>
+          )}
+
+        </>
       )}
-      <div className='reservationList'>
-        <ReservationTable />
-      </div>
     </div>
   )
 }

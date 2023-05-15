@@ -6,7 +6,6 @@ import { RoomContext } from '../../../contexts/RoomContext';
 const ReservationTable = () => {
   const { hotelId } = useContext(RoomContext)
   const { data, loading } = useFetch(`/reservation/hotel/${hotelId}`)
-  console.log(data)
 
   return (
     <div className='reservationTable'>

@@ -115,3 +115,19 @@
   color: #fff;
   background: #800000;
 }
+
+.addReservation {
+  display: flex;
+  justify-content: space-around;
+  gap: 2em;
+}
+
+.addReservation > div {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.addNewBtn {
+  text-align: center;
+}

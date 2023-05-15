@@ -4,6 +4,9 @@ const ReservationSchema = new mongoose.Schema(
   {
     userID: {
       type: String,
+    },
+    name: {
+      type: String,
       required: true,
     },
     hotelID: {
