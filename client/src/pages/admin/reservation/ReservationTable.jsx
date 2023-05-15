@@ -32,8 +32,8 @@ const ReservationTable = () => {
                     <p>{item.name}</p>
                     <p>{item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room</p>
                     <p>{item.adult} Adult <br /> {item.children} Children</p>
-                    <p>{item.checkInDate}</p>
-                    <p>{item.checkOutDate}</p>
+                    <p>{new Date(item.checkInDate).toDateString()}</p>
+                    <p>{new Date(item.checkOutDate).toDateString()}</p>
                     <p className='actBtn'>
                       <div className='viewBtn'>View</div>
                       <div className='delBtn'>Delete</div>

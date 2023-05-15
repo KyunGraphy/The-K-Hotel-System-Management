@@ -2,17 +2,24 @@ import Reservation from "../models/Reservation.model.js";
 import User from "../models/User.model.js";
 
 export const createReservation = async (req, res, next) => {
-  req.body.userID = req.userId
   req.body.hotelID = req.params.hotelId
   const reservation = new Reservation(req.body);
   try {
-    const user = await User.findOne({ _id: req.userId });
-    reservation.name = user.name
-    try {
+    if (req.userId) {
+      // Booking online
+      req.body.userID = req.userId
+      const user = await User.findOne({ _id: req.userId });
+      reservation.name = user.name
+      try {
+        const savedReservation = await reservation.save();
+        res.status(200).json(savedReservation);
+      } catch (err) {
+        next(err);
+      }
+    } else {
+      // Booking directly
       const savedReservation = await reservation.save();
       res.status(200).json(savedReservation);
-    } catch (err) {
-      next(err);
     }
   } catch (err) {
     next(err);
@@ -30,18 +37,7 @@ export const getOneReservation = async (req, res, next) => {
 
 export const getHotelReservation = async (req, res, next) => {
   try {
-    const reservation = await Reservation.find({ hotelID: req.params.hotelId });
-    const user = await Promise.all(
-      reservation.map(item => {
-        return User.findById(item.userID)
-      })
-    )
-    const list = reservation.map((item, i) => {
-      return {
-        ...item._doc,
-        name: user[i].name
-      }
-    })
+    const list = await Reservation.find({ hotelID: req.params.hotelId });
     res.status(200).json(list);
   } catch (err) {
     next(err);
