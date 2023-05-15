@@ -30,6 +30,10 @@ const ReservationSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    isOnline: {
+      type: Boolean,
+      required: true,
+    },
     roomID: {
       type: [String],
     },

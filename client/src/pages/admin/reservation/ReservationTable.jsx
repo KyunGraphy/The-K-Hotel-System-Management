@@ -11,7 +11,6 @@ const ReservationTable = () => {
   return (
     <div className='reservationTable'>
       <div className='reservationHeader'>
-        <input type='checkbox' />
         <p>User Name</p>
         <p>Room type</p>
         <p>Description</p>

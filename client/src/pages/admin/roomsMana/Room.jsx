@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
-import { TbCrown } from "react-icons/tb";
 import { RoomContext } from '../../../contexts/RoomContext';
 
 const Room = ({ room }) => {
@@ -30,7 +29,6 @@ const Room = ({ room }) => {
       <p>
         {room.type === 'Single' && <IoPersonOutline />}
         {room.type === 'Double' && <IoPeopleOutline />}
-        {room.type === 'Royal' && <TbCrown />}
         {room.type}
       </p>
     </div>

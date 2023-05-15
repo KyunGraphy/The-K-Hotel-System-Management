@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
-import { TbCrown } from "react-icons/tb";
 
 const Room = ({ room, listRooms, setListRooms }) => {
   const [openRoomTools, setOpenRoomTools] = useState(false);
@@ -57,7 +56,6 @@ const Room = ({ room, listRooms, setListRooms }) => {
       <p>
         {room.type === 'Single' && <IoPersonOutline />}
         {room.type === 'Double' && <IoPeopleOutline />}
-        {room.type === 'Royal' && <TbCrown />}
         {room.type}
       </p>
       {(openRoomTools && room.status === 'Available') && <div className='roomTools'>
