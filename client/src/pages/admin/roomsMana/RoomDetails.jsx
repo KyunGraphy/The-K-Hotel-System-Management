@@ -50,7 +50,7 @@ const RoomDetails = () => {
             </div>
             <div className='roomInfo'>
               <p>Price:
-                <span>{data.price}</span>
+                <span>{data.type === "Single" ? 30 : 50}</span>
               </p>
               <p>Description:
                 <span>{data.description}</span>

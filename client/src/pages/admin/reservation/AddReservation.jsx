@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 import { DateRange } from "react-date-range";
 import { IoArrowBackCircle, IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
@@ -7,7 +8,6 @@ import { MdEmojiPeople } from "react-icons/md";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 const AddReservation = ({ setAddNewReserve }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
@@ -19,7 +19,6 @@ const AddReservation = ({ setAddNewReserve }) => {
       key: "selection",
     },
   ]);
-  const navigate = useNavigate()
 
   const [reservationForm, setReservationForm] = useState({
     name: undefined,
@@ -52,6 +51,7 @@ const AddReservation = ({ setAddNewReserve }) => {
   }
 
   const handleDate = (item) => {
+    console.log(item)
     setDate(item)
     setReservationForm(prev => {
       return {
@@ -82,7 +82,7 @@ const AddReservation = ({ setAddNewReserve }) => {
   }
 
   return (
-    <div className='addReservation'>
+    <div className='reservationForm'>
       <IoArrowBackCircle
         className='backIcon'
         onClick={() => setAddNewReserve(false)}

@@ -1,5 +1,6 @@
 import Reservation from "../models/Reservation.model.js";
 import User from "../models/User.model.js";
+import Hotel from "../models/Hotel.model.js";
 
 export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
@@ -29,7 +30,15 @@ export const createReservation = async (req, res, next) => {
 export const getOneReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.reservationId);
-    res.status(200).json(reservation);
+    try {
+      const hotel = await Hotel.findById(reservation.hotelID);
+      res.status(200).json({
+        ...reservation._doc,
+        department: hotel.department
+      });
+    } catch (err) {
+      next(err);
+    }
   } catch (err) {
     next(err);
   }

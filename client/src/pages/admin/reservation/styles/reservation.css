@@ -116,13 +116,13 @@
   background: #800000;
 }
 
-.addReservation {
+.reservationForm {
   display: flex;
   justify-content: space-around;
   gap: 2em;
 }
 
-.addReservation > div {
+.reservationForm > div {
   display: flex;
   flex-direction: column;
   width: 40%;

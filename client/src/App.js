@@ -15,6 +15,7 @@ import PageError from "./pages/admin/notFound/PageError.jsx";
 import StaffMana from "./pages/admin/staff/StaffMana";
 import Business from "./pages/admin/business/Business";
 import Finance from "./pages/admin/finance/Finance";
+import ViewReservation from "./pages/admin/reservation/ViewReservation";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/admin" element={<Admin />}>
           <Route path="room" element={<RoomsMana />} />
           <Route path="reservation" element={<ReservationMana />} />
+          <Route path="reservation/:reservationId" element={<ViewReservation />} />
           <Route path="staff" element={<StaffMana />} />
           <Route path="business" element={<Business />} />
           <Route path="finance" element={<Finance />} />
