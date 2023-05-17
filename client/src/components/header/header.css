@@ -92,10 +92,6 @@
   max-width: 1024px;
 }
 
-.headerIcon {
-  color: lightgray;
-}
-
 .headerSearchItem {
   display: flex;
   align-items: center;
@@ -107,8 +103,9 @@
   outline: none;
 }
 
-.headerSearchText {
-  color: lightgray;
+.headerSearchText,
+.headerIcon {
+  color: #384e71;
   cursor: pointer;
 }
 

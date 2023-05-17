@@ -7,6 +7,9 @@ import MailList from "../../components/mailList/MailList";
 import Navbar from "../../components/navbar/Navbar";
 import PropertyList from "../../components/propertyList/PropertyList";
 import ScrollTop from "../../components/scrollTop/ScrollTop";
+import useFetch from "../../hooks/useFetch";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import "./home.css";
 
 const Home = () => {
@@ -16,7 +19,6 @@ const Home = () => {
     const handleShowScrollToTop = () => {
       setShowGoToTop(window.scrollY > 200)
     }
-
     window.addEventListener('scroll', handleShowScrollToTop);
 
     return () => {
@@ -24,18 +26,28 @@ const Home = () => {
     }
   }, [])
 
+  const { data, loading } = useFetch("/hotel")
   return (
     <div>
       <Navbar />
       <Header />
       <div className="homeContainer">
-        <Featured />
-        <h1 className="homeTitle">Browse by property type</h1>
-        <PropertyList />
-        <h1 className="homeTitle">Homes guests love</h1>
-        <FeaturedProperties />
-        <MailList />
-        <Footer />
+        {loading ? (
+          <>
+            <Skeleton width={1024} height={180} />
+          </>
+        ) : (
+          <>
+            <h1 className="homeTitle">Overview about The K</h1>
+            <Featured />
+            <h1 className="homeTitle">Our service</h1>
+            <PropertyList />
+            <h1 className="homeTitle">Our departments</h1>
+            <FeaturedProperties hotels={data} />
+            {/* <MailList /> */}
+            <Footer />
+          </>
+        )}
       </div>
       {showGoToTop && (
         <ScrollTop />

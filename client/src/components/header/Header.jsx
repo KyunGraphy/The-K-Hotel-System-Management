@@ -16,8 +16,6 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ type }) => {
-  const [destination, setDestination] = useState("");
-  const [openDestination, setOpenDestination] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -47,7 +45,7 @@ const Header = ({ type }) => {
   };
 
   const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } });
+    navigate("/hotels", { state: { date, options } });
   };
 
   return (
@@ -57,7 +55,7 @@ const Header = ({ type }) => {
           type === "list" ? "headerContainer listMode" : "headerContainer"
         }
       >
-        {/* <div className="headerList">
+        <div className="headerList">
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
             <span>Stays</span>
@@ -78,7 +76,7 @@ const Header = ({ type }) => {
             <FontAwesomeIcon icon={faTaxi} />
             <span>Airport taxis</span>
           </div>
-        </div> */}
+        </div>
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
@@ -90,61 +88,6 @@ const Header = ({ type }) => {
             </p>
             <button className="headerBtn">Get Started !</button>
             <div className="headerSearch">
-              <div className="headerSearchItem">
-                <FontAwesomeIcon icon={faBed} className="headerIcon" />
-                <span
-                  onClick={() => setOpenDestination(!openDestination)}
-                  className="headerSearchText headerSearchDestination"
-                >
-                  {destination ? destination : "Destination"}
-                </span>
-                {openDestination && (
-                  <div className="destinations">
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Dong Khoi")}
-                    >
-                      The K Dong Khoi
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Van Thanh")}
-                    >
-                      The K Van Thanh
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Thu Duc")}
-                    >
-                      The K Thu Duc
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Phu My Hung")}
-                    >
-                      The K Phu My Hung
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Cong Hoa")}
-                    >
-                      The K Cong Hoa
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Quang Trung")}
-                    >
-                      The K Quang Trung
-                    </div>
-                    <div
-                      className="optionItem"
-                      onClick={() => setDestination("The K Van Hanh")}
-                    >
-                      The K Van Hanh
-                    </div>
-                  </div>
-                )}
-              </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
                 <span
