@@ -30,6 +30,20 @@ const Featured = () => {
           <img
             alt=''
             width="100%"
+            src="https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=600"
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            alt=''
+            width="100%"
+            src="https://images.pexels.com/photos/3288104/pexels-photo-3288104.png?auto=compress&cs=tinysrgb&w=600"
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            alt=''
+            width="100%"
             src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=600"
           />
         </Carousel.Item>
@@ -72,7 +86,7 @@ const Featured = () => {
           <img
             alt=''
             width="100%"
-            src="https://images.pexels.com/photos/5379219/pexels-photo-5379219.jpeg?auto=compress&cs=tinysrgb&w=600"
+            src="https://images.pexels.com/photos/261043/pexels-photo-261043.jpeg?auto=compress&cs=tinysrgb&w=600"
           />
         </Carousel.Item>
       </Carousel>

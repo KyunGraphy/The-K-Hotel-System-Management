@@ -40,7 +40,8 @@ export const login = async (req, res, next) => {
         isAdmin: user.isAdmin,
         role: user.role || null,
       },
-      process.env.JWT_KEY
+      process.env.JWT_KEY,
+      { expiresIn: "1d" }
     );
 
     const { password, isAdmin, ...otherDetails } = user._doc;

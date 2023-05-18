@@ -51,12 +51,12 @@ const PropertyList = () => {
         onClick={() => navigate("/hotels", { state: { date, options } })}
       >
         <img
-          src="https://cf.bstatic.com/static/img/theme-index/carousel_320x240/bg_resorts/6f87c6143fbd51a0bb5d15ca3b9cf84211ab0884.jpg"
+          src="https://images.pexels.com/photos/2036544/pexels-photo-2036544.jpeg?auto=compress&cs=tinysrgb&w=600"
           alt=""
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Double Room</h1>
+          <h1>Rent cars</h1>
         </div>
       </div>
       <div
@@ -83,6 +83,19 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Swimming Pool</h1>
+        </div>
+      </div>
+      <div
+        className="pListItem"
+        onClick={() => navigate("/hotels", { state: { date, options } })}
+      >
+        <img
+          src="https://images.pexels.com/photos/261043/pexels-photo-261043.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt=""
+          className="pListImg"
+        />
+        <div className="pListTitles">
+          <h1>Billiards</h1>
         </div>
       </div>
     </div>

@@ -66,6 +66,7 @@
 
 .lsOptionInput {
   width: 50px;
+  outline: none;
 }
 
 .listSearch > button {

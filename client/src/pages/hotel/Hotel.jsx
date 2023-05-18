@@ -9,11 +9,45 @@ import {
   faCircleXmark,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { format } from "date-fns";
+import { DateRange } from "react-date-range";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 const Hotel = () => {
+  const params = useParams()
+  const location = useLocation();
+  const [date, setDate] = useState(location.state.date);
+  const [openDate, setOpenDate] = useState(false);
+  const [options, setOptions] = useState(location.state.options);
+
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function handlePress(e) {
+      if (e.keyCode === 27) setOpen(false)
+    }
+    window.addEventListener('keydown', handlePress);
+
+    return () => {
+      window.removeEventListener('keydown', handlePress);
+    }
+  })
+
+  const { loading, data } = useFetch(`/hotel/${params.id}`)
+
+  const handleOption = (name, value) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: Number(value),
+      };
+    });
+  }
 
   const photos = [
     {
@@ -81,59 +115,123 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
-          <h1 className="hotelTitle">Tower Street Apartments</h1>
-          <div className="hotelAddress">
-            <FontAwesomeIcon icon={faLocationDot} />
-            <span>Elton St 125 New york</span>
-          </div>
-          <span className="hotelDistance">
-            Excellent location – 500m from center
-          </span>
-          <span className="hotelPriceHighlight">
-            Book a stay over $114 at this property and get a free airport taxi
-          </span>
-          <div className="hotelImages">
-            {photos.map((photo, i) => (
-              <div className="hotelImgWrapper" key={i}>
-                <img
-                  onClick={() => handleOpen(i)}
-                  src={photo.src}
-                  alt=""
-                  className="hotelImg"
-                />
+          {loading ? (
+            <>
+              <div className="listSkeleton">
+                <p><Skeleton width={120} height={120} circle="true" /></p>
+                <p><Skeleton count={5} /></p>
               </div>
-            ))}
-          </div>
-          <div className="hotelDetails">
-            <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Stay in the heart of City</h1>
-              <p className="hotelDesc">
-                Located a 5-minute walk from St. Florian's Gate in Krakow, Tower
-                Street Apartments has accommodations with air conditioning and
-                free WiFi. The units come with hardwood floors and feature a
-                fully equipped kitchenette with a microwave, a flat-screen TV,
-                and a private bathroom with shower and a hairdryer. A fridge is
-                also offered, as well as an electric tea pot and a coffee
-                machine. Popular points of interest near the apartment include
-                Cloth Hall, Main Market Square and Town Hall Tower. The nearest
-                airport is John Paul II International Kraków–Balice, 16.1 km
-                from Tower Street Apartments, and the property offers a paid
-                airport shuttle service.
-              </p>
-            </div>
-            <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
-              <span>
-                Located in the real heart of Krakow, this property has an
-                excellent location score of 9.8!
+            </>
+          ) : (
+            <>
+              <button className="bookNow">Reserve or Book Now!</button>
+              <h1 className="hotelTitle">{data.department}</h1>
+              <div className="hotelAddress">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <span>{data.address}</span>
+              </div>
+              <span className="hotelDistance">
+                Excellent location
               </span>
-              <h2>
-                <b>$945</b> (9 nights)
-              </h2>
-              <button>Reserve or Book Now!</button>
-            </div>
-          </div>
+              <span className="hotelPriceHighlight">
+                {data.title}
+              </span>
+              <div className="hotelImages">
+                {photos.map((photo, i) => (
+                  <div className="hotelImgWrapper" key={i}>
+                    <img
+                      onClick={() => handleOpen(i)}
+                      src={photo.src}
+                      alt=""
+                      className="hotelImg"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="hotelDetails">
+                <div className="hotelDetailsTexts">
+                  <h1 className="hotelTitle">Stay in the {data.title}</h1>
+                  <p className="hotelDesc">
+                    {data.description}
+                  </p>
+                </div>
+                <div className="hotelDetailsPrice">
+                  <div className="listSearch">
+                    <h1 className="lsTitle">Search</h1>
+                    <div className="lsItem">
+                      <label>Check-in Date</label>
+                      <span onClick={() => setOpenDate(!openDate)}>{`${format(
+                        date[0].startDate,
+                        "MM/dd/yyyy"
+                      )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
+                      {openDate && (
+                        <DateRange
+                          editableDateInputs={true}
+                          onChange={(item) => setDate([item.selection])}
+                          moveRangeOnFirstSelection={false}
+                          ranges={date}
+                          minDate={new Date()}
+                        />
+                      )}
+                    </div>
+                    <div className="lsItem">
+                      <label>Options</label>
+                      <div className="lsOptions">
+                        <div className="lsOptionItem">
+                          <span className="lsOptionText">Adult</span>
+                          <input
+                            type="number"
+                            min={1}
+                            className="lsOptionInput"
+                            id="adult"
+                            value={options.adult}
+                            onChange={(e) => handleOption(e.target.id, e.target.value)}
+                          />
+                        </div>
+                        <div className="lsOptionItem">
+                          <span className="lsOptionText">Children</span>
+                          <input
+                            type="number"
+                            min={0}
+                            className="lsOptionInput"
+                            id="children"
+                            value={options.children}
+                            onChange={(e) => handleOption(e.target.id, e.target.value)}
+                          />
+                        </div>
+                        <div className="lsOptionItem">
+                          <span className="lsOptionText">Single Room</span>
+                          <input
+                            type="number"
+                            min={0}
+                            className="lsOptionInput"
+                            id="singleRoom"
+                            value={options.singleRoom}
+                            onChange={(e) => handleOption(e.target.id, e.target.value)}
+                          />
+                        </div>
+                        <div className="lsOptionItem">
+                          <span className="lsOptionText">Double Room</span>
+                          <input
+                            type="number"
+                            min={0}
+                            className="lsOptionInput"
+                            id="doubleRoom"
+                            placeholder={options.doubleRoom}
+                            onChange={(e) => handleOption(e.target.id, e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <h2>
+                      <b>$945</b> (9 nights)
+                    </h2>
+                    <button>Reserve or Book Now!</button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <Footer />
       </div>

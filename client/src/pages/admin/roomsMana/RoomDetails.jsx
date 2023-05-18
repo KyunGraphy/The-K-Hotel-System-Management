@@ -52,8 +52,8 @@ const RoomDetails = () => {
               <p>Price:
                 <span>{data.type === "Single" ? 30 : 50}</span>
               </p>
-              <p>Description:
-                <span>{data.description}</span>
+              <p>Title:
+                <span>{data.title}</span>
               </p>
               <p>Status:
                 <span>{data.status}</span>

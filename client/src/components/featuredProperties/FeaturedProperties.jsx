@@ -1,3 +1,5 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./featuredProperties.css";
@@ -32,8 +34,11 @@ const FeaturedProperties = ({ hotels }) => {
             className="fpImg"
           />
           <span className="fpName">{hotel.department}</span>
-          <span className="fpCity">{hotel.address}</span>
-          <span className="fpPrice">{hotel.description}</span>
+          <span className="fpCity">
+            <FontAwesomeIcon icon={faLocationDot} />
+            {hotel.address}
+          </span>
+          <span className="fpPrice">{hotel.title}</span>
           <div className="fpRating">
             <button>4.9</button>
             <span>Excellent</span>

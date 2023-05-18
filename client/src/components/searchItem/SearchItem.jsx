@@ -1,6 +1,11 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 import "./searchItem.css";
 
 const SearchItem = ({ item, date, options }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="searchItem">
       <img
@@ -10,9 +15,12 @@ const SearchItem = ({ item, date, options }) => {
       />
       <div className="siDesc">
         <h1 className="siTitle">{item.department}</h1>
-        <span className="siDistance">{item.address}</span>
+        <span className="siDistance">
+          <FontAwesomeIcon icon={faLocationDot} />
+          {item.address}
+        </span>
         <span className="siTaxiOp">Free airport taxi</span>
-        <span className="siSubtitle">{item.description}</span>
+        <span className="siSubtitle">{item.title}</span>
         <span className="siFeatures">
           Entire studio • 1 bathroom • 21m² 1 full bed
         </span>
@@ -29,7 +37,10 @@ const SearchItem = ({ item, date, options }) => {
         <div className="siDetailTexts">
           <span className="siPrice">$30-$50/Day</span>
           <span className="siTaxOp">Includes taxes and fees</span>
-          <button className="siCheckButton">See Detail</button>
+          <button
+            className="siCheckButton"
+            onClick={() => navigate(`/hotels/${item._id}`, { state: { date, options } })}
+          >See Details</button>
         </div>
       </div>
     </div>

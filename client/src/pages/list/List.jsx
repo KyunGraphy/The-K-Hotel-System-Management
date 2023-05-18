@@ -12,11 +12,31 @@ import useFetch from "../../hooks/useFetch";
 
 const List = () => {
   const location = useLocation();
-  const [date, setDate] = useState(location.state.date);
+  const [date, setDate] = useState(location.state?.date || [
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [options, setOptions] = useState(location.state?.options || {
+    adult: 1,
+    children: 0,
+    singleRoom: 0,
+    doubleRoom: 0,
+  });
 
   const { loading, data } = useFetch("/hotel")
+
+  const handleOption = (name, value) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: Number(value),
+      };
+    });
+  }
 
   return (
     <div>
@@ -34,9 +54,11 @@ const List = () => {
               )} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
               {openDate && (
                 <DateRange
+                  editableDateInputs={true}
                   onChange={(item) => setDate([item.selection])}
-                  minDate={new Date()}
+                  moveRangeOnFirstSelection={false}
                   ranges={date}
+                  minDate={new Date()}
                 />
               )}
             </div>
@@ -49,7 +71,9 @@ const List = () => {
                     type="number"
                     min={1}
                     className="lsOptionInput"
-                    placeholder={options.adult}
+                    id="adult"
+                    value={options.adult}
+                    onChange={(e) => handleOption(e.target.id, e.target.value)}
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -58,30 +82,35 @@ const List = () => {
                     type="number"
                     min={0}
                     className="lsOptionInput"
-                    placeholder={options.children}
+                    id="children"
+                    value={options.children}
+                    onChange={(e) => handleOption(e.target.id, e.target.value)}
                   />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Single Room</span>
                   <input
                     type="number"
-                    min={1}
+                    min={0}
                     className="lsOptionInput"
-                    placeholder={options.singleRoom}
+                    id="singleRoom"
+                    value={options.singleRoom}
+                    onChange={(e) => handleOption(e.target.id, e.target.value)}
                   />
                 </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">Double Room</span>
                   <input
                     type="number"
-                    min={1}
+                    min={0}
                     className="lsOptionInput"
+                    id="doubleRoom"
                     placeholder={options.doubleRoom}
+                    onChange={(e) => handleOption(e.target.id, e.target.value)}
                   />
                 </div>
               </div>
             </div>
-            <button>Search</button>
           </div>
           <div className="listResult">
             {loading ? (
