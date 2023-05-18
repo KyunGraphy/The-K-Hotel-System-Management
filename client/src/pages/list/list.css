@@ -81,3 +81,13 @@
 .listResult {
   flex: 3;
 }
+
+.listSkeleton {
+  display: flex;
+  gap: 2em;
+  margin: 2em;
+}
+
+.listSkeleton > p:nth-child(2) {
+  flex: 1;
+}

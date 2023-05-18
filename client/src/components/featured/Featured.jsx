@@ -23,6 +23,13 @@ const Featured = () => {
           <img
             alt=''
             width="100%"
+            src="https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=600"
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            alt=''
+            width="100%"
             src="https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=600"
           />
         </Carousel.Item>

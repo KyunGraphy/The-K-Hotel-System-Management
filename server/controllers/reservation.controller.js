@@ -8,7 +8,7 @@ export const createReservation = async (req, res, next) => {
   try {
     if (req.userId) {
       // Booking online
-      req.body.userID = req.userId
+      reservation.userID = req.userId
       const user = await User.findOne({ _id: req.userId });
       reservation.name = user.name
       try {

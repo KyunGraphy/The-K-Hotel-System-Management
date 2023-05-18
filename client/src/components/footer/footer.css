@@ -1,8 +1,9 @@
 .footer {
   background-color: #003580;
-  width: 100%;
+  width: 100vw;
   padding: 2.5em;
   font-size: 12px;
+  box-sizing: border-box;
 }
 
 .fLists {

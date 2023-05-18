@@ -1,9 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./featuredProperties.css";
-import { useState } from "react";
 
 const FeaturedProperties = ({ hotels }) => {
-  const [destination, setDestination] = useState("");
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -18,13 +17,14 @@ const FeaturedProperties = ({ hotels }) => {
     doubleRoom: 0,
   });
   const navigate = useNavigate();
+
   return (
     <div className="fp">
       {hotels.map((hotel) => (
         <div
           key={hotel._id}
           className="fpItem"
-          onClick={() => navigate("/hotels", { state: { date, options } })}
+          onClick={() => navigate(`/hotels/${hotel._id}`, { state: { date, options } })}
         >
           <img
             src={hotel.photo}
