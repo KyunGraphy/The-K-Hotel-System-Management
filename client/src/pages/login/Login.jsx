@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from '../../contexts/AuthContext';
 import axios from "axios";
 import './login.css';
+import Alert from '../../components/alert/Alert';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
     username: undefined,
     password: undefined,
   })
-
-  const { loading, error, dispatch } = useContext(AuthContext)
+  const location = useLocation()
   const navigate = useNavigate()
+  const { loading, error, dispatch } = useContext(AuthContext)
 
   useEffect(() => {
     function handlePress(e) {
@@ -51,6 +52,8 @@ const Login = () => {
 
   return (
     <div className='loginContainer'>
+      {error && <Alert msg={error} type="danger" />}
+      {location.state?.errMsg && <Alert msg={location.state.errMsg} type="danger" />}
       <div className='loginWrapper'>
         <Link to='/'>
           <span className="iconClose">
@@ -88,7 +91,6 @@ const Login = () => {
               <label><input type="checkbox" /> Remember me</label>
               <Link to='#'>Forgot Password?</Link>
             </div>
-            {error && <span className='loginErr'>{error.message}</span>}
             <button
               type="submit"
               className="btn"

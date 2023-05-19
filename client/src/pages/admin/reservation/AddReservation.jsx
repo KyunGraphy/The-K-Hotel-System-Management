@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-
 import { DateRange } from "react-date-range";
 import { IoArrowBackCircle, IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { FaBaby } from "react-icons/fa";
@@ -8,10 +6,12 @@ import { MdEmojiPeople } from "react-icons/md";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import axios from 'axios';
+import Alert from '../../../components/alert/Alert';
 
 const AddReservation = ({ setAddNewReserve }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
-  const [errMsg, setErrMsg] = useState(null);
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -32,13 +32,13 @@ const AddReservation = ({ setAddNewReserve }) => {
   });
 
   useEffect(() => {
-    function handleCloseCountryOptions(e) {
+    function handleCloseDepartmentsOptions(e) {
       (e.target.className !== 'hotelInput') ? setOpenHotelOptions(false) : setOpenHotelOptions(true);
     }
 
-    window.addEventListener('click', handleCloseCountryOptions);
+    window.addEventListener('click', handleCloseDepartmentsOptions);
     return () => {
-      window.removeEventListener('click', handleCloseCountryOptions);
+      window.removeEventListener('click', handleCloseDepartmentsOptions);
     };
   });
 
@@ -61,6 +61,7 @@ const AddReservation = ({ setAddNewReserve }) => {
       }
     })
   }
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
 
   const handleChange = (e) => {
     setReservationForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
@@ -68,17 +69,18 @@ const AddReservation = ({ setAddNewReserve }) => {
 
   const handleAddReservation = async () => {
     if (reservationForm.checkInDate === reservationForm.checkOutDate) {
-      return setErrMsg("Check in and out date must be different")
+      setErrMsg("Check in and out date must be different")
     } else if (reservationForm.singleRoom === 0 && reservationForm.doubleRoom === 0) {
-      return setErrMsg("Single room or Double room must be better than 0")
+      setErrMsg("Single room or Double room must be better than 0")
     } else {
-      setErrMsg(null)
       try {
         await axios.post(`/reservation/${hotelId}`, reservationForm)
-        alert("Booking successful")
-        setAddNewReserve(false)
+        setSuccessMsg('Booking successfully!!');
+        setTimeout(() => {
+          setAddNewReserve(false)
+        }, 3000)
       } catch (err) {
-        setErrMsg(err.message)
+        setErrMsg('Something went wrong!');
       }
     }
   }
@@ -89,6 +91,8 @@ const AddReservation = ({ setAddNewReserve }) => {
         className='backIcon'
         onClick={() => setAddNewReserve(false)}
       />
+      <Alert msg={errMsg} type="danger" />
+      <Alert msg={successMsg} type="success" />
       {loading ? (
         <>Please wait...</>
       ) : (
@@ -125,7 +129,6 @@ const AddReservation = ({ setAddNewReserve }) => {
                 minDate={new Date()}
               />
             </div>
-            {errMsg && <span style={{ color: 'red' }}>{errMsg}</span>}
             <div
               className='addNewBtn'
               onClick={handleAddReservation}
@@ -200,6 +203,9 @@ const AddReservation = ({ setAddNewReserve }) => {
               />
               <label>Double Room</label>
             </div>
+            <h2>
+              <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({dateRange} days)
+            </h2>
           </div>
         </>
       )}

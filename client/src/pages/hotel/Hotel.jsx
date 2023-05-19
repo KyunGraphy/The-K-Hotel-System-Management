@@ -2,6 +2,7 @@ import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import Alert from "../../components/alert/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -26,6 +27,7 @@ const Hotel = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
 
   const [slideNumber, setSlideNumber] = useState(0);
@@ -95,13 +97,14 @@ const Hotel = () => {
   };
 
   const handleReserve = async () => {
-    if (!user)
-      navigate("/login")
+    if (!user) {
+      return navigate("/login", { state: { errMsg: "You have to login to make reservation" } })
+    }
 
-    if (date[0].startDate.getTime() === date[0].endDate.getTime()) {
-      return setErrMsg("Check in and out date must be different")
-    } else if (options.singleRoom === 0 && options.doubleRoom === 0) {
-      return setErrMsg("Single room or Double room must be better than 0")
+    if (user && date[0].startDate.getTime() === date[0].endDate.getTime()) {
+      setErrMsg("Check in and out date must be different")
+    } else if (user && options.singleRoom === 0 && options.doubleRoom === 0) {
+      setErrMsg("Single room or Double room must be better than 0")
     } else {
       setErrMsg(null)
       const reservationForm = {
@@ -113,9 +116,9 @@ const Hotel = () => {
       }
       try {
         await axios.post(`/reservation/${params.id}`, reservationForm)
-        alert("Booking successful")
+        setSuccessMsg('Booking successfully!!');
       } catch (err) {
-        setErrMsg(err.message)
+        setErrMsg('Something went wrong!');
       }
     }
   };
@@ -123,6 +126,8 @@ const Hotel = () => {
   return (
     <div>
       <Navbar />
+      <Alert msg={errMsg} type="danger" />
+      <Alert msg={successMsg} type="success" />
       <Header type="list" />
       <div className="hotelContainer">
         {open && (
@@ -259,7 +264,6 @@ const Hotel = () => {
                     <h2>
                       <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({dateRange} days)
                     </h2>
-                    {errMsg && <span style={{ color: 'red' }}>{errMsg}</span>}
                     <button
                       onClick={handleReserve}
                     >Reserve or Book Now!</button>

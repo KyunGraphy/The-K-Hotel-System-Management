@@ -11,8 +11,6 @@ const ViewReservation = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const reservationId = location.pathname.split('/')[3]
-  const { data, loading } = useFetch(`/reservation/${reservationId}`)
-
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -20,6 +18,8 @@ const ViewReservation = () => {
       key: "selection",
     },
   ]);
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
+  const { data, loading } = useFetch(`/reservation/${reservationId}`)
 
   useEffect(() => {
     if (data._id) {
@@ -49,7 +49,7 @@ const ViewReservation = () => {
               <div className="inputBox">
                 <input
                   type="text"
-                  defaultValue={data._id}
+                  value={data._id}
                 />
                 <label>Reservation ID</label>
               </div>
@@ -59,7 +59,7 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="text"
-                  defaultValue={data.department}
+                  value={data.department}
                 />
                 <label>Department</label>
               </div>
@@ -78,7 +78,7 @@ const ViewReservation = () => {
               <div className="inputBox">
                 <input
                   type="text"
-                  defaultValue={data.isOnline ? "Online" : "Directly"}
+                  value={data.isOnline ? "Online" : "Directly"}
                 />
                 <label>Type of Booking</label>
               </div>
@@ -88,7 +88,7 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="text"
-                  defaultValue={data.name}
+                  value={data.name}
                 />
                 <label>Name</label>
               </div>
@@ -98,7 +98,7 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="number"
-                  defaultValue={data.adult}
+                  value={data.adult}
                 />
                 <label>Adult</label>
               </div>
@@ -108,7 +108,7 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="number"
-                  defaultValue={data.children}
+                  value={data.children}
                 />
                 <label>Children</label>
               </div>
@@ -118,7 +118,7 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="number"
-                  defaultValue={data.singleRoom}
+                  value={data.singleRoom}
                 />
                 <label>Single Room</label>
               </div>
@@ -128,10 +128,13 @@ const ViewReservation = () => {
                 </span>
                 <input
                   type="number"
-                  defaultValue={data.doubleRoom}
+                  value={data.doubleRoom}
                 />
                 <label>Double Room</label>
               </div>
+              <h2>
+                <b>${dateRange * (data.singleRoom * 30 + data.doubleRoom * 50)}</b> ({dateRange} days)
+              </h2>
             </div>
           </>
         )}
