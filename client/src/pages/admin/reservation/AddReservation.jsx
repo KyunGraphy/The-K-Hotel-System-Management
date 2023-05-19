@@ -22,10 +22,10 @@ const AddReservation = ({ setAddNewReserve }) => {
 
   const [reservationForm, setReservationForm] = useState({
     name: undefined,
-    adult: undefined,
-    children: undefined,
-    singleRoom: undefined,
-    doubleRoom: undefined,
+    adult: 1,
+    children: 0,
+    singleRoom: 0,
+    doubleRoom: 0,
     checkInDate: date[0].startDate.getTime() || undefined,
     checkOutDate: date[0].endDate.getTime() || undefined,
     isOnline: false,
@@ -69,6 +69,8 @@ const AddReservation = ({ setAddNewReserve }) => {
   const handleAddReservation = async () => {
     if (reservationForm.checkInDate === reservationForm.checkOutDate) {
       return setErrMsg("Check in and out date must be different")
+    } else if (reservationForm.singleRoom === 0 && reservationForm.doubleRoom === 0) {
+      return setErrMsg("Single room or Double room must be better than 0")
     } else {
       setErrMsg(null)
       try {
@@ -149,6 +151,7 @@ const AddReservation = ({ setAddNewReserve }) => {
               <input
                 type="number"
                 id="adult"
+                value={reservationForm.adult}
                 min="1"
                 onChange={e => handleChange(e)}
                 required
@@ -162,6 +165,7 @@ const AddReservation = ({ setAddNewReserve }) => {
               <input
                 type="number"
                 id="children"
+                value={reservationForm.children}
                 min="0"
                 onChange={e => handleChange(e)}
                 required
@@ -175,6 +179,7 @@ const AddReservation = ({ setAddNewReserve }) => {
               <input
                 type="number"
                 id="singleRoom"
+                value={reservationForm.singleRoom}
                 min="0"
                 onChange={e => handleChange(e)}
                 required
@@ -188,6 +193,7 @@ const AddReservation = ({ setAddNewReserve }) => {
               <input
                 type="number"
                 id="doubleRoom"
+                value={reservationForm.doubleRoom}
                 min="0"
                 onChange={e => handleChange(e)}
                 required

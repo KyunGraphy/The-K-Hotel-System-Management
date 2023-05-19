@@ -22,12 +22,12 @@ const ViewReservation = () => {
   ]);
 
   useEffect(() => {
-    if (data) {
+    if (data._id) {
       setDate([
         {
           ...date,
-          startDate: new Date(data.checkInDate),
-          endDate: new Date(data.checkOutDate),
+          startDate: new Date(data?.checkInDate) || new Date(),
+          endDate: new Date(data?.checkOutDate) || new Date(),
         }
       ])
     }

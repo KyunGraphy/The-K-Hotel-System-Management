@@ -13,9 +13,11 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
+import axios from "axios";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const Hotel = () => {
   const params = useParams()
@@ -23,9 +25,12 @@ const Hotel = () => {
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
+  const [errMsg, setErrMsg] = useState("");
+
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
 
   useEffect(() => {
     function handlePress(e) {
@@ -39,6 +44,8 @@ const Hotel = () => {
   })
 
   const { loading, data } = useFetch(`/hotel/${params.id}`)
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleOption = (name, value) => {
     setOptions((prev) => {
@@ -85,6 +92,32 @@ const Hotel = () => {
     }
 
     setSlideNumber(newSlideNumber)
+  };
+
+  const handleReserve = async () => {
+    if (!user)
+      navigate("/login")
+
+    if (date[0].startDate.getTime() === date[0].endDate.getTime()) {
+      return setErrMsg("Check in and out date must be different")
+    } else if (options.singleRoom === 0 && options.doubleRoom === 0) {
+      return setErrMsg("Single room or Double room must be better than 0")
+    } else {
+      setErrMsg(null)
+      const reservationForm = {
+        ...options,
+        userId: user._id,
+        checkInDate: date[0].startDate.getTime(),
+        checkOutDate: date[0].endDate.getTime(),
+        isOnline: true,
+      }
+      try {
+        await axios.post(`/reservation/${params.id}`, reservationForm)
+        alert("Booking successful")
+      } catch (err) {
+        setErrMsg(err.message)
+      }
+    }
   };
 
   return (
@@ -224,9 +257,12 @@ const Hotel = () => {
                       </div>
                     </div>
                     <h2>
-                      <b>$945</b> (9 nights)
+                      <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({dateRange} days)
                     </h2>
-                    <button>Reserve or Book Now!</button>
+                    {errMsg && <span style={{ color: 'red' }}>{errMsg}</span>}
+                    <button
+                      onClick={handleReserve}
+                    >Reserve or Book Now!</button>
                   </div>
                 </div>
               </div>

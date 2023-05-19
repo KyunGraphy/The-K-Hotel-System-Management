@@ -4,7 +4,7 @@ import { verifyToken } from '../utils/jwt.js';
 
 const router = express.Router();
 
-router.post('/:hotelId', createReservation)
+router.post('/:hotelId', verifyToken, createReservation)
 router.get('/:reservationId', getOneReservation)
 router.get('/hotel/:hotelId', getHotelReservation)
 router.put('/:reservationId', updateReservation)

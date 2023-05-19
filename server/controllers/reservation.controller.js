@@ -6,10 +6,10 @@ export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
   const reservation = new Reservation(req.body);
   try {
-    if (req.userId) {
+    if (req.body.userId) {
       // Booking online
-      reservation.userID = req.userId
-      const user = await User.findOne({ _id: req.userId });
+      reservation.userID = req.body.userId
+      const user = await User.findOne({ _id: req.body.userId });
       reservation.name = user.name
       try {
         const savedReservation = await reservation.save();

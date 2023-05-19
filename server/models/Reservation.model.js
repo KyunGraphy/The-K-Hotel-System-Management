@@ -7,7 +7,6 @@ const ReservationSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
     },
     hotelID: {
       type: String,
