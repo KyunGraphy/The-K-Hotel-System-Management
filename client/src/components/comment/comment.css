@@ -20,6 +20,8 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
+  width: 100%;
+  padding: 0 2em 0 0;
 }
 
 .hotelCommentTitle {
@@ -33,8 +35,8 @@
 }
 
 .hotelCommentAvatar {
-  width: 3em;
-  height: 3em;
+  width: 2.5em;
+  height: 2.5em;
   object-fit: cover;
   border-radius: 50%;
 }
