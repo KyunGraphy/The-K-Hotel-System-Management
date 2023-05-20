@@ -87,7 +87,10 @@ const Header = ({ type }) => {
               Get rewarded for your travels – unlock instant savings of 10% or
               more with a free account
             </p>
-            <button className="headerBtn">Get Started !</button>
+            <button
+              className="headerBtn"
+              onClick={handleSearch}
+            >Get Started !</button>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />

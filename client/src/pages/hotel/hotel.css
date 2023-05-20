@@ -28,6 +28,8 @@
 }
 
 .hotelTitle {
+  display: flex;
+  justify-content: space-between;
   font-size: 24px;
 }
 
@@ -71,7 +73,7 @@
   margin-top: 20px;
 }
 
-.hotelDetailsTexts {
+.hotelDetailsContent {
   flex: 3;
 }
 
@@ -83,11 +85,8 @@
 
 .hotelDetailsPrice {
   flex: 1;
-  background-color: #ebf3ff;
+  /* background-color: #ebf3ff; */
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
 }
 
 .hotelDetailsPrice > h1 {

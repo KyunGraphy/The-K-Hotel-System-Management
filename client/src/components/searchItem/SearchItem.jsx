@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import "./searchItem.css";
+import Rating from "./Rating";
 
 const SearchItem = ({ item, date, options }) => {
   const navigate = useNavigate();
@@ -30,10 +31,7 @@ const SearchItem = ({ item, date, options }) => {
         </span>
       </div>
       <div className="siDetails">
-        <div className="siRating">
-          <span>Excellent</span>
-          <button>8.9</button>
-        </div>
+        <Rating hotelId={item._id} />
         <div className="siDetailTexts">
           <span className="siPrice">$30-$50/Day</span>
           <span className="siTaxOp">Includes taxes and fees</span>

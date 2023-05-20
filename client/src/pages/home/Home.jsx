@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Featured from "../../components/featured/Featured";
 import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
 import Footer from "../../components/footer/Footer";
@@ -11,9 +11,15 @@ import useFetch from "../../hooks/useFetch";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import "./home.css";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [showGoToTop, setShowGoToTop] = useState();
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const { data, loading } = useFetch("/hotel")
 
   useEffect(() => {
     const handleShowScrollToTop = () => {
@@ -26,7 +32,10 @@ const Home = () => {
     }
   }, [])
 
-  const { data, loading } = useFetch("/hotel")
+  useEffect(() => {
+    if (user?.isAdmin === true) navigate("/admin/room")
+  }, [])
+
   return (
     <div>
       <Navbar />

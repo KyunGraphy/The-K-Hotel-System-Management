@@ -19,19 +19,33 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
+import Rating from "../../components/searchItem/Rating";
+import Comment from "../../components/comment/Comment";
 
 const Hotel = () => {
   const params = useParams()
   const location = useLocation();
-  const [date, setDate] = useState(location.state.date);
+  const [date, setDate] = useState(location.state?.date || [
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [options, setOptions] = useState(location.state?.options || {
+    adult: 1,
+    children: 0,
+    singleRoom: 0,
+    doubleRoom: 0,
+  });
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+
   const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
 
   useEffect(() => {
@@ -162,8 +176,11 @@ const Hotel = () => {
             </>
           ) : (
             <>
-              <button className="bookNow">Reserve or Book Now!</button>
-              <h1 className="hotelTitle">{data.department}</h1>
+              {/* <button className="bookNow">Reserve or Book Now!</button> */}
+              <h1 className="hotelTitle">
+                {data.department}
+                <Rating hotelId={params.id} />
+              </h1>
               <div className="hotelAddress">
                 <FontAwesomeIcon icon={faLocationDot} />
                 <span>{data.address}</span>
@@ -187,11 +204,12 @@ const Hotel = () => {
                 ))}
               </div>
               <div className="hotelDetails">
-                <div className="hotelDetailsTexts">
+                <div className="hotelDetailsContent">
                   <h1 className="hotelTitle">Stay in the {data.title}</h1>
                   <p className="hotelDesc">
                     {data.description}
                   </p>
+                  <Comment hotelId={params.id} />
                 </div>
                 <div className="hotelDetailsPrice">
                   <div className="listSearch">

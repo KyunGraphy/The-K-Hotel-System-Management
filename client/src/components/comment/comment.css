@@ -1,0 +1,40 @@
+.hotelComment {
+  margin: 2em 0;
+}
+
+.hotelComment > h3 {
+  padding: 1em;
+}
+
+.hotelCommentBox {
+  display: flex;
+  gap: 1em;
+  margin-top: 1em;
+  padding: 1em;
+  border: 2px solid rgb(56, 78, 113, 0.2);
+  border-radius: 1em;
+  box-shadow: 12px 12px 10px -8px rgba(0, 0, 0, 0.4);
+}
+
+.hotelCommentContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.hotelCommentTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+}
+
+.hotelCommentTitle > div:nth-child(2) {
+  color: #febb02;
+}
+
+.hotelCommentAvatar {
+  width: 3em;
+  height: 3em;
+  object-fit: cover;
+  border-radius: 50%;
+}

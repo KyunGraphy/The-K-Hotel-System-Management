@@ -3,6 +3,7 @@ import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./featuredProperties.css";
+import Rating from "./Rating";
 
 const FeaturedProperties = ({ hotels }) => {
   const [date, setDate] = useState([
@@ -39,10 +40,7 @@ const FeaturedProperties = ({ hotels }) => {
             {hotel.address}
           </span>
           <span className="fpPrice">{hotel.title}</span>
-          <div className="fpRating">
-            <button>4.9</button>
-            <span>Excellent</span>
-          </div>
+          <Rating hotelId={hotel._id} />
         </div>
       ))}
     </div>

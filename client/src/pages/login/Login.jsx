@@ -40,7 +40,7 @@ const Login = () => {
       const res = await axios.post("/auth/login", credentials)
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
 
-      if (res.data.role) {
+      if (res.data.isAdmin) {
         navigate("/admin/room")
       } else {
         navigate("/")
