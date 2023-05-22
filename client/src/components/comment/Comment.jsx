@@ -29,7 +29,7 @@ const Comment = ({ hotelId }) => {
       ) : (
         <>
           {data.map(item => (
-            <CommentBox key={item._id} item={item} />
+            <CommentBox key={item._id} item={item} reFetch={reFetch} />
           ))}
           <CommentMsg reFetch={reFetch} />
         </>

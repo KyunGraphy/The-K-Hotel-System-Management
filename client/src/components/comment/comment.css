@@ -21,17 +21,48 @@
   flex-direction: column;
   gap: 1em;
   width: 100%;
-  padding: 0 2em 0 0;
 }
 
 .hotelCommentTitle {
   display: flex;
   justify-content: space-between;
-  gap: 2em;
+}
+
+.hotelCommentTitle > div:nth-child(1) {
+  flex: 9;
 }
 
 .hotelCommentTitle > div:nth-child(2) {
+  flex: 2;
   color: #febb02;
+}
+
+.hotelCommentTitle > div:nth-child(3) {
+  position: relative;
+  flex: 1;
+  font-size: 20px;
+  text-align: right;
+  cursor: pointer;
+}
+
+.hotelCommentTitle > div:nth-child(3) > div {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 2px 1em;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: #ccc;
+  color: #384e71;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.hotelCommentTitle > div:nth-child(3) > div:hover {
+  cursor: pointer;
+  background-color: #a7dbd8;
+  color: #384e71;
 }
 
 .hotelCommentAvatar {

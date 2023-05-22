@@ -1,20 +1,13 @@
-import {
-  faBed,
-  faCalendarDays,
-  faCar,
-  faDumbbell,
-  faPerson,
-  faPersonSwimming,
-  faUtensils,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBed, faCalendarDays, faCar, faDumbbell, faPerson, faPersonSwimming, faUtensils } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.css";
 import { DateRange } from "react-date-range";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext.js"
 
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
@@ -48,6 +41,12 @@ const Header = ({ type }) => {
   const handleSearch = () => {
     navigate("/hotels", { state: { date, options } });
   };
+
+  const handleManagePage = () => {
+    navigate("/admin/room");
+  };
+
+  const { user } = useContext(AuthContext)
 
   return (
     <div className="header">
@@ -87,10 +86,16 @@ const Header = ({ type }) => {
               Get rewarded for your travels – unlock instant savings of 10% or
               more with a free account
             </p>
-            <button
-              className="headerBtn"
-              onClick={handleSearch}
-            >Get Started !</button>
+            <div>
+              <button
+                className="headerBtn"
+                onClick={handleSearch}
+              >Get Started !</button>
+              {(user?.isAdmin) && <button
+                className="headerBtn"
+                onClick={handleManagePage}
+              >Admin page</button>}
+            </div>
             <div className="headerSearch">
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />

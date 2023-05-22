@@ -66,6 +66,7 @@ const Login = () => {
                 type="text"
                 id="username"
                 onChange={handleChange}
+                autoComplete='off'
                 required
               />
               <label>Username</label>

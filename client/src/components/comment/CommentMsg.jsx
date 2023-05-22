@@ -9,17 +9,6 @@ const CommentMsg = ({ reFetch }) => {
   const [comment, setComment] = useState("")
   const params = useParams()
 
-  useEffect(() => {
-    function handleCloseRating(e) {
-      (e.target.className !== 'countryInput') ? setOpenRating(false) : setOpenRating(true);
-    }
-
-    window.addEventListener('click', handleCloseRating);
-    return () => {
-      window.removeEventListener('click', handleCloseRating);
-    };
-  });
-
   const handleRating = (number) => {
     setRating(number);
   };
@@ -40,12 +29,13 @@ const CommentMsg = ({ reFetch }) => {
 
   return (
     <div className="hotelCommentMsg">
-      <div className="inputBox">
+      <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
         <input
           type="text"
-          className="countryInput"
+          className="starInput"
           id="rating"
           placeholder={rating}
+          autoComplete="off"
         />
         <div className="hotelRating">
           <ion-icon name="star"></ion-icon>
@@ -82,6 +72,7 @@ const CommentMsg = ({ reFetch }) => {
           id="description"
           placeholder="Type your comment"
           onChange={(e) => setComment(e.target.value)}
+          autoComplete="off"
         />
       </div>
     </div>

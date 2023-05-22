@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useFetch from '../../hooks/useFetch'
+import Alert from '../alert/Alert'
 import RatingStars from './RatingStars'
 import Skeleton from 'react-loading-skeleton'
+import { BiDotsVertical } from "react-icons/bi";
+import { useParams } from "react-router-dom";
 import 'react-loading-skeleton/dist/skeleton.css'
+import axios from 'axios';
 
-const CommentBox = ({ item }) => {
+const CommentBox = ({ item, reFetch }) => {
+  const [openCommentOption, setOpenCommentOption] = useState(false)
+  const [errMsg, setErrMsg] = useState("");
+  const params = useParams()
+
   const { data, loading } = useFetch(`/users/${item.userID}`)
   const createdAt = new Date(item.createdAt).getDate() + '/' + (new Date(item.createdAt).getMonth() + 1) + '/' + new Date(item.createdAt).getFullYear();
 
+  const handleDeleteComment = async (commentId) => {
+    try {
+      await axios.delete(`/comment/${params.id}/${commentId}`)
+      reFetch()
+    } catch (err) {
+      setErrMsg(err.response.data.message);
+    }
+  };
+
   return (
     <div className='hotelCommentBox'>
+      <Alert msg={errMsg} type="danger" />
       <img
         src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
         alt=''
@@ -28,6 +46,12 @@ const CommentBox = ({ item }) => {
             </div>
             <div>
               <RatingStars star={item.rating} />
+            </div>
+            <div className='hotelCommentOption'>
+              <BiDotsVertical onClick={() => setOpenCommentOption(!openCommentOption)} />
+              {openCommentOption && <div>
+                <span onClick={() => handleDeleteComment(item._id)}>Delete</span>
+              </div>}
             </div>
           </div>
         )}
