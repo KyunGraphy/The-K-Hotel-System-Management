@@ -6,6 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 const CommentBox = ({ item }) => {
   const { data, loading } = useFetch(`/users/${item.userID}`)
+  const createdAt = new Date(item.createdAt).getDate() + '/' + (new Date(item.createdAt).getMonth() + 1) + '/' + new Date(item.createdAt).getFullYear();
 
   return (
     <div className='hotelCommentBox'>
@@ -23,7 +24,7 @@ const CommentBox = ({ item }) => {
           <div className='hotelCommentTitle'>
             <div>
               <h4>{data.name}</h4>
-              <div>5 minutes ago</div>
+              <div>Created at: {createdAt}</div>
             </div>
             <div>
               <RatingStars star={item.rating} />

@@ -4,9 +4,10 @@ import useFetch from '../../hooks/useFetch'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import './comment.css'
+import CommentMsg from './CommentMsg'
 
 const Comment = ({ hotelId }) => {
-  const { data, loading } = useFetch(`/comment/${hotelId}`)
+  const { data, loading, reFetch } = useFetch(`/comment/${hotelId}`)
 
   return (
     <div className='hotelComment'>
@@ -30,6 +31,7 @@ const Comment = ({ hotelId }) => {
           {data.map(item => (
             <CommentBox key={item._id} item={item} />
           ))}
+          <CommentMsg reFetch={reFetch} />
         </>
       )}
     </div>

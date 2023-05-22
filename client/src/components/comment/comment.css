@@ -40,3 +40,24 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+.hotelCommentMsg {
+  display: flex;
+  gap: 0.5em;
+}
+
+.hotelCommentMsg > div:nth-child(1) {
+  flex: 1;
+}
+
+.hotelCommentMsg > div:nth-child(2) {
+  flex: 11;
+}
+
+.hotelRating {
+  position: absolute;
+  top: 50%;
+  right: 45%;
+  transform: translateY(-50%);
+  color: #febb02;
+}

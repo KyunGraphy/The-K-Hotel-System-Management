@@ -39,12 +39,7 @@ const Login = () => {
     try {
       const res = await axios.post("/auth/login", credentials)
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
-
-      if (res.data.isAdmin) {
-        navigate("/admin/room")
-      } else {
-        navigate("/")
-      }
+      navigate("/")
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err.response.data })
     }

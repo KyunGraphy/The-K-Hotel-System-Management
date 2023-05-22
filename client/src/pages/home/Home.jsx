@@ -32,10 +32,6 @@ const Home = () => {
     }
   }, [])
 
-  useEffect(() => {
-    if (user?.isAdmin === true) navigate("/admin/room")
-  }, [])
-
   return (
     <div>
       <Navbar />
