@@ -48,12 +48,11 @@
 
 .reservationHeader > p {
   padding-left: 24px;
-  width: 16%;
+  width: 25%;
 }
 
 .reservationData {
   display: flex;
-  padding: 12px 8px;
   font-size: 14px;
   font-style: italic;
   font-weight: 600;
@@ -64,12 +63,13 @@
 
 .reservationData > p {
   position: relative;
-  padding-left: 24px;
-  width: 16%;
+  padding: 8px 0 8px 12px;
+  width: 25%;
   background: #fff;
+  border-left: 1px solid #384e71;
 }
 
-.reservationData > p::after {
+/* .reservationData > p::after {
   position: absolute;
   content: " ";
   top: 50%;
@@ -78,7 +78,7 @@
   height: 80%;
   width: 1px;
   background: #384e71;
-}
+} */
 
 .actBtn {
   display: flex;
@@ -116,6 +116,18 @@
   background: #800000;
 }
 
+.assBtn {
+  width: 40%;
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #384e71;
+  background: #febb02;
+}
+
 .reservationForm {
   display: flex;
   justify-content: space-around;
@@ -130,4 +142,13 @@
 
 .addNewBtn {
   text-align: center;
+}
+
+.reservationRoom {
+  margin-top: 3em;
+  padding: 0 3em;
+}
+
+.reservationAvailableRoom > div {
+  margin: 2em 0;
 }

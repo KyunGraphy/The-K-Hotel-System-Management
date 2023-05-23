@@ -5,12 +5,16 @@ import { DateRange } from "react-date-range";
 import { IoArrowBackCircle, IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { MdEmojiPeople } from "react-icons/md";
 import { FaBaby } from "react-icons/fa";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import useFetch from '../../../hooks/useFetch';
+import AvailableRoom from './AvailableRoom';
 
 const ViewReservation = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const reservationId = location.pathname.split('/')[3]
+  const [openAvailableRoom, setOpenAvailableRoom] = useState(false)
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -42,7 +46,9 @@ const ViewReservation = () => {
       <h2>Reservation Information</h2>
       <div className='reservationForm'>
         {loading ? (
-          <>Please wait...</>
+          <>
+            <p><Skeleton width={1024} height={240} /></p>
+          </>
         ) : (
           <>
             <div>
@@ -138,6 +144,13 @@ const ViewReservation = () => {
             </div>
           </>
         )}
+      </div>
+      <div className='reservationRoom'>
+        <div
+          className='viewBtn'
+          onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
+        >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</div>
+        {openAvailableRoom && <AvailableRoom />}
       </div>
     </div>
   )

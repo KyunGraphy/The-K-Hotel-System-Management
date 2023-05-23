@@ -5,6 +5,7 @@ import { IoArrowBackCircle, IoWaterSharp } from "react-icons/io5";
 import { CiLock, CiTempHigh } from "react-icons/ci";
 import { FaRegLightbulb } from "react-icons/fa";
 import { BsLightningFill } from "react-icons/bs";
+import { TbAirConditioningDisabled } from "react-icons/tb";
 import { RoomContext } from '../../../contexts/RoomContext';
 import useFetch from '../../../hooks/useFetch';
 
@@ -65,16 +66,19 @@ const RoomDetails = () => {
             <div className='roomConsume'>
               <div className='roomBlock'>
                 <div className='roomItem'>
-                  <CiTempHigh />27°C
+                  <CiLock />Locked: On
                 </div>
                 <div className='roomItem'>
-                  <CiLock />Locked: On
+                  <TbAirConditioningDisabled />A.C: On
                 </div>
                 <div className='roomItem'>
                   <FaRegLightbulb /> Light: On
                 </div>
               </div>
               <div className='roomBlock'>
+                <div className='roomItem'>
+                  <CiTempHigh />27°C
+                </div>
                 <div className='roomItem'>
                   <BsLightningFill /> 20 hours
                 </div>
