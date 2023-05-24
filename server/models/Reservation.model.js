@@ -36,7 +36,7 @@ const ReservationSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    roomID: {
+    rooms: {
       type: [String],
     },
     checkInDate: {

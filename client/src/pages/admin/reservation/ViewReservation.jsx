@@ -7,6 +7,7 @@ import { MdEmojiPeople } from "react-icons/md";
 import { FaBaby } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { MILLISECONDS_PER_DAY } from '../../../constants/Constant'
 import useFetch from '../../../hooks/useFetch';
 import AvailableRoom from './AvailableRoom';
 
@@ -22,14 +23,14 @@ const ViewReservation = () => {
       key: "selection",
     },
   ]);
-  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
-  const { data, loading } = useFetch(`/reservation/${reservationId}`)
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
+  const { data, loading, reFetch } = useFetch(`/reservation/${reservationId}`)
 
   useEffect(() => {
     if (data._id) {
       setDate([
         {
-          ...date,
+          ...date[0],
           startDate: new Date(data?.checkInDate) || new Date(),
           endDate: new Date(data?.checkOutDate) || new Date(),
         }
@@ -150,7 +151,7 @@ const ViewReservation = () => {
           className='viewBtn'
           onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
         >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</div>
-        {openAvailableRoom && <AvailableRoom />}
+        {openAvailableRoom && <AvailableRoom reserve={data} date={date} reFetch={reFetch} />}
       </div>
     </div>
   )

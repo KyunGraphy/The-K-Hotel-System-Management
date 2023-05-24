@@ -7,6 +7,7 @@ import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import axios from 'axios';
 import Alert from '../../../components/alert/Alert';
+import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 
 const AddReservation = ({ setAddNewReserve }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
@@ -61,7 +62,7 @@ const AddReservation = ({ setAddNewReserve }) => {
       }
     })
   }
-  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
 
   const handleChange = (e) => {
     setReservationForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))

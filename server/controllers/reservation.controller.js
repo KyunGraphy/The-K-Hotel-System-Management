@@ -1,6 +1,7 @@
 import Reservation from "../models/Reservation.model.js";
 import User from "../models/User.model.js";
 import Hotel from "../models/Hotel.model.js";
+import Room from "../models/Room.model.js";
 
 export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
@@ -89,6 +90,44 @@ export const deleteHotelReservation = async (req, res, next) => {
     res.status(200).json({
       message: 'Hotel delete reservation successful'
     })
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const assignReservation = async (req, res, next) => {
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  const startDate = new Date(req.body.date[0].startDate).getTime();
+  const endDate = new Date(req.body.date[0].endDate).getTime();
+  let start = startDate;
+
+  async function handleBookingDates() {
+    while (start <= endDate) {
+      try {
+        await Room.findByIdAndUpdate(
+          req.body.roomId,
+          { $push: { unavailableDate: start } },
+        )
+      } catch (err) {
+        next(err);
+      }
+      start += MILLISECONDS_PER_DAY;
+    }
+  }
+
+  try {
+    await Reservation.findByIdAndUpdate(
+      req.params.reservationId,
+      { $push: { rooms: req.body.roomId } },
+    )
+    try {
+      await handleBookingDates()
+      res.status(200).json({
+        msg: 'Assign successfully'
+      })
+    } catch (err) {
+      next(err);
+    }
   } catch (err) {
     next(err);
   }

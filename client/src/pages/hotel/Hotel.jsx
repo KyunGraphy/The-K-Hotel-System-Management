@@ -21,6 +21,7 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 import Rating from "../../components/searchItem/Rating";
 import Comment from "../../components/comment/Comment";
+import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
 
 const Hotel = () => {
   const params = useParams()
@@ -46,7 +47,7 @@ const Hotel = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
 
-  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / (60 * 60 * 24 * 1000);
+  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
 
   useEffect(() => {
     function handlePress(e) {
