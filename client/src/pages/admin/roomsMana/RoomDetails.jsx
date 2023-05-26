@@ -20,7 +20,6 @@ const RoomDetails = () => {
 
   const { roomId, dispatch } = useContext(RoomContext)
   const { data, loading } = useFetch(`/room/${roomId}`)
-  console.log(data)
 
   const removeRoom = () => {
     dispatch({ type: "REMOVE_ROOM" })

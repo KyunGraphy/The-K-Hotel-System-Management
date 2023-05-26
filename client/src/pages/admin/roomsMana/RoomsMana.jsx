@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Rooms from './Rooms'
 import './styles/rooms.css'
 
@@ -8,7 +8,7 @@ import RoomDetails from './RoomDetails';
 import { RoomContext } from '../../../contexts/RoomContext';
 
 const RoomsMana = () => {
-  const { hotelId, roomId } = useContext(RoomContext)
+  const { roomId } = useContext(RoomContext)
 
   const roomsStatus = [
     {
@@ -43,10 +43,10 @@ const RoomsMana = () => {
       {roomId ? (
         <RoomDetails />
       ) : (
-        <p>
+        <div>
           <Statusbar roomsStatus={roomsStatus} />
           <Rooms />
-        </p>
+        </div>
       )}
     </div>
   )

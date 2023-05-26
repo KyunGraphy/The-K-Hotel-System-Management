@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Alert from '../../../components/alert/Alert'
 import useFetch from '../../../hooks/useFetch';
-import axios from 'axios';
+import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 
-const AvailableRoom = ({ reserve, date, reFetch }) => {
+const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
+  const [roomFound, setRoomFound] = useState([]);
   const [assignLoading, setAssignLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const { data, loading } = useFetch(`/hotel/room/${reserve.hotelID}`);
+  const { data, loading, reFetch } = useFetch(`/hotel/room/${reserve.hotelID}`);
 
   const handleAssignRoom = async (roomId) => {
     setAssignLoading(true)
@@ -20,6 +22,7 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
         date,
       })
       setSuccessMsg('Assign rooms successfully!!');
+      reFetchReservation()
       reFetch()
     } catch (err) {
       setErrMsg("Assign rooms failed")
@@ -36,12 +39,38 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
         date,
       })
       setSuccessMsg('Remove rooms successfully!!');
+      reFetchReservation()
       reFetch()
     } catch (err) {
       setErrMsg("Remove rooms failed")
     }
     setAssignLoading(false)
   };
+
+  const getDatesInRange = (startDate, endDate) => {
+    const start = startDate.getTime();
+    const end = endDate.getTime();
+    let date = start;
+    const dates = [];
+
+    while (date <= end) {
+      dates.push(new Date(date).getTime());
+      date += MILLISECONDS_PER_DAY;
+    }
+    return dates;
+  };
+
+  const allDates = getDatesInRange(date[0].startDate, date[0].endDate)
+
+  useEffect(() => {
+    if (data.length !== 0) {
+      setRoomFound(data.filter(item => !(
+        item.unavailableDate.some(date => (
+          allDates.includes(date)
+        ))
+      )))
+    }
+  }, [data, allDates])
 
   return (
     <div className='reservationAvailableRoom'>
@@ -119,7 +148,7 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
             </>
           ) : (
             <>
-              {data.map(item => (
+              {roomFound.map(item => (
                 <div
                   key={item._id}
                   className='reservationData'

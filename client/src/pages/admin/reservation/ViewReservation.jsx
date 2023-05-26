@@ -151,7 +151,7 @@ const ViewReservation = () => {
           className='viewBtn'
           onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
         >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</div>
-        {openAvailableRoom && <AvailableRoom reserve={data} date={date} reFetch={reFetch} />}
+        {openAvailableRoom && <AvailableRoom reserve={data} date={date} reFetchReservation={reFetch} />}
       </div>
     </div>
   )
