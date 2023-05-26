@@ -20,10 +20,26 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
         date,
       })
       setSuccessMsg('Assign rooms successfully!!');
+      reFetch()
     } catch (err) {
       setErrMsg("Assign rooms failed")
     }
-    reFetch()
+    setAssignLoading(false)
+  };
+
+  const handleRemoveRoom = async (roomId) => {
+    setAssignLoading(true)
+    try {
+      await axios.post(`/reservation/remove/${reserve._id}`, {
+        reserveId: reserve._id,
+        roomId,
+        date,
+      })
+      setSuccessMsg('Remove rooms successfully!!');
+      reFetch()
+    } catch (err) {
+      setErrMsg("Remove rooms failed")
+    }
     setAssignLoading(false)
   };
 
@@ -67,9 +83,12 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
                   <p>{item.description}</p>
                   <p>{item.maxPeople}</p>
                   <p className='actBtn'>
-                    <div className='assBtn'>
+                    <span
+                      className='assBtn'
+                      onClick={() => handleRemoveRoom(item._id)}
+                    >
                       <ion-icon name="remove-circle-outline"></ion-icon>Remove
-                    </div>
+                    </span>
                   </p>
                 </div>)
               ))}
@@ -110,12 +129,12 @@ const AvailableRoom = ({ reserve, date, reFetch }) => {
                   <p>{item.description}</p>
                   <p>{item.maxPeople}</p>
                   <p className='actBtn'>
-                    <div
-                      onClick={() => handleAssignRoom(item._id)}
+                    <span
                       className='assBtn'
+                      onClick={() => handleAssignRoom(item._id)}
                     >
                       <ion-icon name="add-circle-outline"></ion-icon>Assign
-                    </div>
+                    </span>
                   </p>
                 </div>
               ))}

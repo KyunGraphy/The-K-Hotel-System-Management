@@ -79,7 +79,6 @@ export const deleteOneReservation = async (req, res, next) => {
 };
 
 export const deleteHotelReservation = async (req, res, next) => {
-  console.log(req.params)
   try {
     const list = await Reservation.find({ hotelID: req.params.hotelId })
     await Promise.all(
@@ -122,6 +121,44 @@ export const assignReservation = async (req, res, next) => {
     )
     try {
       await handleBookingDates()
+      res.status(200).json({
+        msg: 'Assign successfully'
+      })
+    } catch (err) {
+      next(err);
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const removeReservation = async (req, res, next) => {
+  const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  const startDate = new Date(req.body.date[0].startDate).getTime();
+  const endDate = new Date(req.body.date[0].endDate).getTime();
+  let start = startDate;
+
+  async function handleRemoveDates() {
+    while (start <= endDate) {
+      try {
+        await Room.findByIdAndUpdate(
+          req.body.roomId,
+          { $pull: { unavailableDate: start } },
+        )
+      } catch (err) {
+        next(err);
+      }
+      start += MILLISECONDS_PER_DAY;
+    }
+  }
+
+  try {
+    await Reservation.findByIdAndUpdate(
+      req.params.reservationId,
+      { $pull: { rooms: req.body.roomId } },
+    )
+    try {
+      await handleRemoveDates()
       res.status(200).json({
         msg: 'Assign successfully'
       })

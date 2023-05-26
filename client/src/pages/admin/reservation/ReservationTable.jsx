@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import axios from 'axios';
 import "./styles/reservation.css";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
@@ -6,9 +7,14 @@ import { useNavigate } from "react-router-dom";
 
 const ReservationTable = () => {
   const { hotelId } = useContext(RoomContext)
-  const { data, loading } = useFetch(`/reservation/hotel/${hotelId}`)
+  const { data, loading, reFetch } = useFetch(`/reservation/hotel/${hotelId}`)
 
   const navigate = useNavigate()
+
+  const handleDeleteReservation = async (reservationId) => {
+    await axios.delete(`/reservation/${reservationId}`)
+    reFetch()
+  };
 
   return (
     <div className='reservationTable'>
@@ -37,11 +43,16 @@ const ReservationTable = () => {
                     <p>{new Date(item.checkInDate).toDateString()}</p>
                     <p>{new Date(item.checkOutDate).toDateString()}</p>
                     <p className='actBtn'>
-                      <div
+                      <span
                         className='viewBtn'
                         onClick={() => navigate(`/admin/reservation/${item._id}`)}
-                      >View</div>
-                      <div className='delBtn'>Delete</div>
+                      >View</span>
+                      {item.rooms.length === 0 &&
+                        <span
+                          className='delBtn'
+                          onClick={() => handleDeleteReservation(item._id)}
+                        >Delete</span>
+                      }
                     </p>
                   </div>
                 ))}
