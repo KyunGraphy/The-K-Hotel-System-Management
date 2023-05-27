@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { Calendar } from 'react-date-range';
 import { IoArrowBackCircle, IoWaterSharp } from "react-icons/io5";
@@ -11,15 +11,23 @@ import useFetch from '../../../hooks/useFetch';
 
 const RoomDetails = () => {
   const [unavaiDate, setUnvaiDate] = useState([]);
-
-  const handleSelect = (item) => {
-    let newunavaiDate = [...unavaiDate, item.getTime()]
-    console.log(item.getTime()); // native Date object
-    setUnvaiDate(newunavaiDate);
-  }
-
   const { roomId, dispatch } = useContext(RoomContext)
   const { data, loading } = useFetch(`/room/${roomId}`)
+
+  useEffect(() => {
+    if (data.length !== 0) {
+      setUnvaiDate(data.unavailableDate);
+    }
+  }, [data])
+
+
+  // const handleSelect = (item) => {
+  //   let newunavaiDate = [...unavaiDate, item.getTime()]
+  //   console.log(item.getTime()); // native Date object
+  //   setUnvaiDate(newunavaiDate);
+  // }
+  // console.log(unavaiDate);
+  // console.log(data.unavailableDate);
 
   const removeRoom = () => {
     dispatch({ type: "REMOVE_ROOM" })
@@ -89,8 +97,7 @@ const RoomDetails = () => {
             <div className='roomSchedule'>
               <Calendar
                 date={new Date()}
-                onChange={(item) => handleSelect(item)}
-                minDate={new Date()}
+                onChange={() => null}
                 disabledDates={unavaiDate}
               />
             </div>

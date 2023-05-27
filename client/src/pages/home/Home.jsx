@@ -38,9 +38,11 @@ const Home = () => {
       <Header />
       <div className="homeContainer">
         {loading ? (
-          <>
-            <Skeleton width={1024} height={180} />
-          </>
+          <div className="homeSkeleton">
+            <div><Skeleton width={300} height={180} borderRadius={12.5} /></div>
+            <div><Skeleton width={300} height={180} borderRadius={12.5} /></div>
+            <div><Skeleton width={300} height={180} borderRadius={12.5} /></div>
+          </div>
         ) : (
           <>
             <h1 className="homeTitle">Overview about The K</h1>

@@ -70,7 +70,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
         ))
       )))
     }
-  }, [data, allDates])
+  }, [data])
 
   return (
     <div className='reservationAvailableRoom'>

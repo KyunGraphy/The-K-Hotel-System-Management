@@ -13,3 +13,9 @@
   text-align: center;
   margin-top: 20px;
 }
+
+.homeSkeleton {
+  display: flex;
+  gap: 2em;
+  margin-bottom: 20px;
+}
