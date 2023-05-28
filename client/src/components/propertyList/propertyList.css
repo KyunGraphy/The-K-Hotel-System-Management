@@ -22,9 +22,9 @@
 }
 
 .pListImg:hover {
-  transform: scale(0.9) rotate(1deg);
+  transform: scale(1.05) rotate(1deg);
   border-radius: 8%;
-  box-shadow: 0 8px 55px rgba(68, 77, 136, 0.7);
+  box-shadow: 0 8px 55px rgba(68, 77, 136, 0.2);
 }
 
 .pListTitles > h1 {

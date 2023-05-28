@@ -1,0 +1,41 @@
+.serviceItem {
+  display: flex;
+  gap: 2em;
+  padding-top: 6em;
+  width: 1024px;
+  max-width: 1024px;
+  overflow: hidden;
+}
+
+.serviceImg {
+  padding: 0.5em;
+}
+
+.serviceImg > img {
+  width: 300px;
+  height: 300px;
+  border-radius: 24px;
+  transition: all 0.8s ease;
+  object-fit: cover;
+}
+
+.serviceImg > img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 4px rgba(68, 77, 136, 0.2);
+}
+
+.serviceItem > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.serviceItem > div > h1 {
+  text-align: center;
+}
+
+.serviceItem > div > p {
+  width: 100%;
+}
