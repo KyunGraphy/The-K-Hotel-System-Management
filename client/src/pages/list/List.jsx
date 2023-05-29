@@ -12,13 +12,20 @@ import useFetch from "../../hooks/useFetch";
 
 const List = () => {
   const location = useLocation();
+
+  const today = new Date();
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+
   const [date, setDate] = useState(location.state?.date || [
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: Math.floor(today.getTime() / 100000) * 100000,
+      endDate: Math.floor(today.getTime() / 100000) * 100000,
       key: "selection",
     },
   ]);
+
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state?.options || {
     adult: 1,

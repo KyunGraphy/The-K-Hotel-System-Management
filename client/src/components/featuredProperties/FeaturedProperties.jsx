@@ -6,10 +6,15 @@ import "./featuredProperties.css";
 import Rating from "./Rating";
 
 const FeaturedProperties = ({ hotels }) => {
+  const today = new Date();
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: new Date((Math.floor(today.getTime() / 100000) * 100000)),
+      endDate: new Date(Math.floor(today.getTime() / 100000) * 100000),
       key: "selection",
     },
   ]);

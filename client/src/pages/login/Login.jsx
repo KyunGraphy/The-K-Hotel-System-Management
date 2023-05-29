@@ -32,8 +32,9 @@ const Login = () => {
   }
 
   const handleLogin = async (e) => {
-    if (e)
+    if (e) {
       e.preventDefault()
+    }
 
     dispatch({ type: "LOGIN_START" })
     try {
@@ -41,7 +42,7 @@ const Login = () => {
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
       navigate("/")
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data })
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data.message })
     }
   }
 

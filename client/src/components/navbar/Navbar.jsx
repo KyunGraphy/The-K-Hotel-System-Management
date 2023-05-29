@@ -46,6 +46,10 @@ const Navbar = () => {
                 Profile
               </p>
               <p className="navUserOptionsAfter">
+                <ion-icon name="cart-outline"></ion-icon>
+                Reservation
+              </p>
+              <p className="navUserOptionsAfter">
                 <ion-icon name="settings-outline"></ion-icon>
                 Setting
               </p>

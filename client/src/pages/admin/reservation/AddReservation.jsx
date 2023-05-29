@@ -10,13 +10,20 @@ import Alert from '../../../components/alert/Alert';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 
 const AddReservation = ({ setAddNewReserve }) => {
+  const [dateRange, setDateRange] = useState(0.6)
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+
+  const today = new Date();
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+
   const [date, setDate] = useState([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: new Date(Math.floor(today.getTime() / 100000) * 100000),
+      endDate: new Date(Math.floor(today.getTime() / 100000) * 100000),
       key: "selection",
     },
   ]);
@@ -43,6 +50,14 @@ const AddReservation = ({ setAddNewReserve }) => {
     };
   });
 
+  useEffect(() => {
+    if (date[0].startDate.getTime() === date[0].endDate.getTime()) {
+      setDateRange(0.6);
+    } else {
+      setDateRange((date[0].endDate - date[0].startDate) / MILLISECONDS_PER_DAY);
+    }
+  }, [date])
+
   const { hotelId, dispatch } = useContext(RoomContext)
   const { data, loading } = useFetch("/hotel")
   const department = data.filter(item => item._id === hotelId) || null
@@ -52,27 +67,26 @@ const AddReservation = ({ setAddNewReserve }) => {
   }
 
   const handleDate = (item) => {
-    console.log(item)
     setDate(item)
     setReservationForm(prev => {
       return {
         ...prev,
-        checkInDate: item[0].startDate.getTime(),
-        checkOutDate: item[0].endDate.getTime(),
+        checkInDate: item[0].startDate,
+        checkOutDate: item[0].endDate,
       }
     })
   }
-  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
 
   const handleChange = (e) => {
     setReservationForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
   const handleAddReservation = async () => {
-    if (reservationForm.checkInDate === reservationForm.checkOutDate) {
-      setErrMsg("Check in and out date must be different")
-    } else if (reservationForm.singleRoom === 0 && reservationForm.doubleRoom === 0) {
+    if (reservationForm.singleRoom === 0 && reservationForm.doubleRoom === 0) {
       setErrMsg("Single room or Double room must be better than 0")
+    } else if (hotelId === null) {
+      setErrMsg("Please select hotel");
+      return;
     } else {
       try {
         await axios.post(`/reservation/${hotelId}`, reservationForm)
@@ -205,7 +219,7 @@ const AddReservation = ({ setAddNewReserve }) => {
               <label>Double Room</label>
             </div>
             <h2>
-              <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({dateRange} days)
+              <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
             </h2>
           </div>
         </>

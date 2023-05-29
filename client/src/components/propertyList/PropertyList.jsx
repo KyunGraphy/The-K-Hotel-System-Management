@@ -3,19 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "./propertyList.css";
 
 const PropertyList = () => {
-  const [date, setDate] = useState([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    singleRoom: 0,
-    doubleRoom: 0,
-  });
   const navigate = useNavigate()
 
   return (

@@ -24,12 +24,21 @@ import Comment from "../../components/comment/Comment";
 import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
 
 const Hotel = () => {
+  const [dateRange, setDateRange] = useState(0.6)
+  const [errMsg, setErrMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
   const params = useParams()
   const location = useLocation();
+
+  const today = new Date();
+  today.setHours(0)
+  today.setMinutes(0)
+  today.setSeconds(0)
+
   const [date, setDate] = useState(location.state?.date || [
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: Math.floor(today.getTime() / 100000) * 100000,
+      endDate: Math.floor(today.getTime() / 100000) * 100000,
       key: "selection",
     },
   ]);
@@ -40,14 +49,9 @@ const Hotel = () => {
     singleRoom: 0,
     doubleRoom: 0,
   });
-  const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
-
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-
-  const dateRange = (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
 
   useEffect(() => {
     function handlePress(e) {
@@ -59,6 +63,14 @@ const Hotel = () => {
       window.removeEventListener('keydown', handlePress);
     }
   })
+
+  useEffect(() => {
+    if (date[0].startDate.getTime() === date[0].endDate.getTime()) {
+      setDateRange(0.6);
+    } else {
+      setDateRange((date[0].endDate - date[0].startDate) / MILLISECONDS_PER_DAY);
+    }
+  }, [date])
 
   const { loading, data } = useFetch(`/hotel/${params.id}`)
   const { user } = useContext(AuthContext)
@@ -74,24 +86,12 @@ const Hotel = () => {
   }
 
   const photos = [
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708693.jpg?k=ea210b4fa329fe302eab55dd9818c0571afba2abd2225ca3a36457f9afa74e94&o=&hp=1",
-    },
-    {
-      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
-    },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1", },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1", },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1", },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1", },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708693.jpg?k=ea210b4fa329fe302eab55dd9818c0571afba2abd2225ca3a36457f9afa74e94&o=&hp=1", },
+    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1", },
   ];
 
   const handleOpen = (i) => {
@@ -116,9 +116,7 @@ const Hotel = () => {
       return navigate("/login", { state: { errMsg: "You have to login to make reservation" } })
     }
 
-    if (user && date[0].startDate.getTime() === date[0].endDate.getTime()) {
-      setErrMsg("Check in and out date must be different")
-    } else if (user && options.singleRoom === 0 && options.doubleRoom === 0) {
+    if (user && options.singleRoom === 0 && options.doubleRoom === 0) {
       setErrMsg("Single room or Double room must be better than 0")
     } else {
       setErrMsg(null)
@@ -281,7 +279,7 @@ const Hotel = () => {
                       </div>
                     </div>
                     <h2>
-                      <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({dateRange} days)
+                      <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
                     </h2>
                     <button
                       onClick={handleReserve}
