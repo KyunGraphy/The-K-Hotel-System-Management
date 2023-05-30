@@ -50,6 +50,7 @@ const Login = () => {
     <div className='loginContainer'>
       {error && <Alert msg={error} type="danger" />}
       {location.state?.errMsg && <Alert msg={location.state.errMsg} type="danger" />}
+      {location.state?.successMsg && <Alert msg={location.state.successMsg} type="success" />}
       <div className='loginWrapper'>
         <Link to='/'>
           <span className="iconClose">

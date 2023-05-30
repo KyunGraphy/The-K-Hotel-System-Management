@@ -63,7 +63,7 @@ const Register = () => {
     }
     try {
       await axios.post("/auth/register", registerForm)
-      navigate("/login")
+      navigate("/login", { state: { successMsg: "Register successfully" } })
     } catch (err) {
       setError(err.response.data.message);
     }
