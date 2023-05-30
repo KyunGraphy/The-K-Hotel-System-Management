@@ -4,11 +4,13 @@ import useFetch from '../../hooks/useFetch';
 
 import './register.css';
 import axios from 'axios';
+import Alert from '../../components/alert/Alert';
 
 const Register = () => {
   const { data, loading } = useFetch('https://restcountries.com/v3.1/all?fields=name,flags')
   const navigate = useNavigate()
 
+  const [error, setError] = useState(null)
   const [confirmPassword, setConfirmPassword] = useState("")
   const [confirmFailed, setConfirmFailed] = useState(false)
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
@@ -52,13 +54,25 @@ const Register = () => {
   }
 
   const handleRegister = async () => {
-    await axios.post("/auth/register", registerForm)
+    if ((registerForm.username === undefined) || (registerForm.password === undefined) || (registerForm.email === undefined) || (registerForm.name === undefined) || (registerForm.phone === undefined)) {
+      setError('Please enter all fields');
+      setTimeout(function () {
+        setError(null)
+      }, 3000);
+      return;
+    }
+    try {
+      await axios.post("/auth/register", registerForm)
+      navigate("/login")
+    } catch (err) {
+      setError(err.response.data.message);
+    }
 
-    navigate("/login")
   }
 
   return (
     <div className='registerContainer'>
+      {error && <Alert msg={error} type="danger" />}
       <div className='registerWrapper'>
         <Link to='/'>
           <span className="iconClose">
@@ -81,6 +95,7 @@ const Register = () => {
                       id="username"
                       type="text"
                       onChange={e => handleChange(e)}
+                      autoComplete="off"
                       required
                     />
                     <label>Username</label>
@@ -93,6 +108,7 @@ const Register = () => {
                       id="email"
                       type="text"
                       onChange={e => handleChange(e)}
+                      autoComplete="off"
                       required
                     />
                     <label>Email</label>
@@ -134,6 +150,7 @@ const Register = () => {
                       id="name"
                       type="text"
                       onChange={e => handleChange(e)}
+                      autoComplete="off"
                       required
                     />
                     <label>Name</label>
@@ -146,6 +163,7 @@ const Register = () => {
                       id="address"
                       type="text"
                       onChange={e => handleChange(e)}
+                      autoComplete="off"
                       required
                     />
                     <label>Address</label>
@@ -158,6 +176,7 @@ const Register = () => {
                       id="phone"
                       type="text"
                       onChange={e => handleChange(e)}
+                      autoComplete="off"
                       required
                     />
                     <label>Phone</label>
