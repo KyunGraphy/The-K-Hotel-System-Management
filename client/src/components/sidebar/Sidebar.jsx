@@ -20,20 +20,20 @@ const Sidebar = () => {
       path: 'business',
     },
     {
-      name: 'Finance',
-      path: 'finance',
+      name: 'Staff',
+      path: 'staff',
     },
     {
       name: 'Service',
       path: 'service',
     },
     {
-      name: 'Staff',
-      path: 'staff',
-    },
-    {
       name: 'Procurement',
       path: 'procurement',
+    },
+    {
+      name: 'Finance',
+      path: 'finance',
     },
   ]
 

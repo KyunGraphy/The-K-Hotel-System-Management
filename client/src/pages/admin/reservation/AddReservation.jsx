@@ -158,6 +158,7 @@ const AddReservation = ({ setAddNewReserve }) => {
                 type="text"
                 id="name"
                 onChange={e => handleChange(e)}
+                autoComplete='off'
                 required
               />
               <label>Name</label>

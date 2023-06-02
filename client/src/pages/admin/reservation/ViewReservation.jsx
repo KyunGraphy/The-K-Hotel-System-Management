@@ -14,7 +14,7 @@ import AvailableRoom from './AvailableRoom';
 const ViewReservation = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const reservationId = location.pathname.split('/')[3]
+  const reservationId = location.state.id
   const [openAvailableRoom, setOpenAvailableRoom] = useState(false)
   const [date, setDate] = useState([
     {

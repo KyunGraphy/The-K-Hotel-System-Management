@@ -5,7 +5,7 @@ import { FaCoins } from "react-icons/fa";
 
 const Finance = () => {
   const [currentHeaderOptions, setCurrentHeaderOptions] = useState(0);
-  const headerOptions = ['expense', 'incomes', 'statistics'];
+  const headerOptions = ['request', 'expense', 'incomes', 'statistics'];
 
   return (
     <div className='finance'>

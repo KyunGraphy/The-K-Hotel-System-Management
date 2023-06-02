@@ -45,7 +45,7 @@ const ReservationTable = () => {
                     <p className='actBtn'>
                       <span
                         className='viewBtn'
-                        onClick={() => navigate(`/admin/reservation/${item._id}`)}
+                        onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id } })}
                       >View</span>
                       {item.rooms.length === 0 &&
                         <span
