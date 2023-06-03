@@ -86,7 +86,8 @@
 }
 
 .viewBtn,
-.delBtn {
+.delBtn,
+.cancelBtn {
   width: 40%;
   display: flex;
   justify-content: center;
@@ -114,6 +115,16 @@
 .delBtn:hover {
   color: #fff;
   background: #800000;
+}
+
+.cancelBtn {
+  color: #555;
+  border: 1px solid #555;
+}
+
+.cancelBtn:hover {
+  color: #fff;
+  background: #555;
 }
 
 .assBtn {

@@ -1,23 +1,47 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios';
 import "./styles/reservation.css";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import { useNavigate } from "react-router-dom";
+import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
+import Alert from '../../../components/alert/Alert';
 
 const ReservationTable = () => {
+  const [confirmForm, setConfirmForm] = useState(false);
+  const [delReservationId, setDelReservationId] = useState(undefined);
+  const [successMsg, setSuccessMsg] = useState("");
   const { hotelId } = useContext(RoomContext)
   const { data, loading, reFetch } = useFetch(`/reservation/hotel/${hotelId}`)
 
   const navigate = useNavigate()
 
-  const handleDeleteReservation = async (reservationId) => {
-    await axios.delete(`/reservation/${reservationId}`)
-    reFetch()
+  const handleSetDeleteReservation = (reservationId) => {
+    setConfirmForm(true)
+    setDelReservationId(reservationId)
+  };
+
+  const handleDeleteReservation = async () => {
+    try {
+      await axios.delete(`/reservation/${delReservationId}`)
+      setSuccessMsg('Delete Reservation successfully');
+      reFetch()
+    } catch (err) {
+      console.log(err);
+    }
+    setConfirmForm(false);
+    setDelReservationId(undefined)
   };
 
   return (
     <div className='reservationTable'>
+      {confirmForm && <ConfirmBox
+        msg='Do you want to delete this reservation'
+        type='delete'
+        callBack={handleDeleteReservation}
+        cancelFunc={() => setConfirmForm(false)}
+      />}
+      <Alert msg={successMsg} type="success" />
       <div className='reservationHeader'>
         <p>User Name</p>
         <p>Room type</p>
@@ -32,7 +56,7 @@ const ReservationTable = () => {
         ) : (
           <>
             {(data.length === 0) ? (
-              <>No room found</>
+              <>No reservation found</>
             ) : (
               <>
                 {data.map(item => (
@@ -50,7 +74,7 @@ const ReservationTable = () => {
                       {item.rooms.length === 0 &&
                         <span
                           className='delBtn'
-                          onClick={() => handleDeleteReservation(item._id)}
+                          onClick={() => handleSetDeleteReservation(item._id)}
                         >Delete</span>
                       }
                     </p>

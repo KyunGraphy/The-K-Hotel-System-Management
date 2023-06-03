@@ -87,6 +87,9 @@ const AddReservation = ({ setAddNewReserve }) => {
     } else if (hotelId === null) {
       setErrMsg("Please select hotel");
       return;
+    } else if (reservationForm.name === undefined) {
+      setErrMsg("Please input name");
+      return;
     } else {
       try {
         await axios.post(`/reservation/${hotelId}`, reservationForm)

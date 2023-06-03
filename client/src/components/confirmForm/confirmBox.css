@@ -1,0 +1,26 @@
+.confirmBoxContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.confirmBox {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  background: rgb(255, 255, 255);
+  padding: 2em;
+  border-radius: 12px;
+}
+
+.confirmBox > p {
+  font-size: 18px;
+  font-weight: 600;
+}
