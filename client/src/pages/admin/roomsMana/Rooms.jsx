@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import './styles/rooms.css'
 import Room from './Room'
 import useFetch from '../../../hooks/useFetch'
 import { RoomContext } from '../../../contexts/RoomContext'
