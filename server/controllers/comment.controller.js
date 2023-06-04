@@ -59,7 +59,7 @@ export const deleteComment = async (req, res, next) => {
       }
     }
 
-    return next(createError(403, 'You only delete your own account!'));
+    return next(createError(403, 'You only delete your own comment!'));
   } catch (err) {
     next(err);
   }

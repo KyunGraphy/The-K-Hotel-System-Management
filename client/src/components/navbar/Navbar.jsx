@@ -1,5 +1,6 @@
 import { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios";
 import "./navbar.css"
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -25,11 +26,16 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const handleClickLogOutBtn = () => {
-    dispatch({
-      type: "LOGOUT",
-    });
-    navigate("/");
+  const handleClickLogOutBtn = async () => {
+    try {
+      await axios.get("/auth/logout")
+      dispatch({
+        type: "LOGOUT",
+      });
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

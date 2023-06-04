@@ -1,12 +1,14 @@
 import { BsFillSendFill } from "react-icons/bs";
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Alert from "../alert/Alert";
 
 const CommentMsg = ({ reFetch }) => {
   const [openRating, setOpenRating] = useState(false);
   const [rating, setRating] = useState(5)
   const [comment, setComment] = useState("")
+  const [errMsg, setErrMsg] = useState("");
   const params = useParams()
 
   const handleRating = (number) => {
@@ -23,12 +25,20 @@ const CommentMsg = ({ reFetch }) => {
       await axios.post(`/comment/${params.id}`, cmtForm)
       reFetch()
     } catch (err) {
-      console.log(err);
+      if (err.response.data.message === 'You are not authenticated!') {
+        setErrMsg('You have to login to send comment!');
+        setTimeout(function () {
+          setErrMsg('');
+        }, 3000)
+      } else {
+        setErrMsg('Something went wrong!');
+      }
     }
   }
 
   return (
     <div className="hotelCommentMsg">
+      <Alert msg={errMsg} type="danger" />
       <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
         <input
           type="text"

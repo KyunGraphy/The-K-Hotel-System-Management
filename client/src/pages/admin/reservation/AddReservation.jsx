@@ -8,6 +8,7 @@ import { RoomContext } from '../../../contexts/RoomContext';
 import axios from 'axios';
 import Alert from '../../../components/alert/Alert';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
+import { useNavigate } from 'react-router-dom';
 
 const AddReservation = ({ setAddNewReserve }) => {
   const [dateRange, setDateRange] = useState(0.6)
@@ -59,6 +60,7 @@ const AddReservation = ({ setAddNewReserve }) => {
   }, [date])
 
   const { hotelId, dispatch } = useContext(RoomContext)
+  const navigate = useNavigate()
   const { data, loading } = useFetch("/hotel")
   const department = data.filter(item => item._id === hotelId) || null
 
@@ -98,7 +100,11 @@ const AddReservation = ({ setAddNewReserve }) => {
           setAddNewReserve(false)
         }, 3000)
       } catch (err) {
-        setErrMsg('Something went wrong!');
+        if (err.response.data.message === 'You are not authenticated!') {
+          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+        } else {
+          setErrMsg('Something went wrong!');
+        }
       }
     }
   }

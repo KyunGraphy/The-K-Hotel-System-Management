@@ -131,7 +131,11 @@ const Hotel = () => {
         await axios.post(`/reservation/${params.id}`, reservationForm)
         setSuccessMsg('Booking successfully!!');
       } catch (err) {
-        setErrMsg('Something went wrong!');
+        if (err.response.data.message === 'You are not authenticated!') {
+          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+        } else {
+          setErrMsg('Something went wrong!');
+        }
       }
     }
   };

@@ -22,6 +22,9 @@ const CommentBox = ({ item, reFetch }) => {
       reFetch()
     } catch (err) {
       setErrMsg(err.response.data.message);
+      setTimeout(function () {
+        setErrMsg('');
+      }, 3000)
     }
   };
 
