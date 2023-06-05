@@ -62,7 +62,8 @@
   gap: 12px;
   flex-wrap: wrap;
   background-color: #fff;
-  border-bottom-left-radius: 4px;
+  border-top-left-radius: 1em;
+  border-bottom-left-radius: 1em;
   box-shadow: 5px 5px 18p;
 }
 

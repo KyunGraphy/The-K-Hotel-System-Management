@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
+import { RoomContext } from '../../../contexts/RoomContext';
 import Rooms from './Rooms'
 import './styles/rooms.css'
 
 import Statusbar from '../../../components/statusbar/Statusbar';
 import RoomDetails from './RoomDetails';
-import { RoomContext } from '../../../contexts/RoomContext';
 
 const RoomsMana = () => {
   const { roomId } = useContext(RoomContext)

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
-
-import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { RoomContext } from '../../../contexts/RoomContext';
+import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 
 const Room = ({ room }) => {
   const statusMap = {

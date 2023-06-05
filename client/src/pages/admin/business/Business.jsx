@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { RoomContext } from '../../../contexts/RoomContext';
 import Rooms from './Rooms'
 import './styles/business.css'
 
 import Statusbar from '../../../components/statusbar/Statusbar';
+import BusinessDetail from './BusinessDetail';
 
 const Business = () => {
+  const { roomId } = useContext(RoomContext)
+
   const roomsStatus = [
     {
       status: 'Available',
@@ -30,8 +34,14 @@ const Business = () => {
 
   return (
     <div className='business'>
-      <Statusbar roomsStatus={roomsStatus} />
-      <Rooms />
+      {roomId ? (
+        <BusinessDetail />
+      ) : (
+        <div>
+          <Statusbar roomsStatus={roomsStatus} />
+          <Rooms />
+        </div>
+      )}
     </div>
   )
 }

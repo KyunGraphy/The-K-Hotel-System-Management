@@ -28,3 +28,10 @@
   background: #384e71;
   color: #fff;
 }
+
+.roomService {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin: auto 1em;
+}
