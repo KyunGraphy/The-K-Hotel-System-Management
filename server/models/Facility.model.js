@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
 const FacilitySchema = new mongoose.Schema({
-  facilityName: {
+  name: {
+    type: String,
+    required: true,
+  },
+  img: {
     type: String,
     required: true,
   },

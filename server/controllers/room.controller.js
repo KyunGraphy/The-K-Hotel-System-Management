@@ -68,3 +68,40 @@ export const deleteRooms = async (req, res, next) => {
     next(err);
   }
 };
+
+export const updateFacility = async (req, res, next) => {
+  try {
+    const roomFacility = await Room.findById(req.params.roomId);
+    const facilityExisted = roomFacility.facility.some(item => item.facilityId === req.body.facilityId)
+
+    if (facilityExisted) {
+      const facilityQuantity = roomFacility.facility.filter(item => item.facilityId === req.body.facilityId)[0].quantity
+
+      const newFacility = {
+        ...req.body,
+        quantity: req.body.quantity + facilityQuantity,
+      }
+
+      // Remove existing facility
+      await Room.findByIdAndUpdate(
+        req.params.roomId,
+        { $pull: { facility: { facilityId: req.body.facilityId } } }
+      )
+      // Update quantity of the previous facility
+      await Room.findByIdAndUpdate(
+        req.params.roomId,
+        { $push: { facility: newFacility } },
+      )
+    } else {
+      await Room.findByIdAndUpdate(
+        req.params.roomId,
+        { $push: { facility: req.body } },
+      )
+    }
+    res.status(200).json({
+      message: "Room's facility updated successfully",
+    })
+  } catch (err) {
+    next(err);
+  }
+};

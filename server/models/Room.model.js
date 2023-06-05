@@ -24,6 +24,16 @@ const RoomSchema = new mongoose.Schema(
     },
     unavailableDate: {
       type: [Number],
+    },
+    facility: {
+      type: [{
+        facilityId: {
+          type: String,
+        },
+        quantity: {
+          type: Number,
+        }
+      }],
     }
   },
   { timestamps: true }

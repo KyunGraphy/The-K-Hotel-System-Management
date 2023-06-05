@@ -10,6 +10,7 @@ import hotelRoute from "./routes/hotel.route.js";
 import roomRoute from "./routes/room.route.js";
 import commentRoute from "./routes/comment.route.js";
 import reservationRoute from "./routes/reservation.route.js";
+import facilityRoute from "./routes/facility.route.js";
 
 const app = express();
 dotenv.config();
@@ -43,6 +44,7 @@ app.use('/api/hotel', hotelRoute)
 app.use('/api/room', roomRoute)
 app.use('/api/comment', commentRoute)
 app.use('/api/reservation', reservationRoute)
+app.use('/api/facility', facilityRoute)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
