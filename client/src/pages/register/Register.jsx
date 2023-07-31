@@ -9,6 +9,7 @@ import Alert from '../../components/alert/Alert';
 const Register = () => {
   const { data, loading } = useFetch('https://restcountries.com/v3.1/all?fields=name,flags')
   const navigate = useNavigate()
+  const COUNTRY_LIST = data.sort((a, b) => a.name.common.localeCompare(b.name.common))
 
   const [error, setError] = useState(null)
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -193,7 +194,7 @@ const Register = () => {
                     />
                     <label>Country</label>
                     {openCountryOptions && (<div className='countryOptions'>
-                      {data.map((item, index) => (
+                      {COUNTRY_LIST.map((item, index) => (
                         <p
                           key={index}
                           onClick={() => handleNation(item.name.common, item.flags.png)}

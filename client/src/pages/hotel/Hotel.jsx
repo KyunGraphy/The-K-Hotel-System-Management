@@ -30,6 +30,8 @@ const Hotel = () => {
   const params = useParams()
   const location = useLocation();
 
+  const { dispatch } = useContext(AuthContext)
+
   const today = new Date();
   today.setHours(0)
   today.setMinutes(0)
@@ -132,7 +134,15 @@ const Hotel = () => {
         setSuccessMsg('Booking successfully!!');
       } catch (err) {
         if (err.response.data.message === 'You are not authenticated!') {
-          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+          try {
+            await axios.get("/auth/logout")
+            dispatch({
+              type: "LOGOUT",
+            });
+            navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+          } catch (err) {
+            console.error(err);
+          }
         } else {
           setErrMsg('Something went wrong!');
         }
