@@ -5,6 +5,14 @@ import axios from "axios";
 import './login.css';
 import Alert from '../../components/alert/Alert';
 
+// ----------------------------------------------------------------
+const USERNAME = 'Username';
+const PASSWORD = 'Password';
+const REMEMBER_ME = 'Remember me';
+const FORGOT_PASSWORD = 'Forgot Password?';
+const REGISTER = 'Register';
+
+// ----------------------------------------------------------------
 const Login = () => {
   const [credentials, setCredentials] = useState({
     username: undefined,
@@ -51,6 +59,7 @@ const Login = () => {
       {error && <Alert msg={error} type="danger" />}
       {location.state?.errMsg && <Alert msg={location.state.errMsg} type="danger" />}
       {location.state?.successMsg && <Alert msg={location.state.successMsg} type="success" />}
+
       <div className='loginWrapper'>
         <Link to='/'>
           <span className="iconClose">
@@ -71,7 +80,7 @@ const Login = () => {
                 autoComplete='off'
                 required
               />
-              <label>Username</label>
+              <label>{USERNAME}</label>
             </div>
             <div className="inputBox">
               <span className="icon">
@@ -83,11 +92,11 @@ const Login = () => {
                 onChange={handleChange}
                 required
               />
-              <label>Password</label>
+              <label>{PASSWORD}</label>
             </div>
             <div className="rememberForgot">
-              <label><input type="checkbox" /> Remember me</label>
-              <Link to='#'>Forgot Password?</Link>
+              <label><input type="checkbox" /> {REMEMBER_ME}</label>
+              <Link to='#'>{FORGOT_PASSWORD}</Link>
             </div>
             <button
               type="submit"
@@ -95,10 +104,16 @@ const Login = () => {
               disabled={loading}
               onClick={handleLogin}
             >
-              Login
+              {loading ? (
+                <h5>
+                  <i>"In progress, please wait..."</i>
+                </h5>
+              ) : (
+                "Login"
+              )}
             </button>
             <div className="loginRegister">
-              <p>Don't have an account? <Link to='/register' className="registerLink">Register</Link></p>
+              <p>Don't have an account? <Link to='/register' className="registerLink">{REGISTER}</Link></p>
             </div>
           </div>
         </div>

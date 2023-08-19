@@ -1,12 +1,83 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import ScrollTop from '../../components/scrollTop/ScrollTop'
-import Sidebar from '../../components/sidebar/Sidebar'
 import './admin.css'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import {
+  Box,
+  styled,
+  AppBar as MuiAppBar,
+  IconButton,
+  Drawer,
+  useTheme,
+  Divider,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '../../constants/mui-components.jsx'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import MenuIcon from '@mui/icons-material/Menu';
+import { CssBaseline } from '@mui/material'
+import { MANAGEMENT_ITEMS } from '../../constants/Constant'
 
+// ----------------------------------------------------------------
+const drawerWidth = 240;
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+// ----------------------------------------------------------------
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
+
+// ----------------------------------------------------------------
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
+
+// ----------------------------------------------------------------
 const Admin = () => {
+  const [open, setOpen] = useState(false);
   const [showGoToTop, setShowGoToTop] = useState();
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const managementItems = MANAGEMENT_ITEMS;
 
   useEffect(() => {
     const handleShowScrollToTop = () => {
@@ -20,13 +91,74 @@ const Admin = () => {
     }
   }, [])
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div className='admin'>
-      <Navbar role='admin' />
-      <div className='adminBody'>
-        <Sidebar />
-        <Outlet />
-      </div>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              mr: 2, ...(open && { display: 'none' }),
+              position: 'fixed',
+              top: '0.75em',
+              left: '3em',
+              zIndex: '1010',
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Navbar role='admin' />
+        </AppBar>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {managementItems.map((item, index) => (
+              <ListItem
+                key={index}
+                disablePadding
+                onClick={() => navigate(item.url)}
+              >
+                <ListItemButton>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        <Main open={open}>
+          <DrawerHeader />
+          <Outlet />
+        </Main>
+      </Box>
       {showGoToTop && (
         <ScrollTop />
       )}

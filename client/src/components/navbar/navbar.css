@@ -1,95 +1,96 @@
 .navbar {
-  height: 80px;
-  background-color: #384e71;
-  position: sticky;
-  top: 0px;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
+    min-width: 100%;
+    height: 80px;
+    background-color: #384e71;
+    position: sticky;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
 }
 
 .navContainer {
-  width: 100%;
-  max-width: 1024px;
-  margin: 0 1em;
-  color: #e0e4cc;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 1em;
+    color: #e0e4cc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 20px;
-  cursor: pointer;
-  width: 70px;
-  height: 70px;
-  background: url("../../assets/logo.jpg") no-repeat;
-  background-size: cover;
-  background-position: center;
-  border-radius: 15px 32px;
+    font-weight: bold;
+    font-size: 20px;
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+    background: url("../../assets/logo.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 15px 32px;
 }
 
 .navButton {
-  margin-left: 20px;
-  width: 100px;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  padding: 5px 10px;
-  cursor: pointer;
-  color: #384e71;
+    margin-left: 20px;
+    width: 100px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: #384e71;
 }
 
 .navUser {
-  position: relative;
+    position: relative;
 }
 
 .navUserRole {
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  text-transform: capitalize;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: capitalize;
 }
 
 .navUserOptions {
-  position: absolute;
-  width: max-content;
-  top: 56px;
-  right: 0px;
-  background-color: #384e71;
-  color: #fff;
-  border-radius: 4px;
+    position: absolute;
+    width: max-content;
+    top: 56px;
+    right: 0px;
+    background-color: #384e71;
+    color: #fff;
+    border-radius: 4px;
 }
 
 .navUserOptions > p {
-  position: relative;
-  color: #febb02;
-  margin: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 6px 32px 6px 6px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-  cursor: pointer;
+    position: relative;
+    color: #febb02;
+    margin: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 6px 32px 6px 6px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .navUserOptions > p:hover {
-  background: #febb02;
-  color: #384e71;
+    background: #febb02;
+    color: #384e71;
 }
 
 .navUserOptionsAfter::after {
-  content: " ";
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 1px;
-  background: #e0e4cc;
-  border-radius: 5px;
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1px;
+    background: #e0e4cc;
+    border-radius: 5px;
 }
 
 .navUserOptions > p > ion-icon {
-  margin-right: 8px;
+    margin-right: 8px;
 }
