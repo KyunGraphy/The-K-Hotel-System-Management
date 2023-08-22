@@ -5,6 +5,7 @@ import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import AddReservation from './AddReservation';
 
+// ----------------------------------------------------------------
 const ReservationMana = () => {
   const [addNewReserve, setAddNewReserve] = useState(false);
 
@@ -19,17 +20,20 @@ const ReservationMana = () => {
     <div className='reservation'>
       <h2>Reservation</h2>
       {loading ? (
-        <>Please wait...</>
+        <React.Fragment>Please wait...</React.Fragment>
       ) : (
-        <>
+        <React.Fragment>
           {addNewReserve ? (
             <AddReservation setAddNewReserve={setAddNewReserve} />
           ) : (
-            <>
+            <React.Fragment>
               <div className='reservationTools'>
                 <div>
                   <label>Department: </label>
-                  <select style={{ outline: 'none' }} onChange={handleSetHotel}>
+                  <select
+                    style={{ outline: 'none' }}
+                    onChange={handleSetHotel}
+                  >
                     <option selected value='' disabled>---</option>
                     {
                       data.map(item => (
@@ -45,13 +49,15 @@ const ReservationMana = () => {
                 <div
                   className='addNewBtn'
                   onClick={() => setAddNewReserve(true)}
-                >Add New</div>
+                >
+                  Add new
+                </div>
               </div>
               <ReservationTable />
-            </>
+            </React.Fragment>
           )}
 
-        </>
+        </React.Fragment>
       )}
     </div>
   )

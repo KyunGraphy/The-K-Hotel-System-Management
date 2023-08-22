@@ -6,15 +6,20 @@ import Alert from '../../../components/alert/Alert'
 import useFetch from '../../../hooks/useFetch';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 
+// ----------------------------------------------------------------
 const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
   const [roomFound, setRoomFound] = useState([]);
-  const [assignLoading, setAssignLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  const { data, loading, reFetch } = useFetch(`/hotel/room/${reserve.hotelID}`);
+  const { data, loading: dataLoading, reFetch } = useFetch(`/hotel/room/${reserve.hotelID}`);
 
   const handleAssignRoom = async (roomId) => {
-    setAssignLoading(true)
+    if (date[0].endDate < new Date()) {
+      setErrMsg("The reservation has expired")
+      return
+    }
+    setLoading(true)
     try {
       await axios.post(`/reservation/assign/${reserve._id}`, {
         reserveId: reserve._id,
@@ -27,11 +32,18 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
     } catch (err) {
       setErrMsg("Assign rooms failed")
     }
-    setAssignLoading(false)
+    setLoading(false)
   };
 
   const handleRemoveRoom = async (roomId) => {
-    setAssignLoading(true)
+    if (date[0].endDate < new Date()) {
+      setErrMsg("The reservation has expired")
+      setTimeout(function () {
+        setErrMsg('');
+      }, 3000)
+      return
+    }
+    setLoading(true)
     try {
       await axios.post(`/reservation/remove/${reserve._id}`, {
         reserveId: reserve._id,
@@ -44,7 +56,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
     } catch (err) {
       setErrMsg("Remove rooms failed")
     }
-    setAssignLoading(false)
+    setLoading(false)
   };
 
   const getDatesInRange = (startDate, endDate) => {
@@ -60,9 +72,10 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
     return dates;
   };
 
-  const allDates = getDatesInRange(date[0].startDate, date[0].endDate)
 
   useEffect(() => {
+    const allDates = getDatesInRange(date[0].startDate, date[0].endDate)
+
     if (data.length !== 0) {
       setRoomFound(data.filter(item => !(
         item.unavailableDate.some(date => (
@@ -70,12 +83,12 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
         ))
       )))
     }
-  }, [data])
+  }, [data, date])
 
   return (
     <div className='reservationAvailableRoom'>
-      {assignLoading && (<div className='loadingSection'>
-        <p>Please wait...</p>
+      {loading && (<div className='loadingSection'>
+        <React.Fragment>Please wait...</React.Fragment>
       </div>)}
       <Alert msg={errMsg} type="danger" />
       <Alert msg={successMsg} type="success" />
@@ -89,8 +102,8 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
           <p></p>
         </div>
         <section>
-          {loading ? (
-            <>
+          {dataLoading ? (
+            <React.Fragment>
               <div className="listSkeleton">
                 <p><Skeleton width={120} height={120} circle="true" /></p>
                 <p><Skeleton count={5} /></p>
@@ -99,9 +112,9 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
                 <p><Skeleton width={120} height={120} circle="true" /></p>
                 <p><Skeleton count={5} /></p>
               </div>
-            </>
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment>
               {data.map(item => (
                 reserve.rooms.includes(item._id) && (<div
                   key={item._id}
@@ -121,7 +134,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
                   </p>
                 </div>)
               ))}
-            </>
+            </React.Fragment>
           )}
         </section>
       </div>
@@ -135,8 +148,8 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
           <p></p>
         </div>
         <section>
-          {loading ? (
-            <>
+          {dataLoading ? (
+            <React.Fragment>
               <div className="listSkeleton">
                 <p><Skeleton width={120} height={120} circle="true" /></p>
                 <p><Skeleton count={5} /></p>
@@ -145,9 +158,9 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
                 <p><Skeleton width={120} height={120} circle="true" /></p>
                 <p><Skeleton count={5} /></p>
               </div>
-            </>
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment>
               {roomFound.map(item => (
                 <div
                   key={item._id}
@@ -167,7 +180,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
                   </p>
                 </div>
               ))}
-            </>
+            </React.Fragment>
           )}
         </section>
       </div>

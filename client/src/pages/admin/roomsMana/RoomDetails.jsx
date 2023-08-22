@@ -9,14 +9,15 @@ import { TbAirConditioningDisabled } from "react-icons/tb";
 import { RoomContext } from '../../../contexts/RoomContext';
 import useFetch from '../../../hooks/useFetch';
 
+// ----------------------------------------------------------------
 const RoomDetails = () => {
-  const [unavaiDate, setUnvaiDate] = useState([]);
+  const [unavaiDate, setUnavaiDate] = useState([]);
   const { roomId, dispatch } = useContext(RoomContext)
   const { data, loading } = useFetch(`/room/${roomId}`)
 
   useEffect(() => {
     if (data.length !== 0) {
-      setUnvaiDate(data.unavailableDate);
+      setUnavaiDate(data.unavailableDate);
     }
   }, [data])
 
@@ -24,7 +25,7 @@ const RoomDetails = () => {
   // const handleSelect = (item) => {
   //   let newunavaiDate = [...unavaiDate, item.getTime()]
   //   console.log(item.getTime()); // native Date object
-  //   setUnvaiDate(newunavaiDate);
+  //   setUnavaiDate(newunavaiDate);
   // }
   // console.log(unavaiDate);
   // console.log(data.unavailableDate);
@@ -36,14 +37,18 @@ const RoomDetails = () => {
   return (
     <div className='roomsDetails'>
       {loading ? (
-        <>Please wait...</>
+        <React.Fragment>Please wait...</React.Fragment>
       ) : (
-        <>
-          <IoArrowBackCircle
+        <React.Fragment>
+          <div
             className='backIcon'
             onClick={removeRoom}
-          />
-          <h2 className='roomNumber'>Room {data.number}</h2>
+          >
+            <IoArrowBackCircle />
+            Back
+          </div>
+
+          <h1 className='roomNumber'>Room {data.number}</h1>
           <div className='roomBlock'>
             <div className='roomInfo'>
               <p>Room number:
@@ -102,7 +107,7 @@ const RoomDetails = () => {
               />
             </div>
           </div>
-        </>
+        </React.Fragment>
       )}
     </div>
   )

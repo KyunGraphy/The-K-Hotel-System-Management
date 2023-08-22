@@ -1,13 +1,16 @@
 import { createContext, useReducer } from "react"
 
+// ----------------------------------------------------------------
 const INITIAL_STATE = {
   hotelId: null,
   roomId: null,
   roomSearch: "",
 }
 
+// ----------------------------------------------------------------
 export const RoomContext = createContext(INITIAL_STATE);
 
+// ----------------------------------------------------------------
 const RoomReducer = (state, action) => {
   switch (action.type) {
     case "SET_ROOM":
@@ -36,6 +39,7 @@ const RoomReducer = (state, action) => {
   }
 }
 
+// ----------------------------------------------------------------
 export const RoomProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RoomReducer, INITIAL_STATE)
 

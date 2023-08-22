@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import Alert from '../../../components/alert/Alert';
 
+// ----------------------------------------------------------------
 const ReservationTable = () => {
   const [confirmForm, setConfirmForm] = useState(false);
   const [delReservationId, setDelReservationId] = useState(undefined);
@@ -35,12 +36,14 @@ const ReservationTable = () => {
 
   return (
     <div className='reservationTable'>
-      {confirmForm && <ConfirmBox
-        msg='Do you want to delete this reservation'
-        type='delete'
-        callBack={handleDeleteReservation}
-        cancelFunc={() => setConfirmForm(false)}
-      />}
+      {confirmForm && (
+        <ConfirmBox
+          msg='Do you want to delete this reservation'
+          type='delete'
+          callBack={handleDeleteReservation}
+          cancelFunc={() => setConfirmForm(false)}
+        />
+      )}
       <Alert msg={successMsg} type="success" />
       <div className='reservationHeader'>
         <p>User Name</p>
@@ -52,15 +55,18 @@ const ReservationTable = () => {
       </div>
       <section>
         {loading ? (
-          <>Please wait...</>
+          <React.Fragment>Please wait...</React.Fragment>
         ) : (
-          <>
+          <React.Fragment>
             {(data.length === 0) ? (
-              <>No reservation found</>
+              <React.Fragment>No reservation found</React.Fragment>
             ) : (
-              <>
+              <React.Fragment>
                 {data.map(item => (
-                  <div key={item._id} className='reservationData'>
+                  <div
+                    key={item._id}
+                    className='reservationData'
+                  >
                     <p>{item.name}</p>
                     <p>{item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room</p>
                     <p>{item.adult} Adult <br /> {item.children} Children</p>
@@ -71,18 +77,20 @@ const ReservationTable = () => {
                         className='viewBtn'
                         onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id } })}
                       >View</span>
-                      {item.rooms.length === 0 &&
+                      {item.rooms.length === 0 && (
                         <span
                           className='delBtn'
                           onClick={() => handleSetDeleteReservation(item._id)}
-                        >Delete</span>
-                      }
+                        >
+                          Delete
+                        </span>
+                      )}
                     </p>
                   </div>
                 ))}
-              </>
+              </React.Fragment>
             )}
-          </>
+          </React.Fragment>
         )}
       </section>
     </div>

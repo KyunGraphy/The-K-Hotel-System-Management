@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { RoomContext } from '../../../contexts/RoomContext';
 import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 
+// ----------------------------------------------------------------
 const Room = ({ room }) => {
   const statusMap = {
     'Available': 'bgGreen',

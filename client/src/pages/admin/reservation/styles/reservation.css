@@ -1,72 +1,73 @@
 .reservation {
-  min-height: calc(100vh - 80px);
-  width: 100%;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  padding: 12px;
-  background-color: #fff;
-  box-shadow: 5px 5px 18px #888888;
+    position: relative;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: 5px 5px 18px #888888;
 }
 
 .reservation > h2 {
-  text-align: center;
-  text-transform: uppercase;
-  padding: 0.5em 0;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0.5em 0;
 }
 
 .reservationTools {
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .delReservation {
-  font-weight: 500;
-  color: #800000;
-  border: 1px solid #800000;
-  border-radius: 4px;
-  padding: 4px 12px;
-  transition: all 0.4s ease;
-  cursor: pointer;
+    font-weight: 500;
+    color: #800000;
+    border: 1px solid #800000;
+    border-radius: 4px;
+    padding: 4px 12px;
+    transition: all 0.4s ease;
+    cursor: pointer;
 }
 
 .delReservation:hover {
-  background: #800000;
-  color: #fff;
+    background: #800000;
+    color: #fff;
 }
 
 /* Reservation Table */
 .reservationHeader {
-  display: flex;
-  padding: 12px 8px;
-  font-style: italic;
-  font-weight: 600;
-  color: #fff;
-  background: #384e71;
+    display: flex;
+    padding: 12px 8px;
+    font-style: italic;
+    font-weight: 600;
+    color: #fff;
+    background: #384e71;
 }
 
 .reservationHeader > p {
-  padding-left: 24px;
-  width: 25%;
+    padding-left: 24px;
+    width: 25%;
 }
 
 .reservationData {
-  display: flex;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: 600;
-  color: #384e71;
-  border: 1px solid #384e71;
-  border-top: none;
+    display: flex;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    color: #384e71;
+    border: 1px solid #384e71;
+    border-top: none;
 }
 
 .reservationData > p {
-  position: relative;
-  padding: 8px 0 8px 12px;
-  width: 25%;
-  background: #fff;
-  border-left: 1px solid #384e71;
+    position: relative;
+    padding: 8px 0 8px 12px;
+    width: 25%;
+    background: #fff;
+    border-left: 1px solid #384e71;
 }
 
 /* .reservationData > p::after {
@@ -81,102 +82,102 @@
 } */
 
 .actBtn {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .viewBtn,
 .delBtn,
 .cancelBtn {
-  width: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.4s ease;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
 .viewBtn {
-  color: #008009;
-  border: 1px solid #008009;
+    color: #008009;
+    border: 1px solid #008009;
 }
 
 .viewBtn:hover {
-  color: #fff;
-  background: #008009;
+    color: #fff;
+    background: #008009;
 }
 
 .delBtn {
-  color: #800000;
-  border: 1px solid #800000;
+    color: #800000;
+    border: 1px solid #800000;
 }
 
 .delBtn:hover {
-  color: #fff;
-  background: #800000;
+    color: #fff;
+    background: #800000;
 }
 
 .cancelBtn {
-  color: #555;
-  border: 1px solid #555;
+    color: #555;
+    border: 1px solid #555;
 }
 
 .cancelBtn:hover {
-  color: #fff;
-  background: #555;
+    color: #fff;
+    background: #555;
 }
 
 .assBtn {
-  width: 40%;
-  padding: 0.5em 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #384e71;
-  background: #febb02;
+    width: 40%;
+    padding: 0.5em 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #384e71;
+    background: #febb02;
 }
 
 .reservationForm {
-  display: flex;
-  justify-content: space-around;
-  gap: 2em;
+    display: flex;
+    justify-content: space-around;
+    gap: 2em;
 }
 
 .reservationForm > div {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
 }
 
 .addNewBtn {
-  text-align: center;
+    text-align: center;
 }
 
 .reservationRoom {
-  margin-top: 3em;
-  padding: 0 3em;
+    margin-top: 3em;
+    padding: 0 3em;
 }
 
 .reservationAvailableRoom > div {
-  margin: 2em 0;
+    margin: 2em 0;
 }
 
 .loadingSection {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 1.8em;
-  font-weight: 500;
-  letter-spacing: 1px;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.75);
-  z-index: 100;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.8em;
+    font-weight: 500;
+    letter-spacing: 1px;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 100;
 }

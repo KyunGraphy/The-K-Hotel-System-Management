@@ -1,15 +1,12 @@
 import React, { useContext, useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './statusbar.css'
 import useFetch from '../../hooks/useFetch';
 import { RoomContext } from '../../contexts/RoomContext';
 
-const Statusbar = ({ roomsStatus }) => {
-  const location = useLocation();
-  const page = location.pathname.split('/')[2];
-
+// ----------------------------------------------------------------
+const Statusbar = ({ roomsStatus, hasAddBtn }) => {
   const { hotelId, dispatch } = useContext(RoomContext)
   const { loading, data } = useFetch("/hotel")
 
@@ -53,7 +50,10 @@ const Statusbar = ({ roomsStatus }) => {
             </div>
             <div className='statusbarDepartment'>
               <label htmlFor="floor">Department: </label>
-              <select className='statusbarFilter' onChange={handleSetHotel}>
+              <select
+                className='statusbarFilter'
+                onChange={handleSetHotel}
+              >
                 <option selected value='' disabled>---</option>
                 {
                   data.map(item => (
@@ -78,7 +78,7 @@ const Statusbar = ({ roomsStatus }) => {
           </div>
         </>
       )}
-      {(page === 'business') && <div className='addNewBtn'>Add New</div>}
+      {hasAddBtn && <div className='addNewBtn'>Add New</div>}
     </div>
   )
 }

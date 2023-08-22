@@ -1,5 +1,6 @@
 export const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 
+// ----------------------------------------------------------------
 export const MANAGEMENT_ITEMS = [
   {
     name: 'Home Page',
@@ -42,3 +43,27 @@ export const MANAGEMENT_ITEMS = [
     url: '/admin/procurement',
   },
 ]
+
+// ----------------------------------------------------------------
+export const roomsStatus = [
+  {
+    status: 'Available',
+    bg: '#32CD32',
+  },
+  {
+    status: 'Booked',
+    bg: '#ff0000',
+  },
+  {
+    status: 'Using',
+    bg: '#FF8C00',
+  },
+  // {
+  //   status: 'Check Out',
+  //   bg: '#5d4b63',
+  // },
+  {
+    status: 'Maintenance',
+    bg: '#737373',
+  },
+];

@@ -5,32 +5,11 @@ import './styles/business.css'
 
 import Statusbar from '../../../components/statusbar/Statusbar';
 import BusinessDetail from './BusinessDetail';
+import { roomsStatus } from '../../../constants/Constant';
 
+// ----------------------------------------------------------------
 const Business = () => {
   const { roomId } = useContext(RoomContext)
-
-  const roomsStatus = [
-    {
-      status: 'Available',
-      bg: '#32CD32',
-    },
-    {
-      status: 'Booked',
-      bg: '#ff0000',
-    },
-    {
-      status: 'Using',
-      bg: '#FF8C00',
-    },
-    // {
-    //   status: 'Check Out',
-    //   bg: '#5d4b63',
-    // },
-    {
-      status: 'Maintenance',
-      bg: '#737373',
-    },
-  ];
 
   return (
     <div className='business'>
@@ -38,7 +17,7 @@ const Business = () => {
         <BusinessDetail />
       ) : (
         <div>
-          <Statusbar roomsStatus={roomsStatus} />
+          <Statusbar roomsStatus={roomsStatus} hasAddBtn={true} />
           <Rooms />
         </div>
       )}

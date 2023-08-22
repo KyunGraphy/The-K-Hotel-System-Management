@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { DateRange } from "react-date-range";
 import { IoArrowBackCircle, IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { MdEmojiPeople } from "react-icons/md";
@@ -11,6 +10,7 @@ import { MILLISECONDS_PER_DAY } from '../../../constants/Constant'
 import useFetch from '../../../hooks/useFetch';
 import AvailableRoom from './AvailableRoom';
 
+// ----------------------------------------------------------------
 const ViewReservation = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -40,18 +40,21 @@ const ViewReservation = () => {
 
   return (
     <div className='reservation'>
-      <IoArrowBackCircle
+      <div
         className='backIcon'
         onClick={() => navigate('/admin/reservation')}
-      />
+      >
+        <IoArrowBackCircle />
+        Back
+      </div>
       <h2>Reservation Information</h2>
       <div className='reservationForm'>
         {loading ? (
-          <>
+          <React.Fragment>
             <p><Skeleton width={1024} height={240} /></p>
-          </>
+          </React.Fragment>
         ) : (
-          <>
+          <React.Fragment>
             <div>
               <div className="inputBox">
                 <input
@@ -143,7 +146,7 @@ const ViewReservation = () => {
                 <b>${dateRange * (data.singleRoom * 30 + data.doubleRoom * 50)}</b> ({dateRange} days)
               </h2>
             </div>
-          </>
+          </React.Fragment>
         )}
       </div>
       <div className='reservationRoom'>
@@ -151,7 +154,12 @@ const ViewReservation = () => {
           className='viewBtn'
           onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
         >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</div>
-        {openAvailableRoom && <AvailableRoom reserve={data} date={date} reFetchReservation={reFetch} />}
+        {openAvailableRoom && (
+          <AvailableRoom
+            reserve={data}
+            date={date}
+            reFetchReservation={reFetch}
+          />)}
       </div>
     </div>
   )
