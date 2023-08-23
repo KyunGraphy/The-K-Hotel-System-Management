@@ -11,5 +11,8 @@ export default function Alert({ msg, type }) {
             }, 3000);
         }
     }, [msg]);
-    return <>{show && <div className={`alert alert-${type}`}>{msg}</div>}</>;
+
+    return (
+        <React.Fragment>{show && <div className={`alert alert-${type}`}>{msg}</div>}</React.Fragment>
+    )
 }

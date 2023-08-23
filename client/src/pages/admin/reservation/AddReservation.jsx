@@ -6,10 +6,10 @@ import { MdEmojiPeople } from "react-icons/md";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import axios from 'axios';
-import Alert from '../../../components/alert/Alert';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 import { useNavigate } from 'react-router-dom';
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate';
+import { Toastify } from '../../../components/toastify/Toastify';
 
 // ----------------------------------------------------------------
 const AddReservation = ({ setAddNewReserve }) => {
@@ -85,19 +85,19 @@ const AddReservation = ({ setAddNewReserve }) => {
       setErrMsg("Single room or Double room must be better than 0")
       setTimeout(function () {
         setErrMsg('');
-      }, 3000)
+      }, 10000)
       return;
     } else if (hotelId === null) {
       setErrMsg("Please select hotel");
       setTimeout(function () {
         setErrMsg('');
-      }, 3000)
+      }, 10000)
       return;
     } else if (reservationForm.name === undefined) {
       setErrMsg("Please input name");
       setTimeout(function () {
         setErrMsg('');
-      }, 3000)
+      }, 10000)
       return;
     } else {
       try {
@@ -105,7 +105,7 @@ const AddReservation = ({ setAddNewReserve }) => {
         setSuccessMsg('Booking successfully!!');
         setTimeout(() => {
           setAddNewReserve(false)
-        }, 3000)
+        }, 10000)
       } catch (err) {
         if (err.response.data.message === 'You are not authenticated!') {
           navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
@@ -114,7 +114,7 @@ const AddReservation = ({ setAddNewReserve }) => {
           setErrMsg('Something went wrong!');
           setTimeout(function () {
             setErrMsg('');
-          }, 3000)
+          }, 10000)
         }
       }
     }
@@ -130,8 +130,8 @@ const AddReservation = ({ setAddNewReserve }) => {
         Back
       </div>
       <div className='reservationForm'>
-        <Alert msg={errMsg} type="danger" />
-        <Alert msg={successMsg} type="success" />
+        <Toastify msg={errMsg} type="error" />
+        <Toastify msg={successMsg} type="success" />
         {loading ? (
           <React.Fragment>Please wait...</React.Fragment>
         ) : (

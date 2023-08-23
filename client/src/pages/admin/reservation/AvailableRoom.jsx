@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import Alert from '../../../components/alert/Alert'
 import useFetch from '../../../hooks/useFetch';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
+import { Toastify } from '../../../components/toastify/Toastify';
 
 // ----------------------------------------------------------------
 const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
@@ -40,7 +40,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
       setErrMsg("The reservation has expired")
       setTimeout(function () {
         setErrMsg('');
-      }, 3000)
+      }, 10000)
       return
     }
     setLoading(true)
@@ -87,11 +87,13 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
 
   return (
     <div className='reservationAvailableRoom'>
-      {loading && (<div className='loadingSection'>
-        <React.Fragment>Please wait...</React.Fragment>
-      </div>)}
-      <Alert msg={errMsg} type="danger" />
-      <Alert msg={successMsg} type="success" />
+      {loading && (
+        <div className='loadingSection'>
+          <React.Fragment>Please wait...</React.Fragment>
+        </div>
+      )}
+      <Toastify msg={errMsg} type="error" />
+      <Toastify msg={successMsg} type="success" />
       <div>
         <h2>Assign Rooms</h2>
         <div className='reservationHeader'>

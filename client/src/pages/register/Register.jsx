@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
-import Alert from '../../components/alert/Alert';
+import { Toastify } from '../../components/toastify/Toastify';
 
 // ----------------------------------------------------------------
 const USERNAME = 'Username';
@@ -96,12 +96,12 @@ const Register = () => {
 
       setTimeout(function () {
         setError(null)
-      }, 3000);
+      }, 10000);
       return;
     }
     try {
       await axios.post("/auth/register", registerForm)
-      navigate("/login", { state: { successMsg: "Register successfully" } })
+      navigate("/login", { state: { congratMsg: "Register successfully" } })
     } catch (err) {
       setLoading(false);
       setError(err.response.data.message);
@@ -110,7 +110,7 @@ const Register = () => {
 
   return (
     <div className='registerContainer'>
-      {error && <Alert msg={error} type="danger" />}
+      {error && <Toastify msg={error} type="error" />}
       <div className='registerWrapper'>
         <Link to='/'>
           <span className="iconClose">

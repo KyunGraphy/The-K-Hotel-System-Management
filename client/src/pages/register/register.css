@@ -1,189 +1,189 @@
 .registerContainer {
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: url("../../assets/loginbg.jpg") no-repeat;
-  background-size: cover;
-  background-position: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("../../assets/loginbg.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .registerWrapper {
-  position: relative;
-  width: 700px;
-  height: 600px;
-  background: transparent;
-  border: 4px solid rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-  backdrop-filter: blur(32px);
-  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    position: relative;
+    width: 700px;
+    height: 600px;
+    background: transparent;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(32px);
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .registerWrapper .formBox {
-  width: 100%;
-  padding: 40px;
+    width: 100%;
+    padding: 40px;
 }
 
 .formField {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .registerWrapper .iconClose {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 45px;
-  height: 45px;
-  background: #162938;
-  font-size: 20px;
-  font-weight: bold;
-  color: #e0e4cc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom-left-radius: 20px;
-  cursor: pointer;
-  z-index: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 45px;
+    background: #162938;
+    font-size: 20px;
+    font-weight: bold;
+    color: #e0e4cc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
+    z-index: 1;
 }
 
 .formBox h2 {
-  font-size: 2em;
-  color: #162938;
-  text-align: center;
+    font-size: 2em;
+    color: #162938;
+    text-align: center;
 }
 
 .inputBox {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  border-bottom: 2px solid #162938;
-  margin: 30px 0;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
 }
 
 .inputBox label {
-  position: absolute;
-  top: 50%;
-  left: 5px;
-  transform: translateY(-50%);
-  font-size: 1em;
-  color: #162938;
-  font-weight: 500;
-  pointer-events: none;
-  transition: 0.5s;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.5s;
 }
 
 .inputBox input:focus ~ label,
 .inputBox input:valid ~ label {
-  top: -5px;
+    top: -5px;
 }
 
 .inputBox input {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  color: #162938;
-  font-weight: 600;
-  padding: 0 35px 0 5px;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
 }
 
 .inputBox .icon {
-  position: absolute;
-  right: 8px;
-  font-size: 1.2em;
-  color: #162938;
-  line-height: 57px;
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: #162938;
+    line-height: 57px;
 }
 
 .inputBox > .warning {
-  display: flex;
-  gap: 4px;
-  position: absolute;
-  bottom: -2.5em;
-  right: -1em;
-  align-items: center;
-  font-size: 12px;
-  padding: 0.5em;
-  color: #febb02;
-  background: rgba(22, 41, 56, 0.7);
-  border-radius: 4px;
+    display: flex;
+    gap: 4px;
+    position: absolute;
+    bottom: -2.5em;
+    right: -1em;
+    align-items: center;
+    font-size: 12px;
+    padding: 0.5em;
+    color: #febb02;
+    background: rgba(22, 41, 56, 0.7);
+    border-radius: 4px;
 }
 
 .agreeTerms {
-  font-size: 0.9em;
-  font-weight: 500;
-  color: #162938;
-  padding: 0.5em 2em;
-  margin: -15px 0 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #162938;
+    padding: 0.5em 2em;
+    margin: -15px 0 15px;
 }
 
 .agreeTerms label input {
-  accent-color: #162938;
-  margin-right: 3px;
+    accent-color: #162938;
+    margin-right: 3px;
 }
 
 .btn {
-  width: 100%;
-  height: 45px;
-  background: #162938;
-  border: none;
-  outline: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1em;
-  color: #fff;
-  font-weight: 500;
+    width: 100%;
+    height: 45px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 500;
 }
 
 .loginRegister {
-  font-size: 0.9em;
-  color: #162938;
-  text-align: center;
-  font-weight: 500;
-  margin: 25px 0 10px;
+    font-size: 0.9em;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
 }
 
 .loginRegister p a {
-  color: #162938;
-  text-decoration: none;
-  font-weight: 600;
+    color: #162938;
+    text-decoration: none;
+    font-weight: 600;
 }
 
 .loginRegister p a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* Select country options */
 .countryOptions {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.9);
-  margin-top: 4px;
-  max-height: 144px;
-  width: 100%;
-  border-bottom-left-radius: 12px;
-  overflow: auto;
-  z-index: 100;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.9);
+    margin-top: 4px;
+    max-height: 200px;
+    width: 100%;
+    border-bottom-left-radius: 12px;
+    overflow: auto;
+    z-index: 100;
 }
 
 .countryOptions > p {
-  padding: 0.5em;
-  transition: all 0.3s ease;
-  cursor: pointer;
+    padding: 0.5em;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .countryOptions > p:hover {
-  background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 
 .countryOptions > p > img {
-  height: 12px;
-  margin: 0 0.5em;
+    height: 12px;
+    margin: 0 0.5em;
 }

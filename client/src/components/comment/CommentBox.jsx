@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import useFetch from '../../hooks/useFetch'
-import Alert from '../alert/Alert'
 import RatingStars from './RatingStars'
 import Skeleton from 'react-loading-skeleton'
 import { BiDotsVertical } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
+import { Toastify } from '../toastify/Toastify'
 
 const CommentBox = ({ item, reFetch }) => {
   const [openCommentOption, setOpenCommentOption] = useState(false)
@@ -24,13 +24,13 @@ const CommentBox = ({ item, reFetch }) => {
       setErrMsg(err.response.data.message);
       setTimeout(function () {
         setErrMsg('');
-      }, 3000)
+      }, 10000)
     }
   };
 
   return (
     <div className='hotelCommentBox'>
-      <Alert msg={errMsg} type="danger" />
+      <Toastify msg={errMsg} type="error" />
       <img
         src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
         alt=''

@@ -2,7 +2,6 @@ import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import Alert from "../../components/alert/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -22,6 +21,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Rating from "../../components/searchItem/Rating";
 import Comment from "../../components/comment/Comment";
 import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
+import { Toastify } from "../../components/toastify/Toastify";
 
 const Hotel = () => {
   const [dateRange, setDateRange] = useState(0.6)
@@ -153,8 +153,8 @@ const Hotel = () => {
   return (
     <div>
       <Navbar />
-      <Alert msg={errMsg} type="danger" />
-      <Alert msg={successMsg} type="success" />
+      <Toastify msg={errMsg} type="error" />
+      <Toastify msg={successMsg} type="success" />
       <Header type="list" />
       <div className="hotelContainer">
         {open && (

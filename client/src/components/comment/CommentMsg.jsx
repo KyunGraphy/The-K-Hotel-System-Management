@@ -2,7 +2,7 @@ import { BsFillSendFill } from "react-icons/bs";
 import React, { useState } from 'react'
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Alert from "../alert/Alert";
+import { Toastify } from "../toastify/Toastify";
 
 const CommentMsg = ({ reFetch }) => {
   const [openRating, setOpenRating] = useState(false);
@@ -29,7 +29,7 @@ const CommentMsg = ({ reFetch }) => {
         setErrMsg('You have to login to send comment!');
         setTimeout(function () {
           setErrMsg('');
-        }, 3000)
+        }, 10000)
       } else {
         setErrMsg('Something went wrong!');
       }
@@ -38,7 +38,7 @@ const CommentMsg = ({ reFetch }) => {
 
   return (
     <div className="hotelCommentMsg">
-      <Alert msg={errMsg} type="danger" />
+      <Toastify msg={errMsg} type="error" />
       <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
         <input
           type="text"

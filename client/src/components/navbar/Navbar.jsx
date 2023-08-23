@@ -4,6 +4,7 @@ import axios from "axios";
 import "./navbar.css"
 import { AuthContext } from "../../contexts/AuthContext";
 
+// ----------------------------------------------------------------
 const Navbar = () => {
   const [openUserOptions, setOpenUserOptions] = useState(false);
 
@@ -46,29 +47,37 @@ const Navbar = () => {
         {user ? (
           <div className="navUser">
             <div className="navUserRole" onClick={handleUserOptions}>{user.name}</div>
-            {openUserOptions && <div className="navUserOptions">
-              <p className="navUserOptionsAfter">
-                <ion-icon name="person-outline"></ion-icon>
-                Profile
-              </p>
-              <p className="navUserOptionsAfter">
-                <ion-icon name="cart-outline"></ion-icon>
-                Reservation
-              </p>
-              <p className="navUserOptionsAfter">
-                <ion-icon name="settings-outline"></ion-icon>
-                Setting
-              </p>
-              <p onClick={handleClickLogOutBtn}>
-                <ion-icon name="log-out-outline"></ion-icon>
-                Log out
-              </p>
-            </div>}
+            {openUserOptions && (
+              <div className="navUserOptions">
+                <p className="navUserOptionsAfter">
+                  <ion-icon name="person-outline"></ion-icon>
+                  Profile
+                </p>
+                <p className="navUserOptionsAfter">
+                  <ion-icon name="cart-outline"></ion-icon>
+                  Reservation
+                </p>
+                <p className="navUserOptionsAfter">
+                  <ion-icon name="settings-outline"></ion-icon>
+                  Setting
+                </p>
+                <p onClick={handleClickLogOutBtn}>
+                  <ion-icon name="log-out-outline"></ion-icon>
+                  Log out
+                </p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="navItems">
-            <button className="navButton" onClick={handleClickRegBtn}>Register</button>
-            <button className="navButton" onClick={handleClickLoginBtn}>Login</button>
+            <button
+              className="navButton"
+              onClick={handleClickRegBtn}
+            >Register</button>
+            <button
+              className="navButton"
+              onClick={handleClickLoginBtn}
+            >Login</button>
           </div>
         )}
       </div>

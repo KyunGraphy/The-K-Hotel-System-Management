@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from '../../contexts/AuthContext';
 import axios from "axios";
 import './login.css';
-import Alert from '../../components/alert/Alert';
+import { Toastify } from '../../components/toastify/Toastify';
 
 // ----------------------------------------------------------------
 const USERNAME = 'Username';
@@ -44,6 +44,11 @@ const Login = () => {
       e.preventDefault()
     }
 
+    if (credentials.username === undefined || credentials.password === undefined) {
+      dispatch({ type: "LOGIN_FAILURE", payload: 'Please input username and password!' })
+      return;
+    }
+
     dispatch({ type: "LOGIN_START" })
     try {
       const res = await axios.post("/auth/login", credentials)
@@ -56,9 +61,9 @@ const Login = () => {
 
   return (
     <div className='loginContainer'>
-      {error && <Alert msg={error} type="danger" />}
-      {location.state?.errMsg && <Alert msg={location.state.errMsg} type="danger" />}
-      {location.state?.successMsg && <Alert msg={location.state.successMsg} type="success" />}
+      {error && <Toastify msg={error} type="error" />}
+      {location.state?.errMsg && <Toastify msg={location.state.errMsg} type="error" />}
+      {location.state?.congratMsg && <Toastify msg={location.state.congratMsg} type="congratulation" />}
 
       <div className='loginWrapper'>
         <Link to='/'>

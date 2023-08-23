@@ -5,7 +5,7 @@ import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import { useNavigate } from "react-router-dom";
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
-import Alert from '../../../components/alert/Alert';
+import { Toastify } from '../../../components/toastify/Toastify';
 
 // ----------------------------------------------------------------
 const ReservationTable = () => {
@@ -44,7 +44,7 @@ const ReservationTable = () => {
           cancelFunc={() => setConfirmForm(false)}
         />
       )}
-      <Alert msg={successMsg} type="success" />
+      <Toastify msg={successMsg} type="success" />
       <div className='reservationHeader'>
         <p>User Name</p>
         <p>Room type</p>
