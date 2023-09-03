@@ -8,6 +8,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
 import { Toastify } from '../toastify/Toastify'
 
+// ----------------------------------------------------------------
 const CommentBox = ({ item, reFetch }) => {
   const [openCommentOption, setOpenCommentOption] = useState(false)
   const [errMsg, setErrMsg] = useState("");
@@ -30,7 +31,7 @@ const CommentBox = ({ item, reFetch }) => {
 
   return (
     <div className='hotelCommentBox'>
-      <Toastify msg={errMsg} type="error" />
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <img
         src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
         alt=''

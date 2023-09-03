@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Toastify } from "../toastify/Toastify";
 
+// ----------------------------------------------------------------
 const CommentMsg = ({ reFetch }) => {
   const [openRating, setOpenRating] = useState(false);
   const [rating, setRating] = useState(5)
@@ -16,6 +17,15 @@ const CommentMsg = ({ reFetch }) => {
   };
 
   const handleSendComment = async () => {
+    if (comment === '') {
+      setErrMsg('Please type your comment before sending');
+
+      setTimeout(function () {
+        setErrMsg('')
+      }, 10000);
+      return;
+    }
+
     const cmtForm = {
       rating,
       description: comment
@@ -38,35 +48,47 @@ const CommentMsg = ({ reFetch }) => {
 
   return (
     <div className="hotelCommentMsg">
-      <Toastify msg={errMsg} type="error" />
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
-        <input
-          type="text"
+        <span
           className="starInput"
           id="rating"
-          placeholder={rating}
-          autoComplete="off"
-        />
-        <div className="hotelRating">
-          <ion-icon name="star"></ion-icon>
-        </div>
-        {openRating && (<div className='countryOptions'>
-          <p onClick={() => handleRating(5)} >
-            5<ion-icon name="star" style={{ color: '#febb02' }}></ion-icon>
-          </p>
-          <p onClick={() => handleRating(4)} >
-            4<ion-icon name="star" style={{ color: '#febb02' }}></ion-icon>
-          </p>
-          <p onClick={() => handleRating(3)} >
-            3<ion-icon name="star" style={{ color: '#febb02' }}></ion-icon>
-          </p>
-          <p onClick={() => handleRating(2)} >
-            2<ion-icon name="star" style={{ color: '#febb02' }}></ion-icon>
-          </p>
-          <p onClick={() => handleRating(1)} >
-            1<ion-icon name="star" style={{ color: '#febb02' }}></ion-icon>
-          </p>
-        </div>)}
+        >
+          {Array(rating).fill(null).map(index => (
+            <div className="hotelRating">
+              <ion-icon name="star"></ion-icon>
+            </div>
+          ))}
+        </span>
+        {openRating && (
+          <div className='countryOptions' style={{ top: '50px' }}>
+            <p onClick={() => handleRating(5)} >
+              {Array(5).fill(null).map(index => (
+                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+              ))}
+            </p>
+            <p onClick={() => handleRating(4)} >
+              {Array(4).fill(null).map(index => (
+                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+              ))}
+            </p>
+            <p onClick={() => handleRating(3)} >
+              {Array(3).fill(null).map(index => (
+                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+              ))}
+            </p>
+            <p onClick={() => handleRating(2)} >
+              {Array(2).fill(null).map(index => (
+                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+              ))}
+            </p>
+            <p onClick={() => handleRating(1)} >
+              {Array(1).fill(null).map(index => (
+                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+              ))}
+            </p>
+          </div>)
+        }
       </div>
 
       <div className="inputBox">

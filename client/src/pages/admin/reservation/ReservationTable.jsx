@@ -44,7 +44,7 @@ const ReservationTable = () => {
           cancelFunc={() => setConfirmForm(false)}
         />
       )}
-      <Toastify msg={successMsg} type="success" />
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <div className='reservationHeader'>
         <p>User Name</p>
         <p>Room type</p>

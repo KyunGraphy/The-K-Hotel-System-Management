@@ -1,3 +1,4 @@
+import React from 'react'
 import "./hotel.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
@@ -20,9 +21,12 @@ import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
 import Rating from "../../components/searchItem/Rating";
 import Comment from "../../components/comment/Comment";
-import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
 import { Toastify } from "../../components/toastify/Toastify";
+import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
+import { HOTELS_IMAGES } from '../../constants/Images';
 
+
+// ----------------------------------------------------------------
 const Hotel = () => {
   const [dateRange, setDateRange] = useState(0.6)
   const [errMsg, setErrMsg] = useState("");
@@ -87,15 +91,6 @@ const Hotel = () => {
     });
   }
 
-  const photos = [
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1", },
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1", },
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1", },
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1", },
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708693.jpg?k=ea210b4fa329fe302eab55dd9818c0571afba2abd2225ca3a36457f9afa74e94&o=&hp=1", },
-    { src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1", },
-  ];
-
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -153,8 +148,8 @@ const Hotel = () => {
   return (
     <div>
       <Navbar />
-      <Toastify msg={errMsg} type="error" />
-      <Toastify msg={successMsg} type="success" />
+      {errMsg && <Toastify msg={errMsg} type="error" />}
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <Header type="list" />
       <div className="hotelContainer">
         {open && (
@@ -170,7 +165,7 @@ const Hotel = () => {
               onClick={() => handleMove("l")}
             />
             <div className="sliderWrapper">
-              <img src={photos[slideNumber].src} alt="" className="sliderImg" />
+              <img src={HOTELS_IMAGES[slideNumber].src} alt="" className="sliderImg" />
             </div>
             <FontAwesomeIcon
               icon={faCircleArrowRight}
@@ -181,14 +176,14 @@ const Hotel = () => {
         )}
         <div className="hotelWrapper">
           {loading ? (
-            <>
+            <React.Fragment>
               <div className="listSkeleton">
                 <p><Skeleton width={120} height={120} circle="true" /></p>
                 <p><Skeleton count={5} /></p>
               </div>
-            </>
+            </React.Fragment>
           ) : (
-            <>
+            <React.Fragment>
               {/* <button className="bookNow">Reserve or Book Now!</button> */}
               <h1 className="hotelTitle">
                 {data.department}
@@ -205,7 +200,7 @@ const Hotel = () => {
                 {data.title}
               </span>
               <div className="hotelImages">
-                {photos.map((photo, i) => (
+                {HOTELS_IMAGES.map((photo, i) => (
                   <div className="hotelImgWrapper" key={i}>
                     <img
                       onClick={() => handleOpen(i)}
@@ -301,7 +296,7 @@ const Hotel = () => {
                   </div>
                 </div>
               </div>
-            </>
+            </React.Fragment>
           )}
         </div>
         <Footer />

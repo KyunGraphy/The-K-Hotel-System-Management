@@ -1,94 +1,98 @@
 .hotelComment {
-  margin: 2em 0;
+    margin: 2em 0;
 }
 
 .hotelComment > h3 {
-  padding: 1em;
+    padding: 1em;
 }
 
 .hotelCommentBox {
-  display: flex;
-  gap: 1em;
-  margin-top: 1em;
-  padding: 1em;
-  border: 2px solid rgb(56, 78, 113, 0.2);
-  border-radius: 1em;
-  box-shadow: 12px 12px 10px -8px rgba(0, 0, 0, 0.4);
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    padding: 1em;
+    border: 2px solid rgb(56, 78, 113, 0.2);
+    border-radius: 1em;
+    box-shadow: 12px 12px 10px -8px rgba(0, 0, 0, 0.4);
 }
 
 .hotelCommentContent {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
 }
 
 .hotelCommentTitle {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .hotelCommentTitle > div:nth-child(1) {
-  flex: 9;
+    flex: 9;
 }
 
 .hotelCommentTitle > div:nth-child(2) {
-  flex: 2;
-  color: #febb02;
+    flex: 2;
+    color: #febb02;
 }
 
 .hotelCommentTitle > div:nth-child(3) {
-  position: relative;
-  flex: 1;
-  font-size: 20px;
-  text-align: right;
-  cursor: pointer;
+    position: relative;
+    flex: 1;
+    font-size: 20px;
+    text-align: right;
+    cursor: pointer;
 }
 
 .hotelCommentTitle > div:nth-child(3) > div {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 2px 1em;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  background-color: #ccc;
-  color: #384e71;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 2px 1em;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: #ccc;
+    color: #384e71;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .hotelCommentTitle > div:nth-child(3) > div:hover {
-  cursor: pointer;
-  background-color: #a7dbd8;
-  color: #384e71;
+    cursor: pointer;
+    background-color: #a7dbd8;
+    color: #384e71;
 }
 
 .hotelCommentAvatar {
-  width: 2.5em;
-  height: 2.5em;
-  object-fit: cover;
-  border-radius: 50%;
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .hotelCommentMsg {
-  display: flex;
-  gap: 0.5em;
+    display: flex;
+    gap: 0.5em;
 }
 
 .hotelCommentMsg > div:nth-child(1) {
-  flex: 1;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hotelCommentMsg > div:nth-child(2) {
-  flex: 11;
+    flex: 10;
+}
+
+.starInput {
+    display: flex;
 }
 
 .hotelRating {
-  position: absolute;
-  top: 50%;
-  right: 45%;
-  transform: translateY(-50%);
-  color: #febb02;
+    font-size: 20px;
+    color: #febb02;
 }

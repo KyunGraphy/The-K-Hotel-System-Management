@@ -6,6 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import './comment.css'
 import CommentMsg from './CommentMsg'
 
+// ----------------------------------------------------------------
 const Comment = ({ hotelId }) => {
   const { data, loading, reFetch } = useFetch(`/comment/${hotelId}`)
 
@@ -13,7 +14,7 @@ const Comment = ({ hotelId }) => {
     <div className='hotelComment'>
       <h3>Comment</h3>
       {loading ? (
-        <>
+        <React.Fragment>
           <div className="listSkeleton">
             <p><Skeleton width={120} height={120} circle="true" /></p>
             <p><Skeleton count={5} /></p>
@@ -25,14 +26,14 @@ const Comment = ({ hotelId }) => {
           <div className="listSkeleton">
             <p><Skeleton width={120} height={120} circle="true" /></p>
             <p><Skeleton count={5} /></p>
-          </div></>
+          </div></React.Fragment>
       ) : (
-        <>
+        <React.Fragment>
           {data.map(item => (
             <CommentBox key={item._id} item={item} reFetch={reFetch} />
           ))}
           <CommentMsg reFetch={reFetch} />
-        </>
+        </React.Fragment>
       )}
     </div>
   )

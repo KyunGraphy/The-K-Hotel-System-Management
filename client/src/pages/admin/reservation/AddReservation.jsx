@@ -130,8 +130,8 @@ const AddReservation = ({ setAddNewReserve }) => {
         Back
       </div>
       <div className='reservationForm'>
-        <Toastify msg={errMsg} type="error" />
-        <Toastify msg={successMsg} type="success" />
+        {errMsg && <Toastify msg={errMsg} type="error" />}
+        {successMsg && <Toastify msg={successMsg} type="success" />}
         {loading ? (
           <React.Fragment>Please wait...</React.Fragment>
         ) : (

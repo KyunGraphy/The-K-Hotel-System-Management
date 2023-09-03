@@ -92,8 +92,8 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
           <React.Fragment>Please wait...</React.Fragment>
         </div>
       )}
-      <Toastify msg={errMsg} type="error" />
-      <Toastify msg={successMsg} type="success" />
+      {errMsg && <Toastify msg={errMsg} type="error" />}
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <div>
         <h2>Assign Rooms</h2>
         <div className='reservationHeader'>
