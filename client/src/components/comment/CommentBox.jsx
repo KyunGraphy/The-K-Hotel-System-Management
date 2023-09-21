@@ -23,6 +23,7 @@ const CommentBox = ({ item, reFetch }) => {
       reFetch()
     } catch (err) {
       setErrMsg(err.response.data.message);
+      setOpenCommentOption(!openCommentOption)
       setTimeout(function () {
         setErrMsg('');
       }, 10000)
@@ -30,38 +31,40 @@ const CommentBox = ({ item, reFetch }) => {
   };
 
   return (
-    <div className='hotelCommentBox'>
+    <React.Fragment>
       {errMsg && <Toastify msg={errMsg} type="error" />}
-      <img
-        src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
-        alt=''
-        className='hotelCommentAvatar'
-      />
-      <div className='hotelCommentContent'>
-        {loading ? (
-          <>
-            <p><Skeleton count={2} /></p>
-          </>
-        ) : (
-          <div className='hotelCommentTitle'>
-            <div>
-              <h4>{data.name}</h4>
-              <div>Created at: {createdAt}</div>
+      <div className='hotelCommentBox'>
+        <img
+          src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
+          alt=''
+          className='hotelCommentAvatar'
+        />
+        <div className='hotelCommentContent'>
+          {loading ? (
+            <React.Fragment>
+              <p><Skeleton count={2} /></p>
+            </React.Fragment>
+          ) : (
+            <div className='hotelCommentTitle'>
+              <div>
+                <h4>{data.name}</h4>
+                <div>Created at: {createdAt}</div>
+              </div>
+              <div>
+                <RatingStars star={item.rating} />
+              </div>
+              <div className='hotelCommentOption'>
+                <BiDotsVertical onClick={() => setOpenCommentOption(!openCommentOption)} />
+                {openCommentOption && <div>
+                  <span onClick={() => handleDeleteComment(item._id)}>Delete</span>
+                </div>}
+              </div>
             </div>
-            <div>
-              <RatingStars star={item.rating} />
-            </div>
-            <div className='hotelCommentOption'>
-              <BiDotsVertical onClick={() => setOpenCommentOption(!openCommentOption)} />
-              {openCommentOption && <div>
-                <span onClick={() => handleDeleteComment(item._id)}>Delete</span>
-              </div>}
-            </div>
-          </div>
-        )}
-        <div>{item.description}</div>
+          )}
+          <div>{item.description}</div>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 

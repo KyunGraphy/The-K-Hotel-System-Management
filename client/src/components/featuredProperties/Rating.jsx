@@ -21,7 +21,7 @@ const Rating = ({ hotelId }) => {
   return (
     <div className="fpRating">
       <button>{rate}</button>
-      <span>{(rate > 3) ? "Excellent" : "Good"}</span>
+      <span>{(rate > 3.5) ? "Excellent" : "Good"}</span>
     </div>
   )
 }

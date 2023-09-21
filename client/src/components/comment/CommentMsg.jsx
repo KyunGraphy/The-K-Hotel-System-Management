@@ -47,67 +47,69 @@ const CommentMsg = ({ reFetch }) => {
   }
 
   return (
-    <div className="hotelCommentMsg">
+    <React.Fragment>
       {errMsg && <Toastify msg={errMsg} type="error" />}
-      <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
-        <span
-          className="starInput"
-          id="rating"
-        >
-          {Array(rating).fill(null).map(index => (
-            <div className="hotelRating">
-              <ion-icon name="star"></ion-icon>
-            </div>
-          ))}
-        </span>
-        {openRating && (
-          <div className='countryOptions' style={{ top: '50px' }}>
-            <p onClick={() => handleRating(5)} >
-              {Array(5).fill(null).map(index => (
-                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-              ))}
-            </p>
-            <p onClick={() => handleRating(4)} >
-              {Array(4).fill(null).map(index => (
-                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-              ))}
-            </p>
-            <p onClick={() => handleRating(3)} >
-              {Array(3).fill(null).map(index => (
-                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-              ))}
-            </p>
-            <p onClick={() => handleRating(2)} >
-              {Array(2).fill(null).map(index => (
-                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-              ))}
-            </p>
-            <p onClick={() => handleRating(1)} >
-              {Array(1).fill(null).map(index => (
-                <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-              ))}
-            </p>
-          </div>)
-        }
-      </div>
+      <div className="hotelCommentMsg">
+        <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
+          <span
+            className="starInput"
+            id="rating"
+          >
+            {Array(rating).fill(null).map(index => (
+              <div className="hotelRating">
+                <ion-icon name="star"></ion-icon>
+              </div>
+            ))}
+          </span>
+          {openRating && (
+            <div className='countryOptions' style={{ top: '50px' }}>
+              <p onClick={() => handleRating(5)} >
+                {Array(5).fill(null).map(index => (
+                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+                ))}
+              </p>
+              <p onClick={() => handleRating(4)} >
+                {Array(4).fill(null).map(index => (
+                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+                ))}
+              </p>
+              <p onClick={() => handleRating(3)} >
+                {Array(3).fill(null).map(index => (
+                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+                ))}
+              </p>
+              <p onClick={() => handleRating(2)} >
+                {Array(2).fill(null).map(index => (
+                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+                ))}
+              </p>
+              <p onClick={() => handleRating(1)} >
+                {Array(1).fill(null).map(index => (
+                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
+                ))}
+              </p>
+            </div>)
+          }
+        </div>
 
-      <div className="inputBox">
-        <span className="icon">
-          <BsFillSendFill
-            style={{ cursor: "pointer" }}
-            title="Send comment"
-            onClick={handleSendComment}
+        <div className="inputBox">
+          <span className="icon">
+            <BsFillSendFill
+              style={{ cursor: "pointer" }}
+              title="Send comment"
+              onClick={handleSendComment}
+            />
+          </span>
+          <input
+            type="text"
+            id="description"
+            placeholder="Type your comment"
+            onChange={(e) => setComment(e.target.value)}
+            autoComplete="off"
           />
-        </span>
-        <input
-          type="text"
-          id="description"
-          placeholder="Type your comment"
-          onChange={(e) => setComment(e.target.value)}
-          autoComplete="off"
-        />
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 

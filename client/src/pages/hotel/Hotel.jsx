@@ -15,7 +15,7 @@ import { DateRange } from "react-date-range";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import axios from "axios";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -24,6 +24,7 @@ import Comment from "../../components/comment/Comment";
 import { Toastify } from "../../components/toastify/Toastify";
 import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
 import { HOTELS_IMAGES } from '../../constants/Images';
+import useSetDefaultDate from '../../hooks/useSetDefaultDate';
 
 
 // ----------------------------------------------------------------
@@ -32,29 +33,27 @@ const Hotel = () => {
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const params = useParams()
-  const location = useLocation();
 
   const { dispatch } = useContext(AuthContext)
 
   const today = new Date();
-  today.setHours(0)
-  today.setMinutes(0)
-  today.setSeconds(0)
+  const defaultToday = useSetDefaultDate(today)
 
-  const [date, setDate] = useState(location.state?.date || [
+  const [date, setDate] = useState([
     {
-      startDate: Math.floor(today.getTime() / 100000) * 100000,
-      endDate: Math.floor(today.getTime() / 100000) * 100000,
+      startDate: new Date(defaultToday),
+      endDate: new Date(defaultToday),
       key: "selection",
     },
   ]);
-  const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state?.options || {
+  const [options, setOptions] = useState({
     adult: 1,
     children: 0,
     singleRoom: 0,
     doubleRoom: 0,
   });
+
+  const [openDate, setOpenDate] = useState(false);
 
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
