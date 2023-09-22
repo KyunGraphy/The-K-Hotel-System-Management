@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import "./navbar.css"
@@ -7,6 +7,19 @@ import { AuthContext } from "../../contexts/AuthContext";
 // ----------------------------------------------------------------
 const Navbar = () => {
   const [openUserOptions, setOpenUserOptions] = useState(false);
+
+  useEffect(() => {
+    function handleUserKeyPress(e) {
+      if (e.target.className !== 'navUserRole')
+        setOpenUserOptions(false);
+    }
+
+    window.addEventListener('click', handleUserKeyPress);
+
+    return () => {
+      window.removeEventListener('click', handleUserKeyPress);
+    };
+  }, []);
 
   const navigate = useNavigate();
   const { user, dispatch } = useContext(AuthContext);

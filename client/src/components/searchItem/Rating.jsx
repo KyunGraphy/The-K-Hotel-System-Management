@@ -20,7 +20,7 @@ const Rating = ({ hotelId }) => {
   }, [data])
   return (
     <div className="siRating">
-      <span>{(rate > 3) ? "Excellent" : "Good"}</span>
+      <span>{(rate > 3.5) ? "Excellent" : "Good"}</span>
       <button>{rate}</button>
     </div>
   )

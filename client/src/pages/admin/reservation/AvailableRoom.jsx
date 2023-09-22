@@ -15,7 +15,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
   const { data, loading: dataLoading, reFetch } = useFetch(`/hotel/room/${reserve.hotelID}`);
 
   const handleAssignRoom = async (roomId) => {
-    if (date[0].endDate < new Date()) {
+    if (date[0].startDate < new Date()) {
       setErrMsg("The reservation has expired")
       return
     }
@@ -173,12 +173,20 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
                   <p>{item.description}</p>
                   <p>{item.maxPeople}</p>
                   <p className='actBtn'>
-                    <span
-                      className='assBtn'
-                      onClick={() => handleAssignRoom(item._id)}
-                    >
-                      <ion-icon name="add-circle-outline"></ion-icon>Assign
-                    </span>
+                    {item.status === "Maintenance" ? (
+                      <span
+                        className='maintenanceBtn'
+                      >
+                        <ion-icon name="build-outline"></ion-icon>Maintenance
+                      </span>
+                    ) : (
+                      <span
+                        className='assBtn'
+                        onClick={() => handleAssignRoom(item._id)}
+                      >
+                        <ion-icon name="add-circle-outline"></ion-icon>Assign
+                      </span>
+                    )}
                   </p>
                 </div>
               ))}

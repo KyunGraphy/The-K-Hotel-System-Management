@@ -3,6 +3,8 @@ import Room from './Room'
 import useFetch from '../../../hooks/useFetch'
 import { RoomContext } from '../../../contexts/RoomContext'
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 // ----------------------------------------------------------------
 const Rooms = () => {
@@ -10,8 +12,7 @@ const Rooms = () => {
   const { data, loading } = useFetch(`/hotel/room/${hotelId}/${roomSearch}`)
   const [rooms, setRooms] = useState([])
 
-  const today = new Date();
-  const defaultToday = useSetDefaultDate(today)
+  const defaultToday = useSetDefaultDate(new Date())
 
   useEffect(() => {
     if (data.length !== 0) {
@@ -27,13 +28,22 @@ const Rooms = () => {
   }, [data, defaultToday])
 
   return (
-    <div className='rooms'>
+    <React.Fragment>
       {loading ? (
-        <React.Fragment>Please wait...</React.Fragment>
+        <div className='rooms' style={{ flexDirection: 'column' }}>
+          {Array(3).fill(null).map(() => (
+            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+              <Skeleton height={'121px'} width={'256px'} />
+              <Skeleton height={'121px'} width={'256px'} />
+              <Skeleton height={'121px'} width={'256px'} />
+              <Skeleton height={'121px'} width={'256px'} />
+            </div>
+          ))}
+        </div>
       ) : (
-        <React.Fragment>
+        <div className='rooms'>
           {(data.length === 0) ? (
-            <React.Fragment>No room found</React.Fragment>
+            <div style={{ textAlign: 'center', width: '100%', fontWeight: '600', fontSize: '18px' }}>Choose a department to get rooms</div>
           ) : (
             <React.Fragment>
               {rooms.map((room, index) => (
@@ -41,9 +51,9 @@ const Rooms = () => {
               ))}
             </React.Fragment>
           )}
-        </React.Fragment>
+        </div>
       )}
-    </div>
+    </React.Fragment>
   )
 }
 

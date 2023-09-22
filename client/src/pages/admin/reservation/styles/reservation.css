@@ -129,7 +129,7 @@
 }
 
 .assBtn {
-    width: 40%;
+    width: 80%;
     padding: 0.5em 1em;
     display: flex;
     justify-content: center;
@@ -138,6 +138,18 @@
     cursor: pointer;
     color: #384e71;
     background: #febb02;
+}
+
+.maintenanceBtn {
+    width: 80%;
+    padding: 0.5em 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: not-allowed;
+    color: #fff;
+    background: #737373;
 }
 
 .reservationForm {

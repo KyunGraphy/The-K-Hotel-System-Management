@@ -9,8 +9,7 @@ const Rooms = () => {
   const { data, loading } = useFetch(`/hotel/room/${hotelId}/${roomSearch}`)
   const [rooms, setRooms] = useState([])
 
-  const today = new Date();
-  const defaultToday = useSetDefaultDate(today)
+  const defaultToday = useSetDefaultDate(new Date())
 
   useEffect(() => {
     if (data.length !== 0) {

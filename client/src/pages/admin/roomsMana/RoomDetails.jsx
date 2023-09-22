@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-
 import { Calendar } from 'react-date-range';
 import { IoArrowBackCircle, IoWaterSharp } from "react-icons/io5";
 import { CiLock, CiTempHigh } from "react-icons/ci";
@@ -8,6 +7,8 @@ import { BsLightningFill } from "react-icons/bs";
 import { TbAirConditioningDisabled } from "react-icons/tb";
 import { RoomContext } from '../../../contexts/RoomContext';
 import useFetch from '../../../hooks/useFetch';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 // ----------------------------------------------------------------
 const RoomDetails = () => {
@@ -37,7 +38,10 @@ const RoomDetails = () => {
   return (
     <div className='roomsDetails'>
       {loading ? (
-        <React.Fragment>Please wait...</React.Fragment>
+        <React.Fragment>
+          <Skeleton height={300} />
+          <Skeleton count={5} />
+        </React.Fragment>
       ) : (
         <React.Fragment>
           <div

@@ -10,7 +10,7 @@
 }
 
 .navContainer {
-    width: 100%;
+    width: 80%;
     max-width: 1024px;
     margin: 0 1em;
     color: #e0e4cc;
@@ -26,7 +26,7 @@
     cursor: pointer;
     width: 70px;
     height: 70px;
-    background: url("../../assets/logo.jpg") no-repeat;
+    background: url('../../assets/logo.jpg') no-repeat;
     background-size: cover;
     background-position: center;
     border-radius: 15px 32px;
@@ -82,7 +82,7 @@
 }
 
 .navUserOptionsAfter::after {
-    content: " ";
+    content: ' ';
     position: absolute;
     left: 0;
     bottom: -2px;

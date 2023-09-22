@@ -36,8 +36,7 @@ const Hotel = () => {
 
   const { dispatch } = useContext(AuthContext)
 
-  const today = new Date();
-  const defaultToday = useSetDefaultDate(today)
+  const defaultToday = useSetDefaultDate(new Date())
 
   const [date, setDate] = useState([
     {
