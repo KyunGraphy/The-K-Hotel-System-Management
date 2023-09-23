@@ -10,7 +10,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
           {type === 'accept' && (
             <button
               type='button'
-              className='viewBtn'
+              className='formBtn acceptFormBtn'
               onClick={callBack}
             >
               Delete
@@ -19,7 +19,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
           {type === 'delete' && (
             <button
               type='button'
-              className='delBtn'
+              className='formBtn delFormBtn'
               onClick={callBack}
             >
               Delete
@@ -27,7 +27,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
           )}
           <button
             type='button'
-            className='cancelBtn'
+            className='formBtn cancelFormBtn'
             onClick={cancelFunc}
           >
             Cancel

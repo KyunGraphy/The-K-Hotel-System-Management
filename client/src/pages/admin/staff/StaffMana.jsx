@@ -15,7 +15,7 @@ const StaffMana = () => {
       <div className='staffTools'>
         <div>
           <label htmlFor="floor">Department: </label>
-          <select value={selectedDepartment} onChange={handleChange}>
+          <select value={selectedDepartment} onChange={handleChange} style={{ outline: 'none' }}>
             <option value="The K Dong Khoi">The K Dong Khoi</option>
             <option value="The K Van Thanh">The K Van Thanh</option>
             <option value="The K Thu Duc">The K Thu Duc</option>

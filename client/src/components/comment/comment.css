@@ -30,6 +30,9 @@
 
 .hotelCommentTitle > div:nth-child(1) {
     flex: 9;
+    & div {
+        font-size: 14px;
+    }
 }
 
 .hotelCommentTitle > div:nth-child(2) {

@@ -25,6 +25,11 @@ export const MANAGEMENT_ITEMS = [
   {
     name: 'Staff Page',
     pathName: 'staff',
+    url: '/admin/staff',
+  },
+  {
+    name: 'Finance Page',
+    pathName: 'staff',
     url: '/admin/finance',
   },
   {
@@ -35,11 +40,6 @@ export const MANAGEMENT_ITEMS = [
   {
     name: 'Procurement Page',
     pathName: 'procurement',
-    url: '/admin/staff',
-  },
-  {
-    name: 'Finance Page',
-    pathName: 'finance',
     url: '/admin/procurement',
   },
 ]

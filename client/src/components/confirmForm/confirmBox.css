@@ -1,26 +1,67 @@
 .confirmBoxContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
 }
 
 .confirmBox {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-  background: rgb(255, 255, 255);
-  padding: 2em;
-  border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    background: rgb(255, 255, 255);
+    padding: 2em;
+    border-radius: 12px;
 }
 
 .confirmBox > p {
-  font-size: 18px;
-  font-weight: 600;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.formBtn {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.4s ease;
+}
+
+.acceptFormBtn {
+    color: #008009;
+    border: 1px solid #008009;
+}
+
+.acceptFormBtn:hover {
+    color: #fff;
+    background: #008009;
+}
+
+.delFormBtn {
+    color: #800000;
+    border: 1px solid #800000;
+}
+
+.delFormBtn:hover {
+    color: #fff;
+    background: #800000;
+}
+
+.cancelFormBtn {
+    color: #555;
+    border: 1px solid #555;
+}
+
+.cancelFormBtn:hover {
+    color: #fff;
+    background: #555;
 }

@@ -6,6 +6,7 @@ import { BiDotsVertical } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
+import { format } from "timeago.js"
 import { Toastify } from '../toastify/Toastify'
 
 // ----------------------------------------------------------------
@@ -15,7 +16,6 @@ const CommentBox = ({ item, reFetch }) => {
   const params = useParams()
 
   const { data, loading } = useFetch(`/users/${item.userID}`)
-  const createdAt = new Date(item.createdAt).getDate() + '/' + (new Date(item.createdAt).getMonth() + 1) + '/' + new Date(item.createdAt).getFullYear();
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -48,7 +48,7 @@ const CommentBox = ({ item, reFetch }) => {
             <div className='hotelCommentTitle'>
               <div>
                 <h4>{data.name}</h4>
-                <div>Created at: {createdAt}</div>
+                <div>{format(item.createdAt)}</div>
               </div>
               <div>
                 <RatingStars star={item.rating} />

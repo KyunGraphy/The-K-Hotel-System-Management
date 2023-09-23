@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
   },
+  adminId: {
+    type: String,
+    unique: true,
+  },
   salary: {
     type: Number,
   },

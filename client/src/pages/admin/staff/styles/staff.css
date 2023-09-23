@@ -1,134 +1,152 @@
 .staff {
-  min-height: calc(100vh - 80px);
-  width: 100%;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  padding: 12px;
-  background-color: #fff;
-  box-shadow: 5px 5px 18px #888888;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: 5px 5px 18px #888888;
 }
 
 .staff > h2 {
-  text-align: center;
-  text-transform: uppercase;
-  padding: 0.5em 0;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0.5em 0;
 }
 
 .staffHeaderID {
-  min-width: 190px;
-}
-
-.staffHeaderPhone {
-  max-width: 100px;
+    min-width: 5%;
 }
 
 .staffHeaderName {
-  min-width: 160px;
+    min-width: 20%;
 }
 
 .staffHeaderEmail {
-  min-width: 160px;
+    min-width: 20%;
+}
+
+.staffHeaderRole {
+    min-width: 15%;
+}
+
+.staffHeaderPhone {
+    min-width: 15%;
 }
 
 .staffHeaderSalary {
-  max-width: 60px;
+    min-width: 8%;
 }
 
 .staffTools {
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .addStaff {
-  font-weight: 500;
-  color: #008009;
-  border: 1px solid #008009;
-  border-radius: 4px;
-  padding: 4px 12px;
-  transition: all 0.4s ease;
-  cursor: pointer;
+    font-weight: 500;
+    color: #008009;
+    border: 1px solid #008009;
+    border-radius: 4px;
+    padding: 4px 12px;
+    transition: all 0.4s ease;
+    cursor: pointer;
 }
 
 .addStaff:hover {
-  background: #008009;
-  color: #fff;
+    background: #008009;
+    color: #fff;
 }
 
 /* staff Table */
 .staffHeader {
-  display: flex;
-  padding: 12px 8px;
-  font-style: italic;
-  font-weight: 600;
-  color: #fff;
-  background: #384e71;
+    display: flex;
+    padding: 12px 8px;
+    font-style: italic;
+    font-weight: 600;
+    color: #fff;
+    background: #384e71;
 }
 
 .staffHeader > p {
-  padding-left: 24px;
-  width: 20%;
+    padding-left: 24px;
+    /* width: 20%; */
 }
 
 .staffData {
-  display: flex;
-  padding: 12px 8px;
-  font-size: 14px;
-  font-style: italic;
-  font-weight: 600;
-  color: #384e71;
-  border: 1px solid #384e71;
-  border-top: none;
+    display: flex;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    color: #384e71;
+    border: 1px solid #384e71;
+    border-top: none;
 }
 
 .staffData > p {
-  position: relative;
-  padding-left: 24px;
-  width: 20%;
+    position: relative;
+    padding-left: 24px;
+    /* width: 20%; */
 }
 
 .staffData > p::after {
-  position: absolute;
-  content: " ";
-  top: 50%;
-  transform: translateY(-50%);
-  left: 8px;
-  height: 80%;
-  width: 1px;
-  background: #384e71;
+    position: absolute;
+    content: ' ';
+    top: 50%;
+    transform: translateY(-50%);
+    left: 8px;
+    height: 150%;
+    width: 1px;
+    background: #384e71;
 }
 
 .actBtn {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .viewBtn,
+.editBtn,
 .delBtn {
-  width: 40%;
-  text-align: center;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.4s ease;
+    margin: 2px 0;
+    width: 4em;
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
 .viewBtn {
-  color: #008009;
-  border: 1px solid #008009;
+    color: #008009;
+    border: 1px solid #008009;
 }
 
 .viewBtn:hover {
-  color: #fff;
-  background: #008009;
+    color: #fff;
+    background: #008009;
+}
+
+.editBtn {
+    color: #febb02;
+    border: 1px solid #febb02;
+}
+
+.editBtn:hover {
+    color: #fff;
+    background: #febb02;
 }
 
 .delBtn {
-  color: #800000;
-  border: 1px solid #800000;
+    color: #800000;
+    border: 1px solid #800000;
 }
 
 .delBtn:hover {
-  color: #fff;
-  background: #800000;
+    color: #fff;
+    background: #800000;
 }
