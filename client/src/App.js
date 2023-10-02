@@ -17,6 +17,7 @@ import Business from "./pages/admin/business/Business";
 import Finance from "./pages/admin/finance/Finance";
 import ViewReservation from "./pages/admin/reservation/ViewReservation";
 import Service from "./pages/service/Service";
+import Profile from "./pages/profile/Profile";
 
 // ----------------------------------------------------------------
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/services" element={<Service />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Admin */}
         <Route path="/admin" element={<Admin />}>

@@ -32,6 +32,10 @@ const Navbar = () => {
     navigate('/');
   }
 
+  const handleClickProfileBtn = () => {
+    navigate('/profile');
+  }
+
   const handleClickRegBtn = () => {
     navigate("/register");
   };
@@ -62,7 +66,7 @@ const Navbar = () => {
             <div className="navUserRole" onClick={handleUserOptions}>{user.name}</div>
             {openUserOptions && (
               <div className="navUserOptions">
-                <p className="navUserOptionsAfter">
+                <p className="navUserOptionsAfter" onClick={handleClickProfileBtn}>
                   <ion-icon name="person-outline"></ion-icon>
                   Profile
                 </p>

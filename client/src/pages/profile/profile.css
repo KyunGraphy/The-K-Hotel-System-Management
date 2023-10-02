@@ -1,0 +1,17 @@
+.profileAvatar {
+    margin: 2em;
+    width: 200px;
+    border: 8px solid #384e71;
+    border-radius: 50%;
+}
+
+.profileTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+    & svg {
+        cursor: pointer;
+    }
+}
