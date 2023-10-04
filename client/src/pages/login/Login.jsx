@@ -21,6 +21,7 @@ const Login = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { loading, error, dispatch } = useContext(AuthContext)
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     function handlePress(e) {
@@ -88,15 +89,33 @@ const Login = () => {
               <label>{USERNAME}</label>
             </div>
             <div className="inputBox">
-              <span className="icon">
-                <ion-icon name="lock-closed"></ion-icon>
-              </span>
-              <input
-                type="password"
-                id="password"
-                onChange={handleChange}
-                required
-              />
+              {showPassword ? (
+                <React.Fragment>
+                  <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                    <ion-icon name="eye-off"></ion-icon>
+                  </span>
+                  <input
+                    id="password"
+                    type="text"
+                    onChange={e => handleChange(e)}
+                    autoComplete='off'
+                    required
+                  />
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                    <ion-icon name="eye"></ion-icon>
+                  </span>
+                  <input
+                    id="password"
+                    type="password"
+                    onChange={e => handleChange(e)}
+                    autoComplete='off'
+                    required
+                  />
+                </React.Fragment>
+              )}
               <label>{PASSWORD}</label>
             </div>
             <div className="rememberForgot">

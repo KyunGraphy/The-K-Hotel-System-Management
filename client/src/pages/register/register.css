@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url("../../assets/loginbg.jpg") no-repeat;
+    background: url('../../assets/loginbg.jpg') no-repeat;
     background-size: cover;
     background-position: center;
 }
@@ -101,6 +101,7 @@
     font-size: 1.2em;
     color: #162938;
     line-height: 57px;
+    cursor: pointer;
 }
 
 .inputBox > .warning {

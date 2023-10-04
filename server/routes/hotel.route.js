@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', getAllHotels)
 router.get('/:hotelId', getOneHotels)
 router.post('/', createHotel)
-router.put('/:id', updateHotel)
+router.put('/:hotelId', updateHotel)
 router.get('/room/:hotelId', getHotelRooms)
 router.get('/room/:hotelId/:search', getSearchRooms)
 

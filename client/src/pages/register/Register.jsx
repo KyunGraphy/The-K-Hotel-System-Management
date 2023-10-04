@@ -8,7 +8,7 @@ import { Toastify } from '../../components/toastify/Toastify';
 // ----------------------------------------------------------------
 const USERNAME = 'Username';
 const PASSWORD = 'Password';
-const PASSWARD_CONFIRM = 'Confirm Password';
+const PASSWORD_CONFIRM = 'Confirm Password';
 const EMAIL = 'Email';
 const NAME = 'Name';
 const ADDRESS = 'Address';
@@ -37,6 +37,7 @@ const Register = () => {
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
   const [countryInput, setCountryInput] = useState(registerForm.country?.common || '')
   const [countryList, setCountryList] = useState(COUNTRY_LIST)
+  const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
     function handleCloseCountryOptions(e) {
@@ -55,7 +56,7 @@ const Register = () => {
   }, [confirmPassword, registerForm.password])
 
   useEffect(() => {
-    const newCountryList = COUNTRY_LIST
+    const newCountryList = [...COUNTRY_LIST]
       .filter(item => item.name.common.toLowerCase().includes(countryInput.toLowerCase()));
     setCountryList(newCountryList)
   }, [countryInput, COUNTRY_LIST])
@@ -152,15 +153,33 @@ const Register = () => {
                     <label>{EMAIL}</label>
                   </div>
                   <div className="inputBox">
-                    <span className="icon">
-                      <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input
-                      id="password"
-                      type="password"
-                      onChange={e => handleChange(e)}
-                      required
-                    />
+                    {showPassword ? (
+                      <React.Fragment>
+                        <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                          <ion-icon name="eye-off"></ion-icon>
+                        </span>
+                        <input
+                          id="password"
+                          type="text"
+                          onChange={e => handleChange(e)}
+                          autoComplete='off'
+                          required
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                          <ion-icon name="eye"></ion-icon>
+                        </span>
+                        <input
+                          id="password"
+                          type="password"
+                          onChange={e => handleChange(e)}
+                          autoComplete='off'
+                          required
+                        />
+                      </React.Fragment>
+                    )}
                     <label>{PASSWORD}</label>
                   </div>
                   <div className="inputBox">
@@ -170,15 +189,34 @@ const Register = () => {
                         Confirm password does not match
                       </div>
                     )}
-                    <span className="icon">
-                      <ion-icon name="lock-closed"></ion-icon>
-                    </span>
-                    <input
-                      type="password"
-                      onChange={e => setConfirmPassword(e.target.value)}
-                      required
-                    />
-                    <label>{PASSWARD_CONFIRM}</label>
+                    {showPassword ? (
+                      <React.Fragment>
+                        <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                          <ion-icon name="eye-off"></ion-icon>
+                        </span>
+                        <input
+                          id="password"
+                          type="text"
+                          onChange={e => setConfirmPassword(e.target.value)}
+                          autoComplete='off'
+                          required
+                        />
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <span className="icon" onClick={() => setShowPassword(!showPassword)}>
+                          <ion-icon name="eye"></ion-icon>
+                        </span>
+                        <input
+                          id="password"
+                          type="password"
+                          onChange={e => setConfirmPassword(e.target.value)}
+                          autoComplete='off'
+                          required
+                        />
+                      </React.Fragment>
+                    )}
+                    <label>{PASSWORD_CONFIRM}</label>
                   </div>
                 </div>
                 <div>

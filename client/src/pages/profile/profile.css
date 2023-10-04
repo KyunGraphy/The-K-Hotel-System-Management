@@ -1,8 +1,13 @@
 .profileAvatar {
+    justify-content: center;
+    height: 180px;
     margin: 2em;
-    width: 200px;
-    border: 8px solid #384e71;
-    border-radius: 50%;
+
+    & div {
+        height: 180px;
+        width: 180px;
+        font-size: 6em;
+    }
 }
 
 .profileTitle {
@@ -14,4 +19,30 @@
     & svg {
         cursor: pointer;
     }
+}
+
+.profileCountry {
+    position: absolute;
+    background: rgba(242, 220, 208, 0.9);
+    margin-top: 4px;
+    max-height: 200px;
+    width: 100%;
+    border-bottom-left-radius: 12px;
+    overflow: auto;
+    z-index: 100;
+}
+
+.profileCountry > p {
+    padding: 0.5em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.profileCountry > p:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.profileCountry > p > img {
+    height: 12px;
+    margin: 0 0.5em;
 }

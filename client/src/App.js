@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import "./App.css"
 import Admin from "./pages/admin/Admin";
 import RoomsMana from "./pages/admin/roomsMana/RoomsMana";
 import Home from "./pages/home/Home";
