@@ -1,6 +1,7 @@
 import { createError } from "../utils/error.js";
 
 import User from '../models/User.model.js';
+import { cloudinary } from "../utils/cloudinary.js"
 
 export const getUser = async (req, res, next) => {
   try {
@@ -51,3 +52,52 @@ export const deleteUser = async (req, res, next) => {
     next(err);
   }
 };
+
+export const uploadAvatar = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.params.userId)
+
+    if (currentUser.profilePicture.public_id !== undefined) {
+      await cloudinary.uploader.destroy(currentUser.profilePicture?.public_id);
+    }
+
+    const result = await cloudinary.uploader.upload(req.body.avatarImg, {
+      folder: "avatar",
+    })
+
+    const newUpdate = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set: {
+          profilePicture: {
+            public_id: result.public_id,
+            url: result.secure_url
+          }
+        }
+      },
+      { new: true }
+    )
+    res.status(201).json({
+      success: true,
+      newUpdate
+    })
+  } catch (err) {
+    console.log(err)
+  }
+};
+
+export const deleteAvatar = async (req, res) => {
+  try {
+    const currentUser = await User.findById(req.params.userId)
+
+    if (currentUser.profilePicture.public_id !== undefined) {
+      await cloudinary.uploader.destroy(currentUser.profilePicture?.public_id);
+      res.status(201).json({
+        msg: 'Successfully deleted profile picture'
+      });
+    }
+    return next(createError(403, "Profile picture is not valid!"))
+  } catch (err) {
+    console.log(err)
+  }
+}

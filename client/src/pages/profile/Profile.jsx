@@ -41,13 +41,21 @@ function stringToColor(string) {
   return color;
 }
 
+function stringTitle(name) {
+  if (name.includes(' ')) {
+    return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+  } else {
+    return `${name.split(' ')[0][0]}`
+  }
+}
+
 function stringAvatar(name) {
   return {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-  };
+    children: stringTitle(name)
+  }
 }
 
 const Profile = () => {
@@ -127,11 +135,11 @@ const Profile = () => {
     try {
       const res = await axios.put(`/users/${user._id}`, registerForm)
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
+      window.location.reload();
     } catch (err) {
       setErrMsg('Something went wrong!');
     }
     setLoading(false)
-    setEdittedForm(false);
   }
 
   return (

@@ -1,8 +1,9 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
@@ -13,7 +14,6 @@ import reservationRoute from "./routes/reservation.route.js";
 import facilityRoute from "./routes/facility.route.js";
 
 const app = express();
-dotenv.config();
 
 const connect = async () => {
   try {
@@ -36,7 +36,8 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }));
+// app.use(express.urlencoded({ limit: '50mb' }));
 
 app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)

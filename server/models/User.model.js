@@ -1,6 +1,16 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
+  profilePicture: {
+    type: String,
+    default: "",
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    }
+  },
   username: {
     type: String,
     required: true,
