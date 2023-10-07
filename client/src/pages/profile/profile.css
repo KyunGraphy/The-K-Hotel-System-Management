@@ -1,4 +1,5 @@
 .profileAvatar {
+    position: relative;
     justify-content: center;
     height: 180px;
     margin: 2em;
@@ -7,6 +8,23 @@
         height: 180px;
         width: 180px;
         font-size: 6em;
+    }
+
+    & label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: gray;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 50%;
+        bottom: 0;
+        position: absolute;
+        right: 35%;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
     }
 }
 
