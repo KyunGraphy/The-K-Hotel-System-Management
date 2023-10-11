@@ -68,7 +68,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
   const [countryInput, setCountryInput] = useState(registerForm.country?.common || '')
   const [countryList, setCountryList] = useState(COUNTRY_LIST)
-  const [avatarImg, setAvatarImg] = useState("");
+  const [avatarImg, setAvatarImg] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -137,8 +137,8 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
     setLoading(false)
   }
 
-  // Handle Avatar
-  const handleAvatarImageUpload = (e) => {
+  // Handle Avatar Preview
+  const handleAvatarPreview = (e) => {
     const file = e.target.files[0];
     convertIntoBase64(file);
   }
@@ -152,9 +152,23 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
         setAvatarImg(reader.result);
       };
     } else {
-      setAvatarImg("");
+      setAvatarImg(null);
     }
   };
+
+  // Handle Avatar Upload
+  const handleUploadAvatar = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post(`/users/uploadAvatar/${user._id}`, { avatarImg });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.newUpdate });
+      setLoading(false);
+      window.location.reload();
+    } catch (err) {
+      console.log(err)
+    }
+    setLoading(false);
+  }
 
   return (
     <DemoPaper
@@ -172,15 +186,37 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
         )}
       </h2>
       <Stack direction="row" spacing={2} className="profileAvatar">
-        <Avatar {...stringAvatar(user.name)} />
+        {avatarImg ? (
+          <Avatar alt="" src={avatarImg} />
+        ) : (
+          <React.Fragment>
+            {
+              user.profilePicture?.url ? (
+                <Avatar alt="" src={user.profilePicture.url} />
+              ) : (
+                <Avatar {...stringAvatar(user.name)} />
+              )
+            }
+          </React.Fragment>
+        )}
         {edittedForm && (
           <React.Fragment>
+            {avatarImg && (
+              <React.Fragment>
+                <span>
+                  <ion-icon name="close-outline" onClick={() => setAvatarImg(null)}></ion-icon>
+                </span>
+                <p>
+                  <ion-icon name="checkmark-done-outline" onClick={handleUploadAvatar}></ion-icon>
+                </p>
+              </React.Fragment>
+            )}
             <input
               style={{ display: "none" }}
               accept="image/*"
               type="file"
               id="authAva"
-              onChange={handleAvatarImageUpload}
+              onChange={handleAvatarPreview}
             />
             <label htmlFor="authAva">
               <ion-icon name="camera-outline"></ion-icon>

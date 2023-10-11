@@ -9,6 +9,6 @@ router.get('/', verifyToken, getAllUsers);
 router.put('/:id', verifyToken, updateUser);
 router.delete('/:id', verifyToken, deleteUser);
 
-router.post('/uploadAvatar/:id', verifyToken, uploadAvatar);
+router.post('/uploadAvatar/:userId', verifyToken, uploadAvatar);
 
 export default router;

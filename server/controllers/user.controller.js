@@ -1,7 +1,7 @@
 import { createError } from "../utils/error.js";
 
 import User from '../models/User.model.js';
-import { cloudinary } from "../utils/cloudinary.js"
+import cloudinary from "../utils/cloudinary.js"
 
 export const getUser = async (req, res, next) => {
   try {
