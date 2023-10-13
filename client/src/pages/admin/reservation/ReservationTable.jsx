@@ -13,7 +13,8 @@ const ReservationTable = () => {
   const [delReservationId, setDelReservationId] = useState(undefined);
   const [successMsg, setSuccessMsg] = useState("");
   const { hotelId } = useContext(RoomContext)
-  const { data, loading, reFetch } = useFetch(`/reservation/hotel/${hotelId}`)
+  const { data, loading: dataLoading, reFetch } = useFetch(`/reservation/hotel/${hotelId}`)
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate()
 
@@ -23,13 +24,16 @@ const ReservationTable = () => {
   };
 
   const handleDeleteReservation = async () => {
+    setLoading(true)
     try {
       await axios.delete(`/reservation/${delReservationId}`)
       setSuccessMsg('Delete Reservation successfully');
       reFetch()
+      setLoading(false)
     } catch (err) {
       console.log(err);
     }
+    setLoading(false)
     setConfirmForm(false);
     setDelReservationId(undefined)
   };
@@ -42,6 +46,7 @@ const ReservationTable = () => {
           type='delete'
           callBack={handleDeleteReservation}
           cancelFunc={() => setConfirmForm(false)}
+          loading={loading}
         />
       )}
       {successMsg && <Toastify msg={successMsg} type="success" />}
@@ -54,7 +59,7 @@ const ReservationTable = () => {
         <p>Action</p>
       </div>
       <section>
-        {loading ? (
+        {dataLoading ? (
           <React.Fragment>Please wait...</React.Fragment>
         ) : (
           <React.Fragment>

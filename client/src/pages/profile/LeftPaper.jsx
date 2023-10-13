@@ -6,6 +6,7 @@ import useFetch from '../../hooks/useFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IoPencil } from "react-icons/io5";
 import SaveIcon from '@mui/icons-material/Save';
+import ConfirmBox from '../../components/confirmForm/ConfirmBox';
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -64,6 +65,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
     address: undefined,
     country: undefined,
   });
+  const [confirmForm, setConfirmForm] = useState(false);
   const [edittedForm, setEdittedForm] = useState(false)
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
   const [countryInput, setCountryInput] = useState(registerForm.country?.common || '')
@@ -170,6 +172,30 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
     setLoading(false);
   }
 
+  // Handle Avatar Remove
+  const handleSetRemoveAvatar = () => {
+    if (avatarImg) {
+      setAvatarImg(null)
+      return
+    }
+
+    setConfirmForm(true)
+  }
+
+  const handleRemoveAvatar = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.delete(`/users/uploadAvatar/${user._id}`)
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.newUpdate });
+      setLoading(false);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
+    setConfirmForm(false);
+  }
+
   return (
     <DemoPaper
       elevation={3}
@@ -179,6 +205,15 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
         width: '100%',
         height: '100%',
       }}>
+      {confirmForm && (
+        <ConfirmBox
+          msg='Do you want to remove your avatar ?'
+          type='delete'
+          callBack={handleRemoveAvatar}
+          cancelFunc={() => setConfirmForm(false)}
+          loading={loading}
+        />
+      )}
       <h2 className="profileTitle">
         <strong>General</strong>
         {!edittedForm && (
@@ -201,15 +236,15 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
         )}
         {edittedForm && (
           <React.Fragment>
+            {user.profilePicture?.url && (
+              <span>
+                <ion-icon name="close-outline" onClick={handleSetRemoveAvatar}></ion-icon>
+              </span>
+            )}
             {avatarImg && (
-              <React.Fragment>
-                <span>
-                  <ion-icon name="close-outline" onClick={() => setAvatarImg(null)}></ion-icon>
-                </span>
-                <p>
-                  <ion-icon name="checkmark-done-outline" onClick={handleUploadAvatar}></ion-icon>
-                </p>
-              </React.Fragment>
+              <p>
+                <ion-icon name="checkmark-done-outline" onClick={handleUploadAvatar}></ion-icon>
+              </p>
             )}
             <input
               style={{ display: "none" }}

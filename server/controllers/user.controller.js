@@ -64,6 +64,7 @@ export const uploadAvatar = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.body.avatarImg, {
       folder: "avatar",
     })
+    console.log(result)
 
     const newUpdate = await User.findByIdAndUpdate(
       req.params.userId,
@@ -71,7 +72,7 @@ export const uploadAvatar = async (req, res) => {
         $set: {
           profilePicture: {
             public_id: result.public_id,
-            url: result.secure_url
+            url: result.secure_url,
           }
         }
       },
@@ -86,14 +87,25 @@ export const uploadAvatar = async (req, res) => {
   }
 };
 
-export const deleteAvatar = async (req, res) => {
+export const removeAvatar = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.params.userId)
 
     if (currentUser.profilePicture.public_id !== undefined) {
       await cloudinary.uploader.destroy(currentUser.profilePicture?.public_id);
-      res.status(201).json({
-        msg: 'Successfully deleted profile picture'
+
+      const newUpdate = await User.findByIdAndUpdate(
+        req.params.userId,
+        {
+          $set: {
+            profilePicture: ""
+          }
+        },
+        { new: true }
+      )
+      res.status(200).json({
+        msg: 'Remove profile picture successfully',
+        newUpdate,
       });
     }
     return next(createError(403, "Profile picture is not valid!"))

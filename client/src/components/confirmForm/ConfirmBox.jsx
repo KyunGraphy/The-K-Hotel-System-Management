@@ -1,7 +1,7 @@
 import React from 'react'
 import './confirmBox.css'
 
-const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
+const ConfirmBox = ({ msg, type, callBack, cancelFunc, loading }) => {
   return (
     <div className='confirmBoxContainer'>
       <div className='confirmBox'>
@@ -12,6 +12,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
               type='button'
               className='formBtn acceptFormBtn'
               onClick={callBack}
+              disabled={loading}
             >
               Delete
             </button>
@@ -21,6 +22,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
               type='button'
               className='formBtn delFormBtn'
               onClick={callBack}
+              disabled={loading}
             >
               Delete
             </button>
@@ -29,6 +31,7 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc }) => {
             type='button'
             className='formBtn cancelFormBtn'
             onClick={cancelFunc}
+            disabled={loading}
           >
             Cancel
           </button>

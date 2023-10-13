@@ -14,23 +14,25 @@
 .confirmBox {
     display: flex;
     flex-direction: column;
-    gap: 1em;
+    gap: 2em;
     background: rgb(255, 255, 255);
-    padding: 2em;
+    padding: 3em;
     border-radius: 12px;
 }
 
 .confirmBox > p {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .formBtn {
+    padding: 0.25em;
+    font-weight: 600;
     width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     outline: none;
     transition: all 0.4s ease;
@@ -38,7 +40,7 @@
 
 .acceptFormBtn {
     color: #008009;
-    border: 1px solid #008009;
+    border: 2px solid #008009;
 }
 
 .acceptFormBtn:hover {
@@ -48,7 +50,7 @@
 
 .delFormBtn {
     color: #800000;
-    border: 1px solid #800000;
+    border: 2px solid #800000;
 }
 
 .delFormBtn:hover {
@@ -58,7 +60,7 @@
 
 .cancelFormBtn {
     color: #555;
-    border: 1px solid #555;
+    border: 2px solid #555;
 }
 
 .cancelFormBtn:hover {
