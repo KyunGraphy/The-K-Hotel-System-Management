@@ -64,7 +64,6 @@ export const uploadAvatar = async (req, res) => {
     const result = await cloudinary.uploader.upload(req.body.avatarImg, {
       folder: "avatar",
     })
-    console.log(result)
 
     const newUpdate = await User.findByIdAndUpdate(
       req.params.userId,

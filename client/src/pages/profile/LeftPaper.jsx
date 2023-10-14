@@ -1,59 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { styled } from '@mui/material/styles';
-import { Avatar, Box, Button, Grid, Input, Paper, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Button, Grid, Input, Stack, Typography } from '@mui/material';
 import useFetch from '../../hooks/useFetch';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { IoPencil } from "react-icons/io5";
 import SaveIcon from '@mui/icons-material/Save';
 import ConfirmBox from '../../components/confirmForm/ConfirmBox';
+import { stringAvatar } from '../../hooks/useSetStringToColor';
+import { DemoPaper } from '../../constants/mui-components';
 
 const ariaLabel = { 'aria-label': 'description' };
-
-// DemoPaper Component
-const DemoPaper = styled(Paper)(({ theme }) => ({
-  width: 120,
-  height: 120,
-  padding: theme.spacing(2),
-  ...theme.typography.body2,
-  textAlign: 'center',
-}));
-
-// Convert name String to Color
-function stringToColor(string) {
-  let hash = 0;
-  let i;
-
-  for (i = 0; i < string.length; i += 1) {
-    hash = string.charCodeAt(i) + ((hash << 5) - hash);
-  }
-
-  let color = '#';
-
-  for (i = 0; i < 3; i += 1) {
-    const value = (hash >> (i * 8)) & 0xff;
-    color += `00${value.toString(16)}`.slice(-2);
-  }
-
-  return color;
-}
-
-function stringTitle(name) {
-  if (name.includes(' ')) {
-    return `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
-  } else {
-    return `${name.split(' ')[0][0]}`
-  }
-}
-
-function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: stringTitle(name)
-  }
-}
 
 const LeftPaper = ({ user, setErrMsg, dispatch }) => {
   const { data, loading: countryLoading } = useFetch('https://restcountries.com/v3.1/all?fields=name,flags')

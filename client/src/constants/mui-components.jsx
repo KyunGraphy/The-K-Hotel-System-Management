@@ -1,3 +1,6 @@
+import { Paper } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
 export { default as AppBar } from '@mui/material/AppBar';
 export { default as Autocomplete } from '@mui/material/Autocomplete';
 export { default as Badge } from '@mui/material/Badge';
@@ -43,3 +46,12 @@ export { default as Typography } from '@mui/material/Typography';
 export { default as styled } from '@mui/material/styles/styled';
 export { default as useTheme } from '@mui/material/styles/useTheme';
 // export { default as makeStyles } from '@mui/styles/makeStyles';
+
+// DemoPaper Component
+export const DemoPaper = styled(Paper)(({ theme }) => ({
+  width: 120,
+  height: 120,
+  padding: theme.spacing(2),
+  ...theme.typography.body2,
+  textAlign: 'center',
+}));
