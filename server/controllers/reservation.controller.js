@@ -94,6 +94,7 @@ export const deleteHotelReservation = async (req, res, next) => {
   }
 };
 
+// Handle assign/remove reservations requests
 export const assignReservation = async (req, res, next) => {
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   const startDate = new Date(req.body.date[0].startDate).getTime();
@@ -168,4 +169,40 @@ export const removeReservation = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+// Get user reservations
+export const getUserReservations = async (req, res) => {
+  const reservationList = await Reservation.find({ userID: req.params.userId })
+  const hotelList = await Promise.all(
+    reservationList.map(item => {
+      return Hotel.findById(item.hotelID)
+    })
+  )
+  const roomList = await Promise.all(
+    reservationList.map(async (item) =>
+      await Promise.all(
+        item.rooms.map(room => {
+          return Room.findById(room)
+        })
+      ),
+    )
+  )
+
+  const result = reservationList.map((reservation, index) => {
+    return {
+      name: reservation.name,
+      adult: reservation.adult,
+      children: reservation.children,
+      singleRoom: reservation.singleRoom,
+      doubleRoom: reservation.doubleRoom,
+      checkInDate: reservation.checkInDate,
+      checkOutDate: reservation.checkOutDate,
+      createdAt: reservation.createdAt,
+      department: hotelList[index].department,
+      room: roomList[index],
+    };
+  })
+
+  res.json(result);
 };

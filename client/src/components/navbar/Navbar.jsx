@@ -36,6 +36,10 @@ const Navbar = () => {
     navigate('/profile');
   }
 
+  const handleClickReservationBtn = () => {
+    navigate('/reservation');
+  }
+
   const handleClickRegBtn = () => {
     navigate("/register");
   };
@@ -70,7 +74,7 @@ const Navbar = () => {
                   <ion-icon name="person-outline"></ion-icon>
                   Profile
                 </p>
-                <p className="navUserOptionsAfter">
+                <p className="navUserOptionsAfter" onClick={handleClickReservationBtn}>
                   <ion-icon name="cart-outline"></ion-icon>
                   Reservation
                 </p>

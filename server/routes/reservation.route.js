@@ -6,6 +6,7 @@ import {
   deleteOneReservation,
   getHotelReservation,
   getOneReservation,
+  getUserReservations,
   removeReservation,
   updateReservation
 } from '../controllers/reservation.controller.js';
@@ -16,6 +17,7 @@ const router = express.Router();
 router.post('/:hotelId', verifyToken, createReservation)
 router.get('/:reservationId', getOneReservation)
 router.get('/hotel/:hotelId', getHotelReservation)
+router.get('/user/:userId', getUserReservations)
 router.put('/:reservationId', updateReservation)
 router.post('/assign/:reservationId', assignReservation)
 router.post('/remove/:reservationId', removeReservation)
