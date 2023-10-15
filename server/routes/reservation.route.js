@@ -7,6 +7,7 @@ import {
   getHotelReservation,
   getOneReservation,
   getUserReservations,
+  getUserReservationsCount,
   removeReservation,
   updateReservation
 } from '../controllers/reservation.controller.js';
@@ -18,6 +19,8 @@ router.post('/:hotelId', verifyToken, createReservation)
 router.get('/:reservationId', getOneReservation)
 router.get('/hotel/:hotelId', getHotelReservation)
 router.get('/user/:userId', getUserReservations)
+router.get('/user/count/:userId', getUserReservationsCount)
+
 router.put('/:reservationId', updateReservation)
 router.post('/assign/:reservationId', assignReservation)
 router.post('/remove/:reservationId', removeReservation)

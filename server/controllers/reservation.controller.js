@@ -191,18 +191,24 @@ export const getUserReservations = async (req, res) => {
 
   const result = reservationList.map((reservation, index) => {
     return {
-      name: reservation.name,
+      id: reservation._id,
+      // name: reservation.name,
       adult: reservation.adult,
       children: reservation.children,
       singleRoom: reservation.singleRoom,
       doubleRoom: reservation.doubleRoom,
-      checkInDate: reservation.checkInDate,
-      checkOutDate: reservation.checkOutDate,
-      createdAt: reservation.createdAt,
+      checkInDate: new Date(reservation.checkInDate).getDate() + "/" + new Date(reservation.checkInDate).getMonth() + "/" + new Date(reservation.checkInDate).getFullYear(),
+      checkOutDate: new Date(reservation.checkOutDate).getDate() + "/" + new Date(reservation.checkOutDate).getMonth() + "/" + new Date(reservation.checkOutDate).getFullYear(),
+      createdAt: new Date(reservation.createdAt).getDate() + "/" + new Date(reservation.createdAt).getMonth() + "/" + new Date(reservation.createdAt).getFullYear(),
       department: hotelList[index].department,
-      room: roomList[index],
+      rooms: roomList[index].map(room => room.number),
     };
   })
 
   res.json(result);
+};
+
+export const getUserReservationsCount = async (req, res) => {
+  const reservationList = await Reservation.find({ userID: req.params.userId })
+  res.status(200).json({ count: reservationList.length });
 };

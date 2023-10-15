@@ -3,10 +3,14 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios";
 import "./navbar.css"
 import { AuthContext } from "../../contexts/AuthContext";
+import useFetch from "../../hooks/useFetch";
 
 // ----------------------------------------------------------------
 const Navbar = () => {
+  const { user, dispatch } = useContext(AuthContext);
   const [openUserOptions, setOpenUserOptions] = useState(false);
+
+  const { data } = useFetch(`/reservation/user/count/${user?._id}`)
 
   useEffect(() => {
     function handleUserKeyPress(e) {
@@ -22,7 +26,6 @@ const Navbar = () => {
   }, []);
 
   const navigate = useNavigate();
-  const { user, dispatch } = useContext(AuthContext);
 
   const handleUserOptions = () => {
     setOpenUserOptions(!openUserOptions);
@@ -77,6 +80,7 @@ const Navbar = () => {
                 <p className="navUserOptionsAfter" onClick={handleClickReservationBtn}>
                   <ion-icon name="cart-outline"></ion-icon>
                   Reservation
+                  <p className="navUserBadge">{data.count}</p>
                 </p>
                 <p className="navUserOptionsAfter">
                   <ion-icon name="settings-outline"></ion-icon>
