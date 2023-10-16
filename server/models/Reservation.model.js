@@ -48,7 +48,14 @@ const ReservationSchema = new mongoose.Schema(
       required: true,
     },
     services: {
-      type: [Object],
+      type: [{
+        serviceId: {
+          type: String,
+        },
+        quantity: {
+          type: Number,
+        }
+      }],
     }
   },
   { timestamps: true }
