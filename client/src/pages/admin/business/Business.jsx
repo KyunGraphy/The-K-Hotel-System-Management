@@ -6,6 +6,8 @@ import './styles/business.css'
 import Statusbar from '../../../components/statusbar/Statusbar';
 import BusinessDetail from './BusinessDetail';
 import { roomsStatus } from '../../../constants/Constant';
+import { Box, Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 // ----------------------------------------------------------------
 const Business = () => {
@@ -17,8 +19,16 @@ const Business = () => {
         <BusinessDetail />
       ) : (
         <div>
-          <Statusbar roomsStatus={roomsStatus} hasAddBtn={true} />
+          <Statusbar roomsStatus={roomsStatus} />
           <Rooms />
+          <Box
+            sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
+            onClick={null}
+          >
+            <Fab color="primary" aria-label="add">
+              <AddIcon />
+            </Fab>
+          </Box>
         </div>
       )}
     </div>

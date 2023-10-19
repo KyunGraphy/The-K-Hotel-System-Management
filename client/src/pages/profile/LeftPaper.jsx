@@ -22,7 +22,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
     country: undefined,
   });
   const [confirmForm, setConfirmForm] = useState(false);
-  const [edittedForm, setEdittedForm] = useState(false)
+  const [editedForm, setEditedForm] = useState(false);
   const [openCountryOptions, setOpenCountryOptions] = useState(false);
   const [countryInput, setCountryInput] = useState(registerForm.country?.common || '')
   const [countryList, setCountryList] = useState(COUNTRY_LIST)
@@ -172,8 +172,8 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
       )}
       <h2 className="profileTitle">
         <strong>General</strong>
-        {!edittedForm && (
-          <IoPencil onClick={() => setEdittedForm(true)} />
+        {!editedForm && (
+          <IoPencil onClick={() => setEditedForm(true)} />
         )}
       </h2>
       <Stack direction="row" spacing={2} className="profileAvatar">
@@ -190,7 +190,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
             }
           </React.Fragment>
         )}
-        {edittedForm && (
+        {editedForm && (
           <React.Fragment>
             {user.profilePicture?.url && (
               <span>
@@ -216,7 +216,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
         )}
       </Stack>
       <Box sx={{ textAlign: 'left', padding: '0 4em' }}>
-        {edittedForm ? (
+        {editedForm ? (
           <React.Fragment>
             <Typography sx={{ margin: '1em 0' }}><strong>Name: </strong>
               <Input
@@ -296,7 +296,7 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
                   <Button variant="contained" onClick={handleEditProfile}>Accept</Button>
                 )
               }
-              <Button disabled={loading} onClick={() => setEdittedForm(false)}>Cancel</Button>
+              <Button disabled={loading} onClick={() => setEditedForm(false)}>Cancel</Button>
             </Grid>
           </React.Fragment>
         ) : (

@@ -83,6 +83,10 @@
 }
 
 .roomNumber {
+    display: flex;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     margin: 0.5em auto;
     color: #384e71;
@@ -93,6 +97,10 @@
     font-size: 18px;
     font-weight: 500;
     min-width: 40%;
+}
+
+.roomInfo > p {
+    margin: 0.5em;
 }
 
 .roomInfo > p > span {

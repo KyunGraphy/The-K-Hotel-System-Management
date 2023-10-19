@@ -4,6 +4,8 @@ import ReservationTable from './ReservationTable'
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import AddReservation from './AddReservation';
+import { Box, Fab } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 // ----------------------------------------------------------------
 const ReservationMana = () => {
@@ -46,14 +48,16 @@ const ReservationMana = () => {
                     }
                   </select>
                 </div>
-                <div
-                  className='addNewBtn'
-                  onClick={() => setAddNewReserve(true)}
-                >
-                  Add new
-                </div>
               </div>
               <ReservationTable />
+              <Box
+                sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
+                onClick={() => setAddNewReserve(true)}
+              >
+                <Fab color="primary" aria-label="add">
+                  <AddIcon />
+                </Fab>
+              </Box>
             </React.Fragment>
           )}
 

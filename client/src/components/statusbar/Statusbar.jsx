@@ -6,7 +6,7 @@ import useFetch from '../../hooks/useFetch';
 import { RoomContext } from '../../contexts/RoomContext';
 
 // ----------------------------------------------------------------
-const Statusbar = ({ roomsStatus, hasAddBtn }) => {
+const Statusbar = ({ roomsStatus }) => {
   const { hotelId, dispatch } = useContext(RoomContext)
   const { loading, data } = useFetch("/hotel")
 
@@ -78,7 +78,6 @@ const Statusbar = ({ roomsStatus, hasAddBtn }) => {
           </div>
         </>
       )}
-      {hasAddBtn && <div className='addNewBtn'>Add New</div>}
     </div>
   )
 }
