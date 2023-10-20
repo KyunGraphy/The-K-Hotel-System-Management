@@ -62,6 +62,24 @@ export const updateRooms = async (req, res, next) => {
   }
 };
 
+export const toggleStatusRooms = async (req, res) => {
+  try {
+    const { checked } = req.body;
+    let status = checked ? 'Maintenance' : 'Available';
+
+    const updatedRoom = await Room.findByIdAndUpdate(
+      req.params.roomId,
+      { $set: { status } },
+      { new: true }
+    )
+    res.status(200).json(updatedRoom)
+  } catch (err) {
+    res.status(403).json({
+      message: 'Something error: ' + err.message
+    })
+  }
+}
+
 export const deleteRooms = async (req, res, next) => {
   try {
     await Room.findByIdAndDelete(req.params.roomId);

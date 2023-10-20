@@ -6,32 +6,39 @@ import ServiceItem from '../../../components/serviceItem/ServiceItem'
 import RoomUpdate from './RoomUpdate'
 import { Box, Fab } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
+import Switch from '@mui/material/Switch';
+import axios from 'axios'
+import { Toastify } from '../../../components/toastify/Toastify'
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const BusinessDetail = () => {
+  const [errMsg, setErrMsg] = useState("");
   const [editedForm, setEditedForm] = useState(false);
-  const [roomForm, setRoomForm] = useState({
-    number: undefined,
-    type: undefined,
-    maxPeople: undefined,
-    description: undefined,
-    price: undefined,
-  });
+  const [loading, setLoading] = useState(false);
+
   const { roomId, dispatch } = useContext(RoomContext)
-  const { data, loading } = useFetch(`/room/${roomId}`)
+  const { data, loading: dataLoading, reFetch } = useFetch(`/room/${roomId}`)
 
   const removeRoom = () => {
     dispatch({ type: "REMOVE_ROOM" })
   };
 
-  const handleChange = (e) => {
-    setRoomForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  const handleToggleStatus = async (checked) => {
+    setLoading(true)
+    try {
+      await axios.patch(`/room/toggleStatus/${roomId}`, { checked })
+      reFetch();
+    } catch (err) {
+      setErrMsg('Something went wrong!');
+    }
+    setLoading(false)
   }
-
-  console.log(roomForm)
 
   return (
     <div className='roomsDetails'>
-      {loading ? (
+      {errMsg && <Toastify msg={errMsg} type="error" />}
+      {dataLoading ? (
         <React.Fragment>Please wait...</React.Fragment>
       ) : (
         <React.Fragment>
@@ -47,7 +54,7 @@ const BusinessDetail = () => {
           </h2>
           <div className='roomBlock'>
             {editedForm ? (
-              <RoomUpdate data={data} handleChange={handleChange} />
+              <RoomUpdate data={data} />
             ) : (
               <React.Fragment>
                 <div className='roomInfo'>
@@ -70,6 +77,22 @@ const BusinessDetail = () => {
                   </p>
                   <p>Status:
                     <span>{data.status}</span>
+                  </p>
+                  <p>Maintenance Mode:
+                    {(data.status === 'Maintenance' || data.status === 'Available') ? (
+                      <Switch
+                        {...label}
+                        defaultChecked={data.status === 'Maintenance'}
+                        onChange={(e) => handleToggleStatus(e.target.checked)}
+                        disabled={loading}
+                      />
+                    ) : (
+                      <Switch
+                        {...label}
+                        defaultChecked={data.status === 'Maintenance'}
+                        disabled={true}
+                      />
+                    )}
                   </p>
                 </div>
               </React.Fragment>

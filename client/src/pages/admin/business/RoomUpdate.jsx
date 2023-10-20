@@ -1,13 +1,25 @@
 import { Input, NativeSelect } from '@mui/material'
-import React from 'react'
-import Switch from '@mui/material/Switch';
+import React, { useState } from 'react'
+import { Toastify } from '../../../components/toastify/Toastify';
 
-const label = { inputProps: { 'aria-label': 'Switch demo' } };
 const ariaLabel = { 'aria-label': 'description' };
 
-const RoomUpdate = ({ data, handleChange }) => {
+const RoomUpdate = ({ data }) => {
+  const [errMsg, setErrMsg] = useState("");
+  const [roomForm, setRoomForm] = useState({
+    number: undefined,
+    type: undefined,
+    maxPeople: undefined,
+    description: undefined,
+    price: undefined,
+  });
+
+  const handleChange = (e) => {
+    setRoomForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+  }
   return (
     <React.Fragment>
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <div className='roomInfo'>
         <p>Room number:
           <Input
@@ -81,13 +93,6 @@ const RoomUpdate = ({ data, handleChange }) => {
         </p>
         <p>Status:
           <span>{data.status}</span>
-        </p>
-        <p>Maintenance Mode:
-          <Switch
-            {...label}
-            defaultChecked={data.status === 'Maintenance'}
-            disabled={data.status !== 'Maintenance' || data.status === 'Available'}
-          />
         </p>
       </div>
     </React.Fragment>
