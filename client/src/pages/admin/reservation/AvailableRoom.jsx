@@ -5,6 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import useFetch from '../../../hooks/useFetch';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 import { Toastify } from '../../../components/toastify/Toastify';
+import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
@@ -89,7 +90,7 @@ const AvailableRoom = ({ reserve, date, reFetchReservation }) => {
     <div className='reservationAvailableRoom'>
       {loading && (
         <div className='loadingSection'>
-          <React.Fragment>Please wait...</React.Fragment>
+          <BackdropComponent />
         </div>
       )}
       {errMsg && <Toastify msg={errMsg} type="error" />}

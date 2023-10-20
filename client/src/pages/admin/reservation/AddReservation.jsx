@@ -10,6 +10,7 @@ import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
 import { useNavigate } from 'react-router-dom';
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate';
 import { Toastify } from '../../../components/toastify/Toastify';
+import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const AddReservation = ({ setAddNewReserve }) => {
@@ -133,7 +134,7 @@ const AddReservation = ({ setAddNewReserve }) => {
         {errMsg && <Toastify msg={errMsg} type="error" />}
         {successMsg && <Toastify msg={successMsg} type="success" />}
         {loading ? (
-          <React.Fragment>Please wait...</React.Fragment>
+          <BackdropComponent />
         ) : (
           <React.Fragment>
             <div>

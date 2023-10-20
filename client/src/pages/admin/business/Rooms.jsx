@@ -3,6 +3,7 @@ import Room from './Room'
 import { RoomContext } from '../../../contexts/RoomContext'
 import useFetch from '../../../hooks/useFetch'
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate'
+import BackdropComponent from '../../../components/backdrop/BackdropComponent'
 
 const Rooms = () => {
   const { hotelId, roomSearch } = useContext(RoomContext)
@@ -27,7 +28,7 @@ const Rooms = () => {
   return (
     <div className='rooms'>
       {loading ? (
-        <React.Fragment>Please wait...</React.Fragment>
+        <BackdropComponent />
       ) : (
         <React.Fragment>
           {(data.length === 0) ? (

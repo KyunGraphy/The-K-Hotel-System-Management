@@ -1,5 +1,6 @@
 import Hotel from '../models/Hotel.model.js';
 import Room from '../models/Room.model.js';
+import { createError } from "../utils/error.js";
 
 export const getAllRooms = async (req, res, next) => {
   try {
@@ -46,11 +47,11 @@ export const updateRooms = async (req, res, next) => {
         return room.number
       })
     )
-    if (roomsNum.includes(req.body.number)) {
-      res.status(403).json({
-        message: 'Room number is already existed'
-      })
+
+    if (roomsNum.includes(Number(req.body.number))) {
+      return next(createError(403, 'Room number is already existed!'))
     }
+
     const updatedRoom = await Room.findByIdAndUpdate(
       req.params.roomId,
       { $set: req.body },

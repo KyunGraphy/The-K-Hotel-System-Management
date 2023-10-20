@@ -6,6 +6,7 @@ import { RoomContext } from '../../../contexts/RoomContext';
 import AddReservation from './AddReservation';
 import { Box, Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const ReservationMana = () => {
@@ -22,7 +23,7 @@ const ReservationMana = () => {
     <div className='reservation'>
       <h2>Reservation</h2>
       {loading ? (
-        <React.Fragment>Please wait...</React.Fragment>
+        <BackdropComponent />
       ) : (
         <React.Fragment>
           {addNewReserve ? (

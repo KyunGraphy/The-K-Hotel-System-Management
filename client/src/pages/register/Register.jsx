@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
 import { Toastify } from '../../components/toastify/Toastify';
+import BackdropComponent from '../../components/backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const USERNAME = 'Username';
@@ -122,7 +123,7 @@ const Register = () => {
           <h2>Register</h2>
           <div>
             {countryLoading ? (
-              <div>Please wait...</div>
+              <BackdropComponent />
             ) : (
               <div className='formField'>
                 <div>

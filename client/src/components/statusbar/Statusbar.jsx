@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import './statusbar.css'
 import useFetch from '../../hooks/useFetch';
 import { RoomContext } from '../../contexts/RoomContext';
+import BackdropComponent from '../backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const Statusbar = ({ roomsStatus }) => {
@@ -24,7 +25,7 @@ const Statusbar = ({ roomsStatus }) => {
   return (
     <div className='statusbar'>
       {loading ? (
-        <>Please wait...</>
+        <BackdropComponent />
       ) : (
         <>
           <div className='statusbarLeft'>

@@ -6,6 +6,7 @@ import { RoomContext } from '../../../contexts/RoomContext';
 import { useNavigate } from "react-router-dom";
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../../components/toastify/Toastify';
+import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
 // ----------------------------------------------------------------
 const ReservationTable = () => {
@@ -60,7 +61,7 @@ const ReservationTable = () => {
       </div>
       <section>
         {dataLoading ? (
-          <React.Fragment>Please wait...</React.Fragment>
+          <BackdropComponent />
         ) : (
           <React.Fragment>
             {(data.length === 0) ? (

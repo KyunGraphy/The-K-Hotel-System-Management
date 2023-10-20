@@ -8,6 +8,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import ConfirmBox from '../../components/confirmForm/ConfirmBox';
 import { stringAvatar } from '../../hooks/useSetStringToColor';
 import { DemoPaper } from '../../constants/mui-components';
+import BackdropComponent from '../../components/backdrop/BackdropComponent';
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -248,13 +249,14 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
             <Typography sx={{ margin: '1em 0', position: 'relative' }}><strong>Country: </strong>
               <Input
                 id='isEdittedCountry'
+                autoComplete='off'
                 placeholder={user.country.common}
                 inputProps={ariaLabel}
                 value={countryInput}
                 onChange={e => handleChangeCountry(e)}
               />
               {countryLoading ? (
-                <div>Please wait...</div>
+                <BackdropComponent />
               ) : (
                 <React.Fragment>
                   {openCountryOptions && (
