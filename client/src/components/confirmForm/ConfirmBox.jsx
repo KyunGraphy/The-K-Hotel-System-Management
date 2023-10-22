@@ -1,5 +1,6 @@
 import React from 'react'
 import './confirmBox.css'
+import { Button } from '@mui/material'
 
 const ConfirmBox = ({ msg, type, callBack, cancelFunc, loading }) => {
   return (
@@ -8,33 +9,32 @@ const ConfirmBox = ({ msg, type, callBack, cancelFunc, loading }) => {
         <p>{msg}</p>
         <div className='actBtn'>
           {type === 'accept' && (
-            <button
-              type='button'
-              className='formBtn acceptFormBtn'
+            <Button
+              variant='outlined'
+              color='success'
               onClick={callBack}
               disabled={loading}
             >
               Delete
-            </button>
+            </Button>
           )}
           {type === 'delete' && (
-            <button
-              type='button'
-              className='formBtn delFormBtn'
+            <Button
+              variant='outlined'
+              color='error'
               onClick={callBack}
               disabled={loading}
             >
               Delete
-            </button>
+            </Button>
           )}
-          <button
-            type='button'
-            className='formBtn cancelFormBtn'
+          <Button
+            variant='outlined'
             onClick={cancelFunc}
             disabled={loading}
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     </div>

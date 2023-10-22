@@ -1,12 +1,36 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios';
+import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import "./styles/reservation.css";
+
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import { useNavigate } from "react-router-dom";
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../../components/toastify/Toastify';
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#384e71',
+    color: '#fff',
+    fontSize: 16,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 // ----------------------------------------------------------------
 const ReservationTable = () => {
@@ -40,7 +64,7 @@ const ReservationTable = () => {
   };
 
   return (
-    <div className='reservationTable'>
+    <Grid className='reservationTable'>
       {confirmForm && (
         <ConfirmBox
           msg='Do you want to delete this reservation'
@@ -51,55 +75,61 @@ const ReservationTable = () => {
         />
       )}
       {successMsg && <Toastify msg={successMsg} type="success" />}
-      <div className='reservationHeader'>
-        <p>User Name</p>
-        <p>Room type</p>
-        <p>Description</p>
-        <p>Check In Date</p>
-        <p>Check Out Date</p>
-        <p>Action</p>
-      </div>
-      <section>
-        {dataLoading ? (
-          <BackdropComponent />
-        ) : (
-          <React.Fragment>
-            {(data.length === 0) ? (
-              <React.Fragment>No reservation found</React.Fragment>
-            ) : (
-              <React.Fragment>
-                {data.map(item => (
-                  <div
-                    key={item._id}
-                    className='reservationData'
-                  >
-                    <p>{item.name}</p>
-                    <p>{item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room</p>
-                    <p>{item.adult} Adult <br /> {item.children} Children</p>
-                    <p>{new Date(item.checkInDate).toDateString()}</p>
-                    <p>{new Date(item.checkOutDate).toDateString()}</p>
-                    <p className='actBtn'>
-                      <span
-                        className='viewBtn'
-                        onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id } })}
-                      >View</span>
-                      {item.rooms.length === 0 && (
-                        <span
-                          className='delBtn'
-                          onClick={() => handleSetDeleteReservation(item._id)}
-                        >
-                          Delete
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                ))}
-              </React.Fragment>
-            )}
-          </React.Fragment>
-        )}
-      </section>
-    </div>
+      {dataLoading && (<BackdropComponent />)}
+      <TableContainer component={Paper} sx={{ border: '2px solid #384e71' }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>ID</StyledTableCell>
+              <StyledTableCell>Customer Name</StyledTableCell>
+              <StyledTableCell align="right">Room type</StyledTableCell>
+              <StyledTableCell align="right">Description</StyledTableCell>
+              <StyledTableCell align="right">Check In Date</StyledTableCell>
+              <StyledTableCell align="right">Check Out Date</StyledTableCell>
+              <StyledTableCell align="right">Action</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((item) => (
+              <StyledTableRow
+                key={item._id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <StyledTableCell component="th" scope="row">...{(item._id).slice(-8)}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{item.name}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {item.adult} Adult <br /> {item.children} Children
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {new Date(item.checkInDate).toDateString()}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {new Date(item.checkOutDate).toDateString()}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  <p className='actBtn'>
+                    <Button
+                      variant='outlined'
+                      color='success'
+                      onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id } })}
+                    >View</Button>
+                    <Button
+                      variant='outlined'
+                      color='error'
+                      onClick={() => handleSetDeleteReservation(item._id)}
+                      disabled={item.rooms.length !== 0}
+                    >Delete</Button>
+                  </p>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Grid>
   )
 }
 

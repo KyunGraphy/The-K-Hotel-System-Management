@@ -152,6 +152,7 @@ const ViewReservation = () => {
       <div className='reservationRoom'>
         <div
           className='viewBtn'
+          style={{ width: '100%' }}
           onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
         >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</div>
         {openAvailableRoom && (

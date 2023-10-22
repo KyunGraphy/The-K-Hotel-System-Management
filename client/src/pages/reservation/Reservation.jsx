@@ -8,12 +8,12 @@ import useFetch from '../../hooks/useFetch';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const columns = [
-  { field: 'id', headerName: 'Reservation ID', width: 70 },
-  { field: 'department', headerName: 'Hotel', width: 200 },
-  { field: 'checkInDate', headerName: 'Check In', width: 150 },
-  { field: 'checkOutDate', headerName: 'Check Out', width: 150 },
-  { field: 'rooms', headerName: '#Rooms', type: 'number', width: 70 },
-  { field: 'createdAt', headerName: 'Created At', width: 150 },
+  { field: 'id', headerName: 'Reservation ID' },
+  { field: 'department', headerName: 'Hotel' },
+  { field: 'checkInDate', headerName: 'Check In' },
+  { field: 'checkOutDate', headerName: 'Check Out' },
+  { field: 'rooms', headerName: '#Rooms', type: 'number' },
+  { field: 'createdAt', headerName: 'Created At' },
 ];
 
 function Row(props) {
