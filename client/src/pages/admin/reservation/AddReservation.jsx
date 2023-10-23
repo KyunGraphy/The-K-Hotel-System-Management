@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate';
 import { Toastify } from '../../../components/toastify/Toastify';
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------
 const AddReservation = ({ setAddNewReserve }) => {
@@ -123,6 +124,8 @@ const AddReservation = ({ setAddNewReserve }) => {
 
   return (
     <React.Fragment>
+      {errMsg && <Toastify msg={errMsg} type="error" />}
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <div
         className='backIcon'
         onClick={() => setAddNewReserve(false)}
@@ -130,129 +133,126 @@ const AddReservation = ({ setAddNewReserve }) => {
         <IoArrowBackCircle />
         Back
       </div>
-      <div className='reservationForm'>
-        {errMsg && <Toastify msg={errMsg} type="error" />}
-        {successMsg && <Toastify msg={successMsg} type="success" />}
-        {loading ? (
-          <BackdropComponent />
-        ) : (
-          <React.Fragment>
-            <div>
-              <div className="inputBox">
-                <span className="icon">
-                  <ion-icon name="bed-outline"></ion-icon>
-                </span>
-                <input
-                  type="text"
-                  value={department[0]?.department || ""}
-                  className='hotelInput'
-                  required
-                />
-                <label>Department</label>
-                {openHotelOptions && (
-                  <div className='countryOptions'>
-                    {data.map((item, index) => (
-                      <p
-                        key={index}
-                        onClick={() => handleHotel(item._id)}
-                      >
-                        {item.department}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className='roomSchedule'>
-                <DateRange
-                  editableDateInputs={true}
-                  onChange={(item) => handleDate([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={date}
-                  minDate={new Date()}
-                />
-              </div>
-              <div
-                className='addNewBtn'
-                onClick={handleAddReservation}
-              >Add New</div>
+      {loading ? (
+        <BackdropComponent />
+      ) : (
+        <div className='reservationForm'>
+          <div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="bed-outline"></ion-icon>
+              </span>
+              <input
+                type="text"
+                value={department[0]?.department || ""}
+                className='hotelInput'
+                required
+              />
+              <label>Department</label>
+              {openHotelOptions && (
+                <div className='countryOptions'>
+                  {data.map((item, index) => (
+                    <p
+                      key={index}
+                      onClick={() => handleHotel(item._id)}
+                    >
+                      {item.department}
+                    </p>
+                  ))}
+                </div>
+              )}
             </div>
-            <div>
-              <div className="inputBox">
-                <span className="icon">
-                  <ion-icon name="person-add-outline"></ion-icon>
-                </span>
-                <input
-                  type="text"
-                  id="name"
-                  onChange={e => handleChange(e)}
-                  autoComplete='off'
-                  required
-                />
-                <label>Name</label>
-              </div>
-              <div className="inputBox">
-                <span className="icon">
-                  <MdEmojiPeople />
-                </span>
-                <input
-                  type="number"
-                  id="adult"
-                  value={reservationForm.adult}
-                  min="1"
-                  onChange={e => handleChange(e)}
-                  required
-                />
-                <label>Adult</label>
-              </div>
-              <div className="inputBox">
-                <span className="icon">
-                  <FaBaby />
-                </span>
-                <input
-                  type="number"
-                  id="children"
-                  value={reservationForm.children}
-                  min="0"
-                  onChange={e => handleChange(e)}
-                  required
-                />
-                <label>Children</label>
-              </div>
-              <div className="inputBox">
-                <span className="icon">
-                  <IoPersonOutline />
-                </span>
-                <input
-                  type="number"
-                  id="singleRoom"
-                  value={reservationForm.singleRoom}
-                  min="0"
-                  onChange={e => handleChange(e)}
-                  required
-                />
-                <label>Single Room</label>
-              </div>
-              <div className="inputBox">
-                <span className="icon">
-                  <IoPeopleOutline />
-                </span>
-                <input
-                  type="number"
-                  id="doubleRoom"
-                  value={reservationForm.doubleRoom}
-                  min="0"
-                  onChange={e => handleChange(e)}
-                  required
-                />
-                <label>Double Room</label>
-              </div>
-              <h2>
-                <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
-              </h2>
+            <div className='roomSchedule'>
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => handleDate([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={date}
+                minDate={new Date()}
+              />
             </div>
-          </React.Fragment>
-        )}
-      </div>
+            <Button
+              variant="contained"
+              color='success'
+              onClick={handleAddReservation}
+            >Add New</Button>
+          </div>
+          <div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="person-add-outline"></ion-icon>
+              </span>
+              <input
+                type="text"
+                id="name"
+                onChange={e => handleChange(e)}
+                autoComplete='off'
+                required
+              />
+              <label>Name</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <MdEmojiPeople />
+              </span>
+              <input
+                type="number"
+                id="adult"
+                value={reservationForm.adult}
+                min="1"
+                onChange={e => handleChange(e)}
+                required
+              />
+              <label>Adult</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <FaBaby />
+              </span>
+              <input
+                type="number"
+                id="children"
+                value={reservationForm.children}
+                min="0"
+                onChange={e => handleChange(e)}
+                required
+              />
+              <label>Children</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <IoPersonOutline />
+              </span>
+              <input
+                type="number"
+                id="singleRoom"
+                value={reservationForm.singleRoom}
+                min="0"
+                onChange={e => handleChange(e)}
+                required
+              />
+              <label>Single Room</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <IoPeopleOutline />
+              </span>
+              <input
+                type="number"
+                id="doubleRoom"
+                value={reservationForm.doubleRoom}
+                min="0"
+                onChange={e => handleChange(e)}
+                required
+              />
+              <label>Double Room</label>
+            </div>
+            <h2>
+              <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
+            </h2>
+          </div>
+        </div>
+      )}
     </React.Fragment>
   )
 }
