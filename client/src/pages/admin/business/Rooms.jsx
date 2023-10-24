@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Room from './Room'
 import { RoomContext } from '../../../contexts/RoomContext'
 import useFetch from '../../../hooks/useFetch'
@@ -9,6 +9,10 @@ const Rooms = () => {
   const { hotelId, roomSearch } = useContext(RoomContext)
   const { data, loading } = useFetch(`/hotel/room/${hotelId}/${roomSearch}`)
   const [rooms, setRooms] = useState([])
+
+  useMemo(() => data.sort((a, b) => {
+    return a.number - b.number
+  }), [data])
 
   const defaultToday = useSetDefaultDate(new Date())
 

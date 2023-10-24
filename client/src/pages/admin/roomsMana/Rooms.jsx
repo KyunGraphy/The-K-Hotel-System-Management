@@ -1,16 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import Room from './Room'
 import useFetch from '../../../hooks/useFetch'
 import { RoomContext } from '../../../contexts/RoomContext'
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate'
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import BackdropComponent from '../../../components/backdrop/BackdropComponent'
 
 // ----------------------------------------------------------------
 const Rooms = () => {
   const { hotelId, roomSearch } = useContext(RoomContext)
   const { data, loading } = useFetch(`/hotel/room/${hotelId}/${roomSearch}`)
   const [rooms, setRooms] = useState([])
+
+  useMemo(() => data.sort((a, b) => {
+    return a.number - b.number
+  }), [data])
 
   const defaultToday = useSetDefaultDate(new Date())
 
@@ -30,16 +34,7 @@ const Rooms = () => {
   return (
     <React.Fragment>
       {loading ? (
-        <div className='rooms' style={{ flexDirection: 'column' }}>
-          {Array(3).fill(null).map(() => (
-            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-              <Skeleton height={'121px'} width={'256px'} />
-              <Skeleton height={'121px'} width={'256px'} />
-              <Skeleton height={'121px'} width={'256px'} />
-              <Skeleton height={'121px'} width={'256px'} />
-            </div>
-          ))}
-        </div>
+        <BackdropComponent />
       ) : (
         <div className='rooms'>
           {(data.length === 0) ? (
