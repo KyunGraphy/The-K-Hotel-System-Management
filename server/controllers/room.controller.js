@@ -21,17 +21,29 @@ export const getOneRoom = async (req, res, next) => {
 };
 
 export const createRooms = async (req, res, next) => {
-  const newRoom = new Room(req.body);
   try {
-    const savedRoom = await newRoom.save();
-    try {
-      await Hotel.findByIdAndUpdate(
-        req.params.hotelId,
-        { $push: { rooms: savedRoom._id } },
-      )
-    } catch (err) {
-      next(err);
+    const hotel = await Hotel.findById(req.params.hotelId);
+    const roomsNum = await Promise.all(
+      hotel.rooms.map(async (item) => {
+        const room = await Room.findById(item);
+        return room.number
+      })
+    )
+
+    // Catch exceptions if room number is already exists
+    if (roomsNum.includes(Number(req.body.number))) {
+      return next(createError(403, 'Room number is already existed!'))
     }
+
+    // Create new room
+    const newRoom = new Room(req.body);
+    const savedRoom = await newRoom.save();
+
+    await Hotel.findByIdAndUpdate(
+      req.params.hotelId,
+      { $push: { rooms: savedRoom._id } },
+    )
+
     res.status(200).json(savedRoom);
   } catch (err) {
     next(err);

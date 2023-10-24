@@ -45,8 +45,14 @@ const Login = () => {
       e.preventDefault()
     }
 
-    if (credentials.username === undefined || credentials.password === undefined) {
+    if (
+      credentials.username === undefined || credentials.username === '' ||
+      credentials.password === undefined || credentials.password === ''
+    ) {
       dispatch({ type: "LOGIN_FAILURE", payload: 'Please input username and password!' })
+      setTimeout(function () {
+        dispatch({ type: "LOGIN_FAILURE", payload: '' })
+      }, 10000)
       return;
     }
 

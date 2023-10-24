@@ -72,10 +72,10 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
   const handleEditProfile = async () => {
     setLoading(true)
     if (
-      (registerForm.name === undefined) &&
-      (registerForm.phone === undefined) &&
-      (registerForm.address === undefined) &&
-      (registerForm.country === undefined)
+      (registerForm.name === undefined || registerForm.name === '') &&
+      (registerForm.phone === undefined || registerForm.phone === '') &&
+      (registerForm.address === undefined || registerForm.address === '') &&
+      (registerForm.country === undefined || registerForm.country === '')
     ) {
       setErrMsg('Please enter at least 1 field!');
       setLoading(false);

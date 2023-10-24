@@ -87,11 +87,11 @@ const Register = () => {
   const handleRegister = async () => {
     setLoading(true)
     if (
-      (registerForm.username === undefined) ||
-      (registerForm.password === undefined) ||
-      (registerForm.email === undefined) ||
-      (registerForm.name === undefined) ||
-      (registerForm.phone === undefined)
+      (registerForm.username === undefined || registerForm.username === '') ||
+      (registerForm.password === undefined || registerForm.password === '') ||
+      (registerForm.email === undefined || registerForm.email === '') ||
+      (registerForm.name === undefined || registerForm.name === '') ||
+      (registerForm.phone === undefined || registerForm.name === '')
     ) {
       setError('Please enter all fields');
       setLoading(false);

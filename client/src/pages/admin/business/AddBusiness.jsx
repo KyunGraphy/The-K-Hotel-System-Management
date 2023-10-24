@@ -7,6 +7,7 @@ import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import { useNavigate } from 'react-router-dom';
+import { Toastify } from '../../../components/toastify/Toastify'
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
 const style = {
@@ -29,6 +30,8 @@ const style = {
 const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
   const [openRoomOptions, setOpenRoomOptions] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState('')
   const [loading, setLoading] = useState(false);
 
   const [roomForm, setRoomForm] = useState({
@@ -64,50 +67,57 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
     setRoomForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  // const handleAddReservation = async () => {
-  //   setLoading(true);
-  //   if (roomForm.singleRoom === 0 && roomForm.doubleRoom === 0) {
-  //     setErrMsg("Single room or Double room must be better than 0")
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     return;
-  //   } else if (hotelId === null) {
-  //     setErrMsg("Please select hotel");
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     return;
-  //   } else if (roomForm.name === undefined) {
-  //     setErrMsg("Please input name");
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     return;
-  //   } else {
-  //     try {
-  //       await axios.post(`/reservation/${hotelId}`, roomForm)
-  //       setSuccessMsg('Booking successfully!!');
-  //       setTimeout(() => {
-  //         setAddNewRoom(false)
-  //       }, 10000)
-  //     } catch (err) {
-  //       if (err.response.data.message === 'You are not authenticated!') {
-  //         navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-  //       } else {
-  //         console.log(err)
-  //         setErrMsg('Something went wrong!');
-  //         setTimeout(function () {
-  //           setErrMsg('');
-  //         }, 10000)
-  //       }
-  //     }
-  //   }
-  // setLoading(false)
-  // }
+  const handleCreateRoom = async () => {
+    setLoading(true);
+    if (hotelId === null) {
+      setErrMsg("Please select hotel");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (roomForm.number === undefined || roomForm.number === '' ||
+      roomForm.type === undefined || roomForm.type === '' ||
+      roomForm.price === undefined || roomForm.price === '') {
+      setErrMsg("Please input all necessary field!")
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (roomForm.maxPeople < 1) {
+      setErrMsg("Max people must have at least one person");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else {
+      console.log(roomForm)
+      try {
+        await axios.post(`/room/${hotelId}`, roomForm)
+        window.location.reload()
+        setSuccessMsg('Create new room successfully!!');
+        setAddNewRoom(false)
+      } catch (err) {
+        if (err.response.data.message === 'You are not authenticated!') {
+          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+        } else {
+          console.log(err)
+          setErrMsg(err.response.data.message || 'Something went wrong!');
+          setTimeout(function () {
+            setErrMsg('');
+          }, 10000)
+        }
+      }
+    }
+    setLoading(false)
+  }
 
   return (
     <Grid>
+      {successMsg && <Toastify msg={successMsg} type="success" />}
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       {dataLoading ? (
         <BackdropComponent />
       ) : (
@@ -159,6 +169,7 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
                 id="number"
                 onChange={e => handleChange(e)}
                 autoComplete='off'
+                min="1"
                 required
               />
               <label>Number</label>
@@ -225,7 +236,7 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
             <Button
               variant='contained'
               color='success'
-              onClick={() => console.log(roomForm)}
+              onClick={handleCreateRoom}
               disabled={loading}
             >CREATE</Button>
           </Box>

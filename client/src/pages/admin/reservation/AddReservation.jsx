@@ -95,7 +95,10 @@ const AddReservation = ({ setAddNewReserve }) => {
         setErrMsg('');
       }, 10000)
       return;
-    } else if (reservationForm.name === undefined) {
+    } else if (
+      reservationForm.name === undefined ||
+      reservationForm.name === ''
+    ) {
       setErrMsg("Please input name");
       setTimeout(function () {
         setErrMsg('');

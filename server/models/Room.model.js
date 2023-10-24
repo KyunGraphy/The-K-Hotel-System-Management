@@ -12,7 +12,6 @@ const RoomSchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     maxPeople: {
       type: Number,
@@ -21,6 +20,7 @@ const RoomSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
+      default: 'Maintenance',
     },
     unavailableDate: {
       type: [Number],
