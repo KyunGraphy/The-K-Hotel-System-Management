@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import { IoPersonOutline } from "react-icons/io5";
-import { AiOutlineFieldNumber } from "react-icons/ai";
-import { MdEmojiPeople } from "react-icons/md";
+import { AiOutlineDollar } from "react-icons/ai";
 import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
@@ -27,19 +25,20 @@ const style = {
 };
 
 // ----------------------------------------------------------------
-const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
+const AddStaff = ({ addNewStaff, setAddNewStaff }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
   const [openRoomOptions, setOpenRoomOptions] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState('')
   const [loading, setLoading] = useState(false);
 
-  const [roomForm, setRoomForm] = useState({
-    number: undefined,
-    type: undefined,
-    description: undefined,
-    price: undefined,
-    maxPeople: 1,
+  const [staffForm, setStaffForm] = useState({
+    name: undefined,
+    role: undefined,
+    salary: undefined,
+    email: undefined,
+    phone: undefined,
+    isAdmin: true,
   });
 
   useEffect(() => {
@@ -64,55 +63,55 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
   }
 
   const handleChange = (e) => {
-    setRoomForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
+    setStaffForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  const handleCreateRoom = async () => {
-    setLoading(true);
-    if (hotelId === null) {
-      setErrMsg("Please select hotel");
-      setTimeout(function () {
-        setErrMsg('');
-      }, 10000)
-      setLoading(false)
-      return;
-    } else if (roomForm.number === undefined || roomForm.number === '' ||
-      roomForm.type === undefined || roomForm.type === '' ||
-      roomForm.price === undefined || roomForm.price === '') {
-      setErrMsg("Please input all necessary field!")
-      setTimeout(function () {
-        setErrMsg('');
-      }, 10000)
-      setLoading(false)
-      return;
-    } else if (roomForm.maxPeople < 1) {
-      setErrMsg("Max people must have at least one person");
-      setTimeout(function () {
-        setErrMsg('');
-      }, 10000)
-      setLoading(false)
-      return;
-    } else {
-      console.log(roomForm)
-      try {
-        await axios.post(`/room/${hotelId}`, roomForm)
-        window.location.reload()
-        setSuccessMsg('Create new room successfully!!');
-        setAddNewRoom(false)
-      } catch (err) {
-        if (err.response.data.message === 'You are not authenticated!') {
-          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-        } else {
-          console.log(err)
-          setErrMsg(err.response.data.message || 'Something went wrong!');
-          setTimeout(function () {
-            setErrMsg('');
-          }, 10000)
-        }
-      }
-    }
-    setLoading(false)
-  }
+  // const handleCreateStaff = async () => {
+  //   setLoading(true);
+  //   if (hotelId === null) {
+  //     setErrMsg("Please select hotel");
+  //     setTimeout(function () {
+  //       setErrMsg('');
+  //     }, 10000)
+  //     setLoading(false)
+  //     return;
+  //   } else if (roomForm.number === undefined || roomForm.number === '' ||
+  //     roomForm.type === undefined || roomForm.type === '' ||
+  //     roomForm.price === undefined || roomForm.price === '') {
+  //     setErrMsg("Please input all necessary field!")
+  //     setTimeout(function () {
+  //       setErrMsg('');
+  //     }, 10000)
+  //     setLoading(false)
+  //     return;
+  //   } else if (roomForm.maxPeople < 1) {
+  //     setErrMsg("Max people must have at least one person");
+  //     setTimeout(function () {
+  //       setErrMsg('');
+  //     }, 10000)
+  //     setLoading(false)
+  //     return;
+  //   } else {
+  //     console.log(roomForm)
+  //     try {
+  //       await axios.post(`/room/${hotelId}`, roomForm)
+  //       window.location.reload()
+  //       setSuccessMsg('Create new room successfully!!');
+  //       setAddNewStaff(false)
+  //     } catch (err) {
+  //       if (err.response.data.message === 'You are not authenticated!') {
+  //         navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+  //       } else {
+  //         console.log(err)
+  //         setErrMsg(err.response.data.message || 'Something went wrong!');
+  //         setTimeout(function () {
+  //           setErrMsg('');
+  //         }, 10000)
+  //       }
+  //     }
+  //   }
+  //   setLoading(false)
+  // }
 
   return (
     <Grid>
@@ -122,8 +121,8 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
         <BackdropComponent />
       ) : (
         <Modal
-          open={addNewRoom}
-          onClose={() => setAddNewRoom(false)}
+          open={addNewStaff}
+          onClose={() => setAddNewStaff(false)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
@@ -134,7 +133,7 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
               component="h2"
               sx={{ textAlign: 'center' }}
             >
-              New Room Form
+              New Staff Form
             </Typography>
             <div className="inputBox">
               <span className="icon">
@@ -162,80 +161,82 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
             </div>
             <div className="inputBox">
               <span className="icon">
-                <AiOutlineFieldNumber />
-              </span>
-              <input
-                type="number"
-                id="number"
-                onChange={e => handleChange(e)}
-                autoComplete='off'
-                min="1"
-                required
-              />
-              <label>Number</label>
-            </div>
-            <div className="inputBox">
-              <span className="icon">
-                <ion-icon name="keypad-outline"></ion-icon>
+                <ion-icon name="person-outline"></ion-icon>
               </span>
               <input
                 type="text"
-                value={roomForm.type || ""}
+                id="name"
+                onChange={e => handleChange(e)}
+                autoComplete='off'
+                required
+              />
+              <label>Name</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="build-outline"></ion-icon>
+              </span>
+              <input
+                type="text"
+                value={staffForm.role || ""}
                 className='roomInput'
                 required
               />
               <label>Type</label>
               {openRoomOptions && (
                 <div className='countryOptions'>
-                  <p onClick={() => setRoomForm((prev) => ({ ...prev, type: "Single" }))}>Single Room</p>
-                  <p onClick={() => setRoomForm((prev) => ({ ...prev, type: "Double" }))}>Double Room</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "RS" }))}>Receptionist</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "BS" }))}>Business staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "SS" }))}>Service Staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "AS" }))}>Accountant</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "HRS" }))}>Human Resources Staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "MN" }))}>Director</p>
                 </div>
               )}
             </div>
             <div className="inputBox">
               <span className="icon">
-                <MdEmojiPeople />
+                <AiOutlineDollar />
+              </span>
+              <input
+                type="number"
+                id="salary"
+                min='1'
+                onChange={e => handleChange(e)}
+                required
+              />
+              <label>Salary</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="mail-outline"></ion-icon>
               </span>
               <input
                 type="text"
-                id="description"
+                id="email"
                 onChange={e => handleChange(e)}
                 autoComplete='off'
                 required
               />
-              <label>Description</label>
+              <label>Email</label>
             </div>
             <div className="inputBox">
               <span className="icon">
-                <ion-icon name="pricetag-outline"></ion-icon>
+                <ion-icon name="call-outline"></ion-icon>
               </span>
               <input
-                type="number"
-                id="price"
-                min="0"
+                type="text"
+                id="phone"
                 onChange={e => handleChange(e)}
+                autoComplete='off'
                 required
               />
-              <label>Price</label>
-            </div>
-            <div className="inputBox">
-              <span className="icon">
-                <IoPersonOutline />
-              </span>
-              <input
-                type="number"
-                id="maxPeople"
-                value={roomForm.maxPeople}
-                min="0"
-                onChange={e => handleChange(e)}
-                required
-              />
-              <label>Max People</label>
+              <label>Phone</label>
             </div>
             <Button
               variant='contained'
               color='success'
-              onClick={handleCreateRoom}
+              onClick={null}
               disabled={loading}
             >CREATE</Button>
           </Box>
@@ -245,4 +246,4 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
   )
 }
 
-export default AddBusiness
+export default AddStaff

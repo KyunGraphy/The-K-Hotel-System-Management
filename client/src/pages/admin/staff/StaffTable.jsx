@@ -1,13 +1,47 @@
 import React, { useState } from 'react'
 import "./styles/staff.css";
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
+import { Avatar, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const StyledTableCell = styled(TableCell)(() => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: '#384e71',
+    color: '#fff',
+    fontSize: 16,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  // '&:nth-of-type(odd)': {
+  //   backgroundColor: theme.palette.action.hover,
+  // },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+function createData(id, name, department, role, salary, email, phone) {
+  return { id, name, department, role, salary, email, phone };
+}
+
+const rows = [
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+];
 
 const StaffTable = () => {
   const [confirmForm, setConfirmForm] = useState(false);
-  console.log(1)
 
   return (
-    <div className='staffTable'>
+    <Grid className='staffTable'>
       {confirmForm && (
         <ConfirmBox
           msg='Do you want to delete this staff'
@@ -16,61 +50,56 @@ const StaffTable = () => {
           cancelFunc={() => setConfirmForm(false)}
         />
       )}
-      <div className='staffHeader'>
-        {/* <input type='checkbox' /> */}
-        <p className='staffHeaderID'>ID</p>
-        <p className='staffHeaderName'>Employee</p>
-        <p className='staffHeaderEmail'>Email</p>
-        <p className='staffHeaderPhone'>Phone</p>
-        <p className='staffHeaderRole'>Role</p>
-        <p className='staffHeaderSalary'>Salary</p>
-        <p>Action</p>
-      </div>
-      <section>
-        <div className='staffData'>
-          {/* <input type='checkbox' /> */}
-          <span className='staffHeaderID'>MN001</span>
-          <p className='staffHeaderName'>Mark John</p>
-          <p className='staffHeaderEmail'>john@gmail.com</p>
-          <p className='staffHeaderPhone'>0987654321</p>
-          <p className='staffHeaderRole'>Business Staff</p>
-          <p className='staffHeaderSalary'>2000$</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='editBtn'>Edit</div>
-            <div className='delBtn' onClick={() => setConfirmForm(true)}>Delete</div>
-          </p>
-        </div>
-        <div className='staffData'>
-          {/* <input type='checkbox' /> */}
-          <span className='staffHeaderID'>MN001</span>
-          <p className='staffHeaderName'>Mark John</p>
-          <p className='staffHeaderEmail'>john@gmail.com</p>
-          <p className='staffHeaderPhone'>0987654321</p>
-          <p className='staffHeaderRole'>Business Staff</p>
-          <p className='staffHeaderSalary'>2000$</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='editBtn'>Edit</div>
-            <div className='delBtn'>Delete</div>
-          </p>
-        </div>
-        <div className='staffData'>
-          {/* <input type='checkbox' /> */}
-          <span className='staffHeaderID'>MN001</span>
-          <p className='staffHeaderName'>Mark John</p>
-          <p className='staffHeaderEmail'>john@gmail.com</p>
-          <p className='staffHeaderPhone'>0987654321</p>
-          <p className='staffHeaderRole'>Business Staff</p>
-          <p className='staffHeaderSalary'>2000$</p>
-          <p className='actBtn'>
-            <div className='viewBtn'>View</div>
-            <div className='editBtn'>Edit</div>
-            <div className='delBtn'>Delete</div>
-          </p>
-        </div>
-      </section>
-    </div>
+      <TableContainer component={Paper} sx={{ border: '2px solid #384e71' }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>ID</StyledTableCell>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell align="right">Department</StyledTableCell>
+              <StyledTableCell align="right">Role</StyledTableCell>
+              <StyledTableCell align="right">Salary&nbsp;($)</StyledTableCell>
+              <StyledTableCell align="right">Email</StyledTableCell>
+              <StyledTableCell align="right">Phone</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) => (
+              <StyledTableRow
+                hover
+                onClick={() => console.log('onClick')}
+                key={row.index}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <StyledTableCell component="th" scope="row">
+                  {row.id}
+                </StyledTableCell>
+                <StyledTableCell>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: '0.5em',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Avatar
+                      alt="Travis Howard"
+                      src="https://res.cloudinary.com/dvroxew0r/image/upload/v1696993380/imympejeja4o42ufhdpl.jpg"
+                    />
+                    {row.name}
+                  </Box>
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.department}</StyledTableCell>
+                <StyledTableCell align="right">{row.role}</StyledTableCell>
+                <StyledTableCell align="right">{row.salary}</StyledTableCell>
+                <StyledTableCell align="right">{row.email}</StyledTableCell>
+                <StyledTableCell align="right">{row.phone}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Grid>
   )
 }
 

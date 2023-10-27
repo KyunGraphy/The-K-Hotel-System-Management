@@ -61,7 +61,6 @@ const ReservationMana = () => {
               </Box>
             </React.Fragment>
           )}
-
         </React.Fragment>
       )}
     </div>

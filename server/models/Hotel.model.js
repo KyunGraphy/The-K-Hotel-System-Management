@@ -28,6 +28,9 @@ const HotelSchema = new mongoose.Schema({
   rooms: {
     type: [String],
   },
+  staff: {
+    type: [String],
+  },
   comments: {
     type: [String],
   },
