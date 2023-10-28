@@ -308,7 +308,9 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
             <Typography sx={{ margin: '1em 0' }}><strong>Address: </strong>{user.address}</Typography>
             <Typography sx={{ margin: '1em 0' }}><strong>Country: </strong>
               {user.country.common}
-              <img src={user.country.flags} alt="country" style={{ height: 20 }} />
+              {
+                user.country.flags && <img src={user.country.flags} alt="country" style={{ height: 20 }} />
+              }
             </Typography>
           </React.Fragment>
         )}

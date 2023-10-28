@@ -35,7 +35,7 @@ export const newStaff = async (req, res, next) => {
     const roleKey = roleKeys[req.body.role]
     const roleNum = padWithLeadingZeros(admin.length + 1, 3)
 
-    console.log({
+    const newStaff = new User({
       ...req.body,
       username: `admin${admin.length + 1}`,
       password: hash,
@@ -44,15 +44,11 @@ export const newStaff = async (req, res, next) => {
       adminId: `${roleKey}${roleNum}`
     })
 
-    res.status(200).json({
-      ...req.body,
-      username: `admin${admin.length + 1}`,
-      password: hash,
-      isAdmin: true,
-      hotelId: req.params.hotelId,
-      adminId: `${roleKey}${roleNum}`
-    })
+    await newStaff.save();
+
+    res.status(200).json(newStaff)
   } catch (err) {
+    console.log(err)
     next(err)
   }
 
