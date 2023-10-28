@@ -5,7 +5,7 @@ import cloudinary from "../utils/cloudinary.js"
 
 export const getUser = async (req, res, next) => {
   try {
-    const users = await User.findOne({ _id: req.params.id });
+    const users = await User.findById(req.params.id);
     res.status(200).json(users);
   } catch (err) {
     next(err);
