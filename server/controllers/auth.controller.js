@@ -1,19 +1,17 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
+import { padWithLeadingZeros, roleKeys } from "../constants/Constants.js";
 
 import User from "../models/User.model.js";
 
 export const register = async (req, res, next) => {
   try {
-    try {
-      const user = await User.findOne({ username: req.body.username })
-      if (user) {
-        return next(createError(401, 'Username has already existed!'))
-      }
-    } catch (err) {
-      next(err);
+    const user = await User.findOne({ username: req.body.username })
+    if (user) {
+      return next(createError(401, 'Username has already existed!'))
     }
+
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
 
@@ -27,6 +25,39 @@ export const register = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
+};
+
+export const newStaff = async (req, res, next) => {
+  try {
+    const admin = await User.find({ isAdmin: true })
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync('1234', salt);
+    const roleKey = roleKeys[req.body.role]
+    const roleNum = padWithLeadingZeros(admin.length + 1, 3)
+
+    console.log({
+      ...req.body,
+      username: `admin${admin.length + 1}`,
+      password: hash,
+      isAdmin: true,
+      hotelId: req.params.hotelId,
+      adminId: `${roleKey}${roleNum}`
+    })
+
+    res.status(200).json({
+      ...req.body,
+      username: `admin${admin.length + 1}`,
+      password: hash,
+      isAdmin: true,
+      hotelId: req.params.hotelId,
+      adminId: `${roleKey}${roleNum}`
+    })
+  } catch (err) {
+    next(err)
+  }
+
+  //  create json data and save on database
+
 };
 
 export const login = async (req, res, next) => {

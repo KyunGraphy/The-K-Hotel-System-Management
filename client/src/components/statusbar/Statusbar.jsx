@@ -27,7 +27,7 @@ const Statusbar = ({ roomsStatus }) => {
       {loading ? (
         <BackdropComponent />
       ) : (
-        <>
+        <React.Fragment>
           <div className='statusbarLeft'>
             <div className='statusbarSearchRoom'>
               <label>Search room: </label>
@@ -39,9 +39,9 @@ const Statusbar = ({ roomsStatus }) => {
                 className='statusbarFilter'
               />
               {/* <div className='statusbarCalendar'>
-            <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /></div>
-            <div><ion-icon name="calendar-outline"></ion-icon></div>
-          </div> */}
+                <div><DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /></div>
+                <div><ion-icon name="calendar-outline"></ion-icon></div>
+              </div> */}
               <div
                 className='statusbarSearchIcon'
                 onClick={handleSearchRoom}
@@ -77,7 +77,7 @@ const Statusbar = ({ roomsStatus }) => {
               </div>
             ))}
           </div>
-        </>
+        </React.Fragment>
       )}
     </div>
   )

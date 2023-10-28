@@ -38,7 +38,6 @@ const AddStaff = ({ addNewStaff, setAddNewStaff }) => {
     salary: undefined,
     email: undefined,
     phone: undefined,
-    isAdmin: true,
   });
 
   useEffect(() => {
@@ -66,52 +65,53 @@ const AddStaff = ({ addNewStaff, setAddNewStaff }) => {
     setStaffForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  // const handleCreateStaff = async () => {
-  //   setLoading(true);
-  //   if (hotelId === null) {
-  //     setErrMsg("Please select hotel");
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     setLoading(false)
-  //     return;
-  //   } else if (roomForm.number === undefined || roomForm.number === '' ||
-  //     roomForm.type === undefined || roomForm.type === '' ||
-  //     roomForm.price === undefined || roomForm.price === '') {
-  //     setErrMsg("Please input all necessary field!")
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     setLoading(false)
-  //     return;
-  //   } else if (roomForm.maxPeople < 1) {
-  //     setErrMsg("Max people must have at least one person");
-  //     setTimeout(function () {
-  //       setErrMsg('');
-  //     }, 10000)
-  //     setLoading(false)
-  //     return;
-  //   } else {
-  //     console.log(roomForm)
-  //     try {
-  //       await axios.post(`/room/${hotelId}`, roomForm)
-  //       window.location.reload()
-  //       setSuccessMsg('Create new room successfully!!');
-  //       setAddNewStaff(false)
-  //     } catch (err) {
-  //       if (err.response.data.message === 'You are not authenticated!') {
-  //         navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-  //       } else {
-  //         console.log(err)
-  //         setErrMsg(err.response.data.message || 'Something went wrong!');
-  //         setTimeout(function () {
-  //           setErrMsg('');
-  //         }, 10000)
-  //       }
-  //     }
-  //   }
-  //   setLoading(false)
-  // }
+  const handleCreateStaff = async () => {
+    setLoading(true);
+    if (hotelId === null) {
+      setErrMsg("Please select hotel");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (staffForm.name === undefined || staffForm.name === '' ||
+      staffForm.role === undefined || staffForm.role === '' ||
+      staffForm.email === undefined || staffForm.email === '' ||
+      staffForm.phone === undefined || staffForm.phone === '' ||
+      staffForm.salary === undefined || staffForm.salary === '') {
+      setErrMsg("Please input all necessary field!")
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (staffForm.salary < 0) {
+      setErrMsg("Salary must be larger than 0");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else {
+      try {
+        await axios.post(`/auth/newStaff/${hotelId}`, staffForm)
+        window.location.reload()
+        setSuccessMsg('Create new staff successfully!!');
+        setAddNewStaff(false)
+      } catch (err) {
+        if (err.response.data.message === 'You are not authenticated!') {
+          navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+        } else {
+          console.log(err)
+          setErrMsg(err.response.data.message || 'Something went wrong!');
+          setTimeout(function () {
+            setErrMsg('');
+          }, 10000)
+        }
+      }
+    }
+    setLoading(false)
+  }
 
   return (
     <Grid>
@@ -182,15 +182,15 @@ const AddStaff = ({ addNewStaff, setAddNewStaff }) => {
                 className='roomInput'
                 required
               />
-              <label>Type</label>
+              <label>Role</label>
               {openRoomOptions && (
                 <div className='countryOptions'>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "RS" }))}>Receptionist</p>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "BS" }))}>Business staff</p>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "SS" }))}>Service Staff</p>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "AS" }))}>Accountant</p>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "HRS" }))}>Human Resources Staff</p>
-                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "MN" }))}>Director</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Receptionist" }))}>Receptionist</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Business Staff" }))}>Business Staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Service Staff" }))}>Service Staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Accountant" }))}>Accountant</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Human Resources Staff" }))}>Human Resources Staff</p>
+                  <p onClick={() => setStaffForm((prev) => ({ ...prev, role: "Director" }))}>Director</p>
                 </div>
               )}
             </div>
@@ -236,7 +236,7 @@ const AddStaff = ({ addNewStaff, setAddNewStaff }) => {
             <Button
               variant='contained'
               color='success'
-              onClick={null}
+              onClick={handleCreateStaff}
               disabled={loading}
             >CREATE</Button>
           </Box>
