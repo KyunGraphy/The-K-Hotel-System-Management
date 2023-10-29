@@ -28,7 +28,7 @@ const HotelSchema = new mongoose.Schema({
   rooms: {
     type: [String],
   },
-  staff: {
+  staffs: {
     type: [String],
   },
   comments: {

@@ -4,6 +4,7 @@ import { createError } from "../utils/error.js";
 import { padWithLeadingZeros, roleKeys } from "../constants/Constants.js";
 
 import User from "../models/User.model.js";
+import Hotel from "../models/Hotel.model.js";
 
 export const register = async (req, res, next) => {
   try {
@@ -113,18 +114,29 @@ export const newStaff = async (req, res, next) => {
     const roleKey = roleKeys[req.body.role]
     const roleNum = padWithLeadingZeros(admin.length + 1, 3)
 
+    if (!roleKey)
+      return next(createError(400, "Invalid role!"))
+
     const newStaff = new User({
       ...req.body,
       username: `admin${admin.length + 1}`,
       password: hash,
       isAdmin: true,
-      hotelId: req.params.hotelId,
+      hotelId: (req.body.role !== 'Director') ? req.params.hotelId : undefined,
       adminId: `${roleKey}${roleNum}`
     })
 
-    await newStaff.save();
+    const savedStaff = await newStaff.save();
 
-    res.status(200).json(newStaff)
+    if (req.body.role !== 'Director') {
+      await Hotel.findByIdAndUpdate(
+        req.params.hotelId,
+        { $push: { staffs: savedStaff._id } },
+        { new: true }
+      )
+    }
+
+    res.status(200).json(savedStaff)
   } catch (err) {
     console.log(err)
     next(err)
