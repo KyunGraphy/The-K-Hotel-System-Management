@@ -25,11 +25,13 @@ import { Toastify } from "../../components/toastify/Toastify";
 import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
 import { HOTELS_IMAGES } from '../../constants/Images';
 import useSetDefaultDate from '../../hooks/useSetDefaultDate';
+import { Button } from '@mui/material';
 
 
 // ----------------------------------------------------------------
 const Hotel = () => {
   const [dateRange, setDateRange] = useState(0.6)
+  const [loading, setLoading] = useState(false)
   const [errMsg, setErrMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const params = useParams()
@@ -76,7 +78,7 @@ const Hotel = () => {
     }
   }, [date])
 
-  const { loading, data } = useFetch(`/hotel/${params.id}`)
+  const { loading: loadingData, data } = useFetch(`/hotel/${params.id}`)
   const { user } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -107,12 +109,18 @@ const Hotel = () => {
   };
 
   const handleReserve = async () => {
+    setLoading(true);
     if (!user) {
       return navigate("/login", { state: { errMsg: "You have to login to make reservation" } })
     }
 
     if (user && options.singleRoom === 0 && options.doubleRoom === 0) {
       setErrMsg("Single room or Double room must be better than 0")
+      setLoading(false);
+      setTimeout(function () {
+        setErrMsg('')
+      }, 10000);
+      return
     } else {
       setErrMsg(null)
       const reservationForm = {
@@ -125,6 +133,11 @@ const Hotel = () => {
       try {
         await axios.post(`/reservation/${params.id}`, reservationForm)
         setSuccessMsg('Booking successfully!!');
+        setLoading(false);
+        setTimeout(function () {
+          setSuccessMsg('')
+        }, 10000);
+        return
       } catch (err) {
         if (err.response.data.message === 'You are not authenticated!') {
           try {
@@ -138,7 +151,12 @@ const Hotel = () => {
           }
         } else {
           setErrMsg('Something went wrong!');
+          setTimeout(function () {
+            setErrMsg('')
+          }, 10000);
         }
+        setLoading(false);
+        return
       }
     }
   };
@@ -173,7 +191,7 @@ const Hotel = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          {loading ? (
+          {loadingData ? (
             <React.Fragment>
               <div className="listSkeleton">
                 <p><Skeleton width={120} height={120} circle="true" /></p>
@@ -288,9 +306,11 @@ const Hotel = () => {
                     <h2>
                       <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
                     </h2>
-                    <button
+                    <Button
+                      variant="contained"
                       onClick={handleReserve}
-                    >Reserve or Book Now!</button>
+                      disabled={loading}
+                    >Reserve or Book Now!</Button>
                   </div>
                 </div>
               </div>

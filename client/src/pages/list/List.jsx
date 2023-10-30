@@ -4,7 +4,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
@@ -121,7 +121,7 @@ const List = () => {
           </div>
           <div className="listResult">
             {loading ? (
-              <>
+              <React.Fragment>
                 <div className="listSkeleton">
                   <p><Skeleton width={120} height={120} circle="true" /></p>
                   <p><Skeleton count={5} /></p>
@@ -138,9 +138,9 @@ const List = () => {
                   <p><Skeleton width={120} height={120} circle="true" /></p>
                   <p><Skeleton count={5} /></p>
                 </div>
-              </>
+              </React.Fragment>
             ) : (
-              <>
+              <React.Fragment>
                 {data.map(item => (
                   <div key={item._id}>
                     <SearchItem
@@ -151,7 +151,7 @@ const List = () => {
                     />
                   </div>
                 ))}
-              </>
+              </React.Fragment>
             )}
           </div>
         </div>
