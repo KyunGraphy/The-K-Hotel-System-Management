@@ -73,7 +73,7 @@ const ViewReservation = () => {
     <Grid>
       {confirmForm && (
         <ConfirmBox
-          msg='Do you want to delete this reservation'
+          msg='Do you want to delete this reservation?'
           type='delete'
           callBack={handleDeleteReservation}
           cancelFunc={() => setConfirmForm(false)}

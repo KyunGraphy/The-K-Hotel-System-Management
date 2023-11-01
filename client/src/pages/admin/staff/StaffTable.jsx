@@ -38,6 +38,11 @@ const rows = [
   createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
   createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
   createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
+  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
 ];
 
 const StaffTable = () => {
@@ -47,21 +52,21 @@ const StaffTable = () => {
     <Grid className='staffTable'>
       {confirmForm && (
         <ConfirmBox
-          msg='Do you want to delete this staff'
+          msg='Do you want to delete this staff?'
           type='delete'
           callBack={null}
           cancelFunc={() => setConfirmForm(false)}
         />
       )}
-      <TableContainer component={Paper} sx={{ border: '2px solid #384e71' }}>
+      <TableContainer component={Paper} sx={{ border: '2px solid #384e71', maxHeight: '32em' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Name</StyledTableCell>
               <StyledTableCell align="right">Department</StyledTableCell>
               <StyledTableCell align="right">Role</StyledTableCell>
-              <StyledTableCell align="right">Salary&nbsp;($)</StyledTableCell>
+              <StyledTableCell align="right">Salary&nbsp;($/month)</StyledTableCell>
               <StyledTableCell align="right">Email</StyledTableCell>
               <StyledTableCell align="right">Phone</StyledTableCell>
             </TableRow>

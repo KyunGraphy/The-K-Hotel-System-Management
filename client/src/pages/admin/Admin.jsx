@@ -21,6 +21,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
 import { CssBaseline } from '@mui/material'
 import { MANAGEMENT_ITEMS } from '../../constants/Constant'
+import Footer from '../../components/footer/Footer'
 
 // ----------------------------------------------------------------
 const drawerWidth = 240;
@@ -159,6 +160,7 @@ const Admin = () => {
           <Outlet />
         </Main>
       </Box>
+      <Footer />
       {showGoToTop && (
         <ScrollTop />
       )}

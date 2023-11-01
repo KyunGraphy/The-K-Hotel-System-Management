@@ -35,16 +35,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ----------------------------------------------------------------
 const ReservationTable = () => {
   const { hotelId } = useContext(RoomContext)
-  const { data, loading: dataLoading, reFetch } = useFetch(`/reservation/hotel/${hotelId}`)
+  const { data, loading: dataLoading } = useFetch(`/reservation/hotel/${hotelId}`)
 
   const navigate = useNavigate()
 
   return (
     <Grid className='reservationTable'>
       {dataLoading && (<BackdropComponent />)}
-      <TableContainer component={Paper} sx={{ border: '2px solid #384e71' }}>
+      <TableContainer component={Paper} sx={{ border: '2px solid #384e71', maxHeight: '32em' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Customer Name</StyledTableCell>
