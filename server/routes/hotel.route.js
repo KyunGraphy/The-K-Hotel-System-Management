@@ -1,11 +1,12 @@
 import express from 'express';
-import { createHotel, getAllHotels, updateHotel, getOneHotels, getHotelRooms, getSearchRooms } from '../controllers/hotel.controller.js';
+import { createHotel, getAllHotels, updateHotel, getOneHotels, getHotelRooms, getSearchRooms, getHotelStaffs } from '../controllers/hotel.controller.js';
 import { verifyAdmin, verifyToken } from '../utils/jwt.js';
 
 const router = express.Router();
 
 router.get('/', getAllHotels)
 router.get('/:hotelId', getOneHotels)
+router.get('/staffs/:hotelId', getHotelStaffs)
 router.post('/', verifyToken, verifyAdmin, createHotel)
 router.put('/:hotelId', verifyToken, verifyAdmin, updateHotel)
 router.get('/room/:hotelId', verifyToken, verifyAdmin, getHotelRooms)

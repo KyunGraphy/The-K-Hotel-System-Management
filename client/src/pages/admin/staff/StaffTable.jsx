@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import "./styles/staff.css";
-import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import { Avatar, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { RoomContext } from '../../../contexts/RoomContext';
+import useFetch from '../../../hooks/useFetch';
+import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+import { stringAvatar } from '../../../hooks/useSetStringToColor';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,43 +31,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(id, name, department, role, salary, email, phone) {
-  return { id, name, department, role, salary, email, phone };
-}
-
-const rows = [
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-  createData('MN001', 'Robinson', 'The K Dong Khoi', 'Director', '4000', 'user@gmail.com', '09999900'),
-];
-
 const StaffTable = () => {
-  const [confirmForm, setConfirmForm] = useState(false);
+  const { hotelId } = useContext(RoomContext)
+  const { data, loading: dataLoading } = useFetch(`/hotel/staffs/${hotelId}`)
 
   return (
     <Grid className='staffTable'>
-      {confirmForm && (
-        <ConfirmBox
-          msg='Do you want to delete this staff?'
-          type='delete'
-          callBack={null}
-          cancelFunc={() => setConfirmForm(false)}
-        />
-      )}
+      {dataLoading && (<BackdropComponent />)}
       <TableContainer component={Paper} sx={{ border: '2px solid #384e71', maxHeight: '32em' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell align="right">Department</StyledTableCell>
               <StyledTableCell align="right">Role</StyledTableCell>
               <StyledTableCell align="right">Salary&nbsp;($/month)</StyledTableCell>
               <StyledTableCell align="right">Email</StyledTableCell>
@@ -72,15 +51,15 @@ const StaffTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {data.map((item, index) => (
               <StyledTableRow
                 hover
                 onClick={() => console.log('onClick')}
-                key={row.index}
+                key={item.index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <StyledTableCell component="th" scope="row">
-                  {row.id}
+                  {item.adminId}
                 </StyledTableCell>
                 <StyledTableCell>
                   <Box
@@ -90,18 +69,20 @@ const StaffTable = () => {
                       alignItems: 'center',
                     }}
                   >
-                    <Avatar
-                      alt="Travis Howard"
-                      src="https://res.cloudinary.com/dvroxew0r/image/upload/v1696993380/imympejeja4o42ufhdpl.jpg"
-                    />
-                    {row.name}
+                    {
+                      item.profilePicture?.url ? (
+                        <Avatar alt="" src={item.profilePicture.url} />
+                      ) : (
+                        <Avatar {...stringAvatar(item.name)} />
+                      )
+                    }
+                    {item.name}
                   </Box>
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.department}</StyledTableCell>
-                <StyledTableCell align="right">{row.role}</StyledTableCell>
-                <StyledTableCell align="right">{row.salary}</StyledTableCell>
-                <StyledTableCell align="right">{row.email}</StyledTableCell>
-                <StyledTableCell align="right">{row.phone}</StyledTableCell>
+                <StyledTableCell align="right">{item.role}</StyledTableCell>
+                <StyledTableCell align="right">{item.salary}</StyledTableCell>
+                <StyledTableCell align="right">{item.email}</StyledTableCell>
+                <StyledTableCell align="right">{item.phone}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
