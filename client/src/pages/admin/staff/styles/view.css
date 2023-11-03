@@ -1,0 +1,107 @@
+.staffAvatar {
+    position: relative;
+    justify-content: center;
+    height: 180px;
+    margin: 2em;
+
+    & div {
+        height: 180px;
+        width: 180px;
+        font-size: 6em;
+        border: 6px solid grey;
+        transition: all 0.4s ease-in;
+    }
+
+    & div:hover {
+        border: 6px solid #384e71;
+    }
+
+    & label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: gray;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 50%;
+        bottom: 15%;
+        position: absolute;
+        right: 20%;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+    }
+
+    & span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: gray;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 50%;
+        top: 15%;
+        position: absolute;
+        right: 20%;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+    }
+
+    & p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: gray;
+        color: white;
+        font-size: 1.2em;
+        font-weight: 600;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+        right: 20%;
+        height: 32px;
+        width: 32px;
+        cursor: pointer;
+    }
+}
+
+.staffTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+
+    & svg {
+        cursor: pointer;
+    }
+}
+
+.staffCountry {
+    position: absolute;
+    background: rgba(242, 220, 208, 0.9);
+    margin-top: 4px;
+    max-height: 200px;
+    width: 100%;
+    border-bottom-left-radius: 12px;
+    overflow: auto;
+    z-index: 100;
+}
+
+.staffCountry > p {
+    padding: 0.5em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.staffCountry > p:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.staffCountry > p > img {
+    height: 12px;
+    margin: 0 0.5em;
+}

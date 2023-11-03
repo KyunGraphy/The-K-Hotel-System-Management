@@ -20,6 +20,7 @@ import ViewReservation from "./pages/admin/reservation/ViewReservation";
 import Service from "./pages/service/Service";
 import Profile from "./pages/profile/Profile";
 import Reservation from "./pages/reservation/Reservation";
+import ViewStaff from "./pages/admin/staff/Components/ViewStaff";
 
 // ----------------------------------------------------------------
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path="reservation" element={<ReservationMana />} />
           <Route path="reservation/detail" element={<ViewReservation />} />
           <Route path="staff" element={<StaffMana />} />
+          <Route path="staff/detail" element={<ViewStaff />} />
           <Route path="business" element={<Business />} />
           <Route path="finance" element={<Finance />} />
 

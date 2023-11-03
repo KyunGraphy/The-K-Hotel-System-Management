@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import Navbar from '../../components/navbar/Navbar'
-import ScrollTop from '../../components/scrollTop/ScrollTop'
 import './admin.css'
 import { Outlet, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   styled,
@@ -19,6 +17,9 @@ import {
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
+
+import ScrollTop from '../../components/scrollTop/ScrollTop'
+import Navbar from '../../components/navbar/Navbar'
 import { CssBaseline } from '@mui/material'
 import { MANAGEMENT_ITEMS } from '../../constants/Constant'
 import Footer from '../../components/footer/Footer'
@@ -155,7 +156,7 @@ const Admin = () => {
             ))}
           </List>
         </Drawer>
-        <Main open={open}>
+        <Main open={open} sx={{ background: '#f2dcd0', height: '70vh' }}>
           <DrawerHeader />
           <Outlet />
         </Main>

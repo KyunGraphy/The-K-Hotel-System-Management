@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
 import "./styles/staff.css";
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { RoomContext } from '../../../contexts/RoomContext';
@@ -35,6 +36,8 @@ const StaffTable = () => {
   const { hotelId } = useContext(RoomContext)
   const { data, loading: dataLoading } = useFetch(`/hotel/staffs/${hotelId}`)
 
+  const navigate = useNavigate()
+
   return (
     <Grid className='staffTable'>
       {dataLoading && (<BackdropComponent />)}
@@ -54,8 +57,8 @@ const StaffTable = () => {
             {data.map((item, index) => (
               <StyledTableRow
                 hover
-                onClick={() => console.log('onClick')}
-                key={item.index}
+                onClick={() => navigate('/admin/staff/detail', { state: { id: item._id } })}
+                key={item._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <StyledTableCell component="th" scope="row">
