@@ -56,6 +56,18 @@ const ReservationTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {data.length === 0 && (
+              <StyledTableRow>
+                <StyledTableCell
+                  component="th"
+                  align="center"
+                  scope="row"
+                  colSpan={6}
+                >
+                  No data available
+                </StyledTableCell>
+              </StyledTableRow>
+            )}
             {data.map((item) => (
               <StyledTableRow
                 hover

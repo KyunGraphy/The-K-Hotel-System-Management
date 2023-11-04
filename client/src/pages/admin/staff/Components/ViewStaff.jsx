@@ -1,7 +1,7 @@
 import '../styles/view.css'
 import React from 'react'
 import { Box, Grid } from '@mui/material'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import LeftPaper from './LeftPaper'
 import RightPaper from './RightPaper'
 import useFetch from '../../../../hooks/useFetch'
@@ -9,6 +9,7 @@ import BackdropComponent from '../../../../components/backdrop/BackdropComponent
 
 const ViewStaff = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const { id: staffId } = location.state
   const { loading: loadingStaff, data: staff } = useFetch(`/users/${staffId}`)
   const { loading: loadingHotel, data: hotel } = useFetch(`/hotel/${staff.hotelId}`)
@@ -19,12 +20,18 @@ const ViewStaff = () => {
         <BackdropComponent />
       ) : (
         <React.Fragment>
+          <span
+            className='backIcon'
+            onClick={() => navigate('/admin/staff')}
+          >
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            Back
+          </span>
           <Grid
             sx={{
               display: 'flex',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              padding: '1em',
             }}>
             <Box
               sx={{

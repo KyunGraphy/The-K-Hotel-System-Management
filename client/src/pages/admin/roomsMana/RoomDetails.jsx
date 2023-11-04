@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Calendar } from 'react-date-range';
-import { IoArrowBackCircle, IoWaterSharp } from "react-icons/io5";
+import { Grid } from '@mui/material';
+import { IoWaterSharp } from "react-icons/io5";
 import { CiLock, CiTempHigh } from "react-icons/ci";
 import { FaRegLightbulb } from "react-icons/fa";
 import { BsLightningFill } from "react-icons/bs";
 import { TbAirConditioningDisabled } from "react-icons/tb";
-import { RoomContext } from '../../../contexts/RoomContext';
-import useFetch from '../../../hooks/useFetch';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { RoomContext } from '../../../contexts/RoomContext';
+import useFetch from '../../../hooks/useFetch';
 
 // ----------------------------------------------------------------
 const RoomDetails = () => {
@@ -36,84 +37,85 @@ const RoomDetails = () => {
   };
 
   return (
-    <div className='roomsDetails'>
-      {loading ? (
-        <React.Fragment>
-          <Skeleton height={300} />
-          <Skeleton count={5} />
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <div
-            className='backIcon'
-            onClick={removeRoom}
-          >
-            <IoArrowBackCircle />
-            Back
-          </div>
-
-          <h1 className='roomNumber'>Room {data.number}</h1>
-          <div className='roomBlock'>
-            <div className='roomInfo'>
-              <p>Room number:
-                <span>{data.number}</span>
-              </p>
-              <p>Type:
-                <span>{data.type}</span>
-              </p>
-              <p>Max people:
-                <span>{data.maxPeople}</span>
-              </p>
-            </div>
-            <div className='roomInfo'>
-              <p>Price:
-                <span>{data.type === "Single" ? 30 : 50}</span>
-              </p>
-              <p>Title:
-                <span>{data.title}</span>
-              </p>
-              <p>Status:
-                <span>{data.status}</span>
-              </p>
-            </div>
-          </div>
-
-          <div className='roomStatus'>
-            <div className='roomConsume'>
-              <div className='roomBlock'>
-                <div className='roomItem'>
-                  <CiLock />Locked: On
-                </div>
-                <div className='roomItem'>
-                  <TbAirConditioningDisabled />A.C: On
-                </div>
-                <div className='roomItem'>
-                  <FaRegLightbulb /> Light: On
-                </div>
+    <Grid>
+      <span
+        className='backIcon'
+        onClick={removeRoom}
+      >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        Back
+      </span>
+      <div className='roomsDetails'>
+        {loading ? (
+          <React.Fragment>
+            <Skeleton height={300} />
+            <Skeleton count={5} />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <h1 className='roomNumber'>Room {data.number}</h1>
+            <div className='roomBlock'>
+              <div className='roomInfo'>
+                <p>Room number:
+                  <span>{data.number}</span>
+                </p>
+                <p>Type:
+                  <span>{data.type}</span>
+                </p>
+                <p>Max people:
+                  <span>{data.maxPeople}</span>
+                </p>
               </div>
-              <div className='roomBlock'>
-                <div className='roomItem'>
-                  <CiTempHigh />27°C
-                </div>
-                <div className='roomItem'>
-                  <BsLightningFill /> 20 hours
-                </div>
-                <div className='roomItem'>
-                  <IoWaterSharp />2 litres
-                </div>
+              <div className='roomInfo'>
+                <p>Price:
+                  <span>{data.type === "Single" ? 30 : 50}</span>
+                </p>
+                <p>Title:
+                  <span>{data.title}</span>
+                </p>
+                <p>Status:
+                  <span>{data.status}</span>
+                </p>
               </div>
             </div>
-            <div className='roomSchedule'>
-              <Calendar
-                date={new Date()}
-                onChange={() => null}
-                disabledDates={unavaiDate}
-              />
+
+            <div className='roomStatus'>
+              <div className='roomConsume'>
+                <div className='roomBlock'>
+                  <div className='roomItem'>
+                    <CiLock />Locked: On
+                  </div>
+                  <div className='roomItem'>
+                    <TbAirConditioningDisabled />A.C: On
+                  </div>
+                  <div className='roomItem'>
+                    <FaRegLightbulb /> Light: On
+                  </div>
+                </div>
+                <div className='roomBlock'>
+                  <div className='roomItem'>
+                    <CiTempHigh />27°C
+                  </div>
+                  <div className='roomItem'>
+                    <BsLightningFill /> 20 hours
+                  </div>
+                  <div className='roomItem'>
+                    <IoWaterSharp />2 litres
+                  </div>
+                </div>
+              </div>
+              <div className='roomSchedule'>
+                <Calendar
+                  date={new Date()}
+                  onChange={() => null}
+                  disabledDates={unavaiDate}
+                />
+              </div>
             </div>
-          </div>
-        </React.Fragment>
-      )}
-    </div>
+          </React.Fragment>
+        )}
+      </div>
+    </Grid>
   )
 }
 

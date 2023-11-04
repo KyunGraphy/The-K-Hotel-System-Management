@@ -59,27 +59,9 @@
     margin: 20px 0;
     padding: 10px;
     min-height: calc(100vh - 80px);
-    gap: 12px;
     flex-wrap: wrap;
     background-color: #fff;
-    border-top-left-radius: 1em;
-    border-bottom-left-radius: 1em;
-    box-shadow: 5px 5px 18p;
-}
-
-.backIcon {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0.5em;
-    top: 24px;
-    right: 40px;
-    font-size: 20px;
-    background: #384e71;
-    color: #fff;
-    border-radius: 0.5em;
-    cursor: pointer;
+    box-shadow: 5px 5px 18px #888888;
 }
 
 .roomNumber {

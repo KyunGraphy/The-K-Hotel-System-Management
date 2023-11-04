@@ -1,17 +1,17 @@
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { DateRange } from "react-date-range";
-import { IoArrowBackCircle, IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
+import { IoPeopleOutline, IoPersonOutline } from "react-icons/io5";
 import { FaBaby } from "react-icons/fa";
+import { Button } from '@mui/material';
 import { MdEmojiPeople } from "react-icons/md";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
-import axios from 'axios';
 import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
-import { useNavigate } from 'react-router-dom';
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate';
 import { Toastify } from '../../../components/toastify/Toastify';
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
-import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------
 const AddReservation = ({ setAddNewReserve }) => {
@@ -129,13 +129,6 @@ const AddReservation = ({ setAddNewReserve }) => {
     <React.Fragment>
       {errMsg && <Toastify msg={errMsg} type="error" />}
       {successMsg && <Toastify msg={successMsg} type="success" />}
-      <div
-        className='backIcon'
-        onClick={() => setAddNewReserve(false)}
-      >
-        <IoArrowBackCircle />
-        Back
-      </div>
       {loading ? (
         <BackdropComponent />
       ) : (

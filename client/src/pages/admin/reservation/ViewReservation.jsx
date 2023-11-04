@@ -81,14 +81,14 @@ const ViewReservation = () => {
         />
       )}
       {successMsg && <Toastify msg={successMsg} type="success" />}
+      <span
+        className='backIcon'
+        onClick={() => navigate('/admin/reservation')}
+      >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        Back
+      </span>
       <div className='reservation'>
-        <div
-          className='backIcon'
-          onClick={() => navigate('/admin/reservation')}
-        >
-          <IoArrowBackCircle />
-          Back
-        </div>
         <h2>Reservation Information</h2>
         <div className='reservationForm'>
           {loadingData ? (

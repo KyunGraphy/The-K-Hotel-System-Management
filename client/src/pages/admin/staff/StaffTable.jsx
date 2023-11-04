@@ -54,6 +54,18 @@ const StaffTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {data.length === 0 && (
+              <StyledTableRow>
+                <StyledTableCell
+                  align="center"
+                  component="th"
+                  scope="row"
+                  colSpan={6}
+                >
+                  No data available
+                </StyledTableCell>
+              </StyledTableRow>
+            )}
             {data.map((item, index) => (
               <StyledTableRow
                 hover

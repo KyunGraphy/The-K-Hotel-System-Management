@@ -13,6 +13,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Grid,
 } from '../../constants/mui-components.jsx'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -102,7 +103,7 @@ const Admin = () => {
   };
 
   return (
-    <div className='admin'>
+    <Grid className='admin'>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="fixed" open={open}>
@@ -156,7 +157,7 @@ const Admin = () => {
             ))}
           </List>
         </Drawer>
-        <Main open={open} sx={{ background: '#f2dcd0', height: '70vh' }}>
+        <Main open={open} sx={{ background: '#f2dcd0' }}>
           <DrawerHeader />
           <Outlet />
         </Main>
@@ -165,7 +166,7 @@ const Admin = () => {
       {showGoToTop && (
         <ScrollTop />
       )}
-    </div>
+    </Grid>
   )
 }
 
