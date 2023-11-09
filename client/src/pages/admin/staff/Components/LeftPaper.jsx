@@ -40,9 +40,9 @@ const LeftPaper = ({ staff }) => {
               <Typography sx={{ margin: '1em 0' }}><strong>Phone: </strong>{staff.phone}</Typography>
               <Typography sx={{ margin: '1em 0' }}><strong>Address: </strong>{staff.address}</Typography>
               <Typography sx={{ margin: '1em 0' }}><strong>Country: </strong>
-                {staff.country.common}
+                {(staff.country) ? staff.country.common : ''}
                 {
-                  staff.country.flags && <img src={staff.country.flags} alt="country" style={{ height: 20 }} />
+                  staff.country && <img src={staff.country.flags} alt="country" style={{ height: 20 }} />
                 }
               </Typography>
             </React.Fragment>

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { AiOutlineDollar } from "react-icons/ai";
 import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import useFetch from '../../../../hooks/useFetch';
@@ -13,6 +12,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  height: '70vh',
   width: 700,
   bgcolor: 'background.paper',
   background: '#f2dcd0',
@@ -24,18 +24,12 @@ const style = {
 };
 
 // ----------------------------------------------------------------
-const EditStaff = ({ editStaff, setEditStaff }) => {
+const EditStaff = ({ editStaff, setEditStaff, staff, hotel }) => {
   const [openHotelOptions, setOpenHotelOptions] = useState(false);
   const [openRoomOptions, setOpenRoomOptions] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState('')
   const [loading, setLoading] = useState(false);
-
-  const [staffForm, setStaffForm] = useState({
-    role: undefined,
-    salary: undefined,
-    department: undefined,
-  });
 
   useEffect(() => {
     function handleCloseDepartmentsOptions(e) {
@@ -50,64 +44,66 @@ const EditStaff = ({ editStaff, setEditStaff }) => {
   });
 
   const { hotelId, dispatch } = useContext(RoomContext)
-  const navigate = useNavigate()
   const { data, loading: dataLoading } = useFetch("/hotel")
-  const department = data.filter(item => item._id === hotelId) || null
 
-  const handleHotel = (hotelId) => {
+  const [staffForm, setStaffForm] = useState({
+    role: staff.role,
+    salary: staff.salary,
+    hotel: hotel.department,
+    hotelId: hotelId,
+    oldHotelId: hotelId,
+    isStaff: true,
+  });
+
+
+  const handleHotel = (hotelId, hotelDepartment) => {
     dispatch({ type: "SET_HOTEL", payload: hotelId || null })
+    setStaffForm((prev) => ({ ...prev, 'hotel': hotelDepartment, 'hotelId': hotelId }))
   }
 
   const handleChange = (e) => {
     setStaffForm((prev) => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  const handleCreateStaff = async () => {
-    // setLoading(true);
-    // if (hotelId === null) {
-    //   setErrMsg("Please select hotel");
-    //   setTimeout(function () {
-    //     setErrMsg('');
-    //   }, 10000)
-    //   setLoading(false)
-    //   return;
-    // } else if (staffForm.name === undefined || staffForm.name === '' ||
-    //   staffForm.role === undefined || staffForm.role === '' ||
-    //   staffForm.email === undefined || staffForm.email === '' ||
-    //   staffForm.phone === undefined || staffForm.phone === '' ||
-    //   staffForm.salary === undefined || staffForm.salary === '') {
-    //   setErrMsg("Please input all necessary field!")
-    //   setTimeout(function () {
-    //     setErrMsg('');
-    //   }, 10000)
-    //   setLoading(false)
-    //   return;
-    // } else if (staffForm.salary < 0) {
-    //   setErrMsg("Salary must be larger than 0");
-    //   setTimeout(function () {
-    //     setErrMsg('');
-    //   }, 10000)
-    //   setLoading(false)
-    //   return;
-    // } else {
-    //   try {
-    //     await axios.post(`/auth/newStaff/${hotelId}`, staffForm)
-    //     window.location.reload()
-    //     setSuccessMsg('Create new staff successfully!!');
-    //     setEditStaff(false)
-    //   } catch (err) {
-    //     if (err.response.data.message === 'You are not authenticated!') {
-    //       navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-    //     } else {
-    //       console.log(err)
-    //       setErrMsg(err.response.data.message || 'Something went wrong!');
-    //       setTimeout(function () {
-    //         setErrMsg('');
-    //       }, 10000)
-    //     }
-    //   }
-    // }
-    // setLoading(false)
+  const handleEditStaff = async () => {
+    const { hotel, ...otherDetails } = staffForm
+    setLoading(true);
+    if (hotelId === null) {
+      setErrMsg("Please select hotel");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (
+      staffForm.role === undefined || staffForm.role === '' ||
+      staffForm.salary === undefined || staffForm.salary === '' ||
+      staffForm.hotel === undefined || staffForm.hotel === '' ||
+      staffForm.hotelId === undefined || staffForm.hotelId === ''
+    ) {
+      setErrMsg("Please input all necessary field!")
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else if (staffForm.salary < 0) {
+      setErrMsg("Salary must be larger than 0");
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+      return;
+    } else {
+      try {
+        const res = await axios.put(`/users/${staff._id}`, otherDetails)
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
+        window.location.reload();
+      } catch (err) {
+        setErrMsg('Something went wrong!');
+      }
+    }
+    setLoading(false)
   }
 
   return (
@@ -138,7 +134,7 @@ const EditStaff = ({ editStaff, setEditStaff }) => {
               </span>
               <input
                 type="text"
-                value={department[0]?.department || ""}
+                value={staffForm.hotel}
                 className='hotelInput'
                 required
               />
@@ -148,7 +144,7 @@ const EditStaff = ({ editStaff, setEditStaff }) => {
                   {data.map((item, index) => (
                     <p
                       key={index}
-                      onClick={() => handleHotel(item._id)}
+                      onClick={() => handleHotel(item._id, item.department)}
                     >
                       {item.department}
                     </p>
@@ -186,6 +182,7 @@ const EditStaff = ({ editStaff, setEditStaff }) => {
                 type="number"
                 id="salary"
                 min='1'
+                value={staffForm.salary}
                 onChange={e => handleChange(e)}
                 required
               />
@@ -194,8 +191,15 @@ const EditStaff = ({ editStaff, setEditStaff }) => {
             <Button
               variant='contained'
               color='success'
-              onClick={handleCreateStaff}
-              disabled={loading}
+              onClick={handleEditStaff}
+              disabled={
+                loading || (
+                  staffForm.role === staff.role &&
+                  staffForm.salary === staff.salary &&
+                  staffForm.hotel === hotel.department &&
+                  staffForm.hotelId === hotelId
+                )
+              }
             >ACCEPT</Button>
           </Box>
         </Modal>

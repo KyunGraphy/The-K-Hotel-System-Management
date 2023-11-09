@@ -14,6 +14,7 @@ const ViewStaff = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { id: staffId } = location.state
+  console.log(location.state)
   const { loading: loadingStaff, data: staff } = useFetch(`/users/${staffId}`)
   const { loading: loadingHotel, data: hotel } = useFetch(`/hotel/${staff.hotelId}`)
 
@@ -26,6 +27,8 @@ const ViewStaff = () => {
           <EditStaff
             editStaff={editStaff}
             setEditStaff={setEditStaff}
+            staff={staff}
+            hotel={hotel}
           />
           <span
             className='backIcon'

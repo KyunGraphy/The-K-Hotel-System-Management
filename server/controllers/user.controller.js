@@ -1,6 +1,7 @@
 import { createError } from "../utils/error.js";
 
 import User from '../models/User.model.js';
+import Hotel from '../models/Hotel.model.js';
 import cloudinary from "../utils/cloudinary.js"
 
 export const getUser = async (req, res, next) => {
@@ -23,16 +24,44 @@ export const getAllUsers = async (req, res, next) => {
 
 export const updateUser = async (req, res, next) => {
   try {
-    if (req.params.id === req.userId || req.isAdmin) {
-      const updateUser = await User.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
-        { new: true }
-      );
-      res.status(200).json(updateUser);
+    if (req.body.hasOwnProperty('isStaff')) {
+      // Update Admin object
+      if (req.isAdmin) {
+        const updateUser = await Promise.all([
+          User.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+          ),
+          Hotel.findByIdAndUpdate(
+            req.body.oldHotelId,
+            { $pull: { staffs: req.params.id } },
+            { new: true }
+          ),
+          Hotel.findByIdAndUpdate(
+            req.body.hotelId,
+            { $push: { staffs: req.params.id } },
+            { new: true }
+          ),
+        ])
+        res.status(200).json(updateUser);
+      } else {
+        return next(createError(403, "Something wrong!"))
+      }
     } else {
-      return next(createError(403, "You can only update your account!"))
+      // Update Customer object
+      if (req.params.id === req.userId || req.isAdmin) {
+        const updateUser = await User.findByIdAndUpdate(
+          req.params.id,
+          { $set: req.body },
+          { new: true }
+        );
+        res.status(200).json(updateUser);
+      } else {
+        return next(createError(403, "You can only update your account!"))
+      }
     }
+
   } catch (err) {
     next(err);
   }
