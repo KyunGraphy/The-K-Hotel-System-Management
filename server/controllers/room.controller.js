@@ -1,3 +1,4 @@
+import Facility from '../models/Facility.model.js';
 import Hotel from '../models/Hotel.model.js';
 import Room from '../models/Room.model.js';
 import { createError } from "../utils/error.js";
@@ -112,6 +113,11 @@ export const deleteRooms = async (req, res, next) => {
   }
 };
 
+// --- Update room facilities ---
+// Check the existed items in room or not
+//// If existing => update by get the quantity of items and update
+//// Else => Add new items with new quantity from requested body quantity
+// Decrease the number of items in the facilities database
 export const updateFacility = async (req, res, next) => {
   try {
     const roomFacility = await Room.findById(req.params.roomId);
@@ -130,11 +136,26 @@ export const updateFacility = async (req, res, next) => {
         req.params.roomId,
         { $pull: { facility: { facilityId: req.body.facilityId } } }
       )
+
       // Update quantity of the previous facility
       await Room.findByIdAndUpdate(
         req.params.roomId,
         { $push: { facility: newFacility } },
       )
+
+      // Update quantity in facility database
+      const facility = await Facility.findById(req.body.facilityId)
+      await Facility.findByIdAndUpdate(
+        req.body.facilityId,
+        {
+          using: facility.using + req.body.quantity,
+          amount: facility.amount - req.body.quantity,
+        },
+        { new: true },
+      )
+      res.status(201).json({
+        msg: 'Facility updated successfully',
+      })
     } else {
       await Room.findByIdAndUpdate(
         req.params.roomId,

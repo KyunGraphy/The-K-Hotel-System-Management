@@ -136,7 +136,7 @@ const BusinessDetail = () => {
                 onClick={() => setEditedForm(!editedForm)}
                 sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
               >
-                <Fab color="primary" aria-label="edit">
+                <Fab color="secondary" aria-label="edit">
                   <Edit />
                 </Fab>
               </Box>
