@@ -1,6 +1,7 @@
-import { Box, Fab, Input, NativeSelect } from '@mui/material'
 import React, { useState } from 'react'
+import { Box, Fab, Input, NativeSelect } from '@mui/material'
 import { Close, DoneAll, Delete } from '@mui/icons-material';
+import RoomFacilityUpdate from './RoomFacilityUpdate';
 
 const ariaLabel = { 'aria-label': 'description' };
 
@@ -99,9 +100,12 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom }) => {
           </p>
         </div>
       </div>
+      <h2 className='roomNumber'>Furnitures</h2>
+      <RoomFacilityUpdate />
+
       {/* ----------------------------------------------------- */}
       <Box
-        sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
+        sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em', zIndex: 10 }}
       >
         <Fab color="error" aria-label="edit">
           <Delete />

@@ -18,6 +18,6 @@ router.post('/:hotelId', verifyToken, verifyAdmin, createRooms)
 router.put('/:hotelId/:roomId', verifyToken, verifyAdmin, updateRooms)
 router.patch('/toggleStatus/:roomId', verifyToken, verifyAdmin, toggleStatusRooms)
 router.delete('/:hotelId/:roomId', verifyToken, verifyAdmin, deleteRooms)
-router.post('/updateFacility/:roomId', verifyToken, verifyAdmin, updateFacility)
+router.patch('/updateFacility/:roomId', verifyToken, verifyAdmin, updateFacility)
 
 export default router;

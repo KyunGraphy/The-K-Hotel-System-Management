@@ -121,25 +121,20 @@ const BusinessDetail = () => {
                 Furnitures
               </h2>
               <div className='roomService'>
-                {/* <div className='roomServiceItem'>
-                  <img
-                    src='https://ae01.alicdn.com/kf/HTB1h1ViOrvpK1RjSZPiq6zmwXXaf/Full-HD-1080P-42-55-65-inch-ultra-slim-android-television-Smart-TV-HD-LED-2GB.jpg'
-                    alt=''
-                  />
-                  <p>Television: 1</p>
-                </div> */}
                 <ServiceItem />
                 <ServiceItem />
                 <ServiceItem />
               </div>
-              <Box
-                onClick={() => setEditedForm(!editedForm)}
-                sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
-              >
-                <Fab color="secondary" aria-label="edit">
-                  <Edit />
-                </Fab>
-              </Box>
+              {data.status === 'Maintenance' && (
+                <Box
+                  onClick={() => setEditedForm(!editedForm)}
+                  sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
+                >
+                  <Fab color="secondary" aria-label="edit">
+                    <Edit />
+                  </Fab>
+                </Box>
+              )}
             </React.Fragment>
           )}
         </React.Fragment>
