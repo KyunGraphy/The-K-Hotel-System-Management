@@ -5,7 +5,7 @@ import RoomFacilityUpdate from './RoomFacilityUpdate';
 
 const ariaLabel = { 'aria-label': 'description' };
 
-const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom }) => {
+const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReFetch }) => {
   const [roomForm, setRoomForm] = useState({
     number: undefined,
     type: undefined,
@@ -101,7 +101,7 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom }) => {
         </div>
       </div>
       <h2 className='roomNumber'>Furnitures</h2>
-      <RoomFacilityUpdate />
+      <RoomFacilityUpdate roomData={data} roomReFetch={roomReFetch} />
 
       {/* ----------------------------------------------------- */}
       <Box

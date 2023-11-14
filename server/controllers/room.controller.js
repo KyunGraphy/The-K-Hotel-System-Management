@@ -113,11 +113,6 @@ export const deleteRooms = async (req, res, next) => {
   }
 };
 
-// --- Update room facilities ---
-// Check the existed items in room or not
-//// If existing => update by get the quantity of items and update
-//// Else => Add new items with new quantity from requested body quantity
-// Decrease the number of items in the facilities database
 export const updateFacility = async (req, res, next) => {
   try {
     const roomFacility = await Room.findById(req.params.roomId);
@@ -160,6 +155,17 @@ export const updateFacility = async (req, res, next) => {
       await Room.findByIdAndUpdate(
         req.params.roomId,
         { $push: { facility: req.body } },
+      )
+
+      // Update quantity in facility database
+      const facility = await Facility.findById(req.body.facilityId)
+      await Facility.findByIdAndUpdate(
+        req.body.facilityId,
+        {
+          using: facility.using + req.body.quantity,
+          amount: facility.amount - req.body.quantity,
+        },
+        { new: true },
       )
     }
     res.status(200).json({

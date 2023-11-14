@@ -70,6 +70,7 @@ const BusinessDetail = () => {
               editedForm={editedForm}
               setEditedForm={setEditedForm}
               handleUpdateRoom={handleUpdateRoom}
+              roomReFetch={reFetch}
             />
           ) : (
             <React.Fragment>
