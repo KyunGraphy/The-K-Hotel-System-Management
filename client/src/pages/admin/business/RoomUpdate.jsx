@@ -31,7 +31,10 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
               autoComplete='off'
               placeholder={data.number}
               type='number'
-              onChange={e => handleChange(e)}
+              onChange={e => setRoomForm((prev) => ({
+                ...prev,
+                [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
+              }))}
               sx={{
                 marginLeft: '1em',
               }}
@@ -62,7 +65,11 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
               placeholder={data.maxPeople}
               type='number'
               inputProps={ariaLabel}
-              onChange={e => handleChange(e)}
+              min='1'
+              onChange={e => setRoomForm((prev) => ({
+                ...prev,
+                [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
+              }))}
               sx={{
                 marginLeft: '1em'
               }}
@@ -77,7 +84,13 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
               placeholder={data.price}
               type='number'
               inputProps={ariaLabel}
-              onChange={e => handleChange(e)}
+              min='1'
+              onChange={e => {
+                setRoomForm((prev) => ({
+                  ...prev,
+                  [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
+                }))
+              }}
               sx={{
                 marginLeft: '1em'
               }}

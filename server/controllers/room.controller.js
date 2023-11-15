@@ -54,15 +54,17 @@ export const createRooms = async (req, res, next) => {
 export const updateRooms = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.hotelId)
-    const roomsNum = await Promise.all(
-      hotel.rooms.map(async (item) => {
-        const room = await Room.findById(item)
-        return room.number
-      })
-    )
+    if (req.body.number) {
+      const roomsNum = await Promise.all(
+        hotel.rooms.map(async (item) => {
+          const room = await Room.findById(item)
+          return room.number
+        })
+      )
 
-    if (roomsNum.includes(Number(req.body.number))) {
-      return next(createError(403, 'Room number is already existed!'))
+      if (roomsNum.includes(req.body.number)) {
+        return next(createError(403, 'Room number is already existed!'))
+      }
     }
 
     const updatedRoom = await Room.findByIdAndUpdate(
