@@ -20,7 +20,8 @@ const BusinessDetail = () => {
   const [loading, setLoading] = useState(false);
 
   const { hotelId, roomId, dispatch } = useContext(RoomContext)
-  const { data, loading: dataLoading, reFetch } = useFetch(`/room/${roomId}`)
+  const { data: roomData, loading: roomLoading, reFetch } = useFetch(`/room/${roomId}`)
+  const { data: roomFacility, loading: facilityLoading, reFetch: reFetchRoomFacility } = useFetch(`/facility/room/${roomId}`)
 
   const removeRoom = () => {
     dispatch({ type: "REMOVE_ROOM" })
@@ -53,7 +54,7 @@ const BusinessDetail = () => {
   return (
     <div className='roomsDetails'>
       {errMsg && <Toastify msg={errMsg} type="error" />}
-      {dataLoading ? (
+      {(roomLoading || facilityLoading) ? (
         <BackdropComponent />
       ) : (
         <React.Fragment>
@@ -66,51 +67,52 @@ const BusinessDetail = () => {
           </div>
           {editedForm ? (
             <RoomUpdate
-              data={data}
+              data={roomData}
               editedForm={editedForm}
               setEditedForm={setEditedForm}
               handleUpdateRoom={handleUpdateRoom}
               roomReFetch={reFetch}
+              reFetchRoomFacility={reFetchRoomFacility}
             />
           ) : (
             <React.Fragment>
               <h2 className='roomNumber'>
-                Room {data.number}
+                Room {roomData.number}
               </h2>
               <div className='roomBlock'>
                 <div className='roomInfo'>
                   <p>Room number:
-                    <span>{data.number}</span>
+                    <span>{roomData.number}</span>
                   </p>
                   <p>Type:
-                    <span>{data.type}</span>
+                    <span>{roomData.type}</span>
                   </p>
                   <p>Max people:
-                    <span>{data.maxPeople}</span>
+                    <span>{roomData.maxPeople}</span>
                   </p>
                 </div>
                 <div className='roomInfo'>
                   <p>Price:
-                    <span>{data.price}$/day</span>
+                    <span>{roomData.price}$/day</span>
                   </p>
                   <p>Description:
-                    <span>{data.description}</span>
+                    <span>{roomData.description}</span>
                   </p>
                   <p>Status:
-                    <span>{data.status}</span>
+                    <span>{roomData.status}</span>
                   </p>
                   <p>Maintenance Mode:
-                    {(data.status === 'Maintenance' || data.status === 'Available') ? (
+                    {(roomData.status === 'Maintenance' || roomData.status === 'Available') ? (
                       <Switch
                         {...label}
-                        defaultChecked={data.status === 'Maintenance'}
+                        defaultChecked={roomData.status === 'Maintenance'}
                         onChange={(e) => handleToggleStatus(e.target.checked)}
                         disabled={loading}
                       />
                     ) : (
                       <Switch
                         {...label}
-                        defaultChecked={data.status === 'Maintenance'}
+                        defaultChecked={roomData.status === 'Maintenance'}
                         disabled={true}
                       />
                     )}
@@ -122,11 +124,11 @@ const BusinessDetail = () => {
                 Furnitures
               </h2>
               <div className='roomService'>
-                <ServiceItem />
-                <ServiceItem />
-                <ServiceItem />
+                {roomFacility.map((item, index) => (
+                  <ServiceItem key={index} data={item} />
+                ))}
               </div>
-              {data.status === 'Maintenance' && (
+              {roomData.status === 'Maintenance' && (
                 <Box
                   onClick={() => setEditedForm(!editedForm)}
                   sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}

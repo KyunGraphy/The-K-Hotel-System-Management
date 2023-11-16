@@ -1,4 +1,5 @@
 import Facility from '../models/Facility.model.js';
+import Room from '../models/Room.model.js';
 
 export const getAllFacilities = async (req, res, next) => {
   try {
@@ -34,6 +35,18 @@ export const deleteFacility = async (req, res, next) => {
     res.status(200).json({
       message: 'Facility deleted successfully'
     })
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getRoomFacility = async (req, res, next) => {
+  try {
+    const data = await Room.findById(req.params.roomId);
+    const roomFacilityList = await Promise.all(
+      data.facility.map(item => Facility.findById(item.facilityId))
+    )
+    res.status(200).json(roomFacilityList);
   } catch (err) {
     next(err);
   }

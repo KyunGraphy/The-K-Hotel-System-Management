@@ -7,7 +7,7 @@ import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext'
 import BackdropComponent from '../../../components/backdrop/BackdropComponent'
 
-const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch, roomReFetch }) => {
+const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch }) => {
   const [quantity, setQuantity] = useState(roomFacility ? roomFacility.quantity : 0)
   const { roomId } = useContext(RoomContext)
 
@@ -19,7 +19,6 @@ const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch, roomReF
         "quantity": -1,
       })
       facilityReFetch()
-      roomReFetch()
     } catch (err) {
       console.error(err)
     }
@@ -33,7 +32,6 @@ const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch, roomReF
         "quantity": 1,
       })
       facilityReFetch()
-      roomReFetch()
     } catch (err) {
       console.error(err)
     }
@@ -65,7 +63,7 @@ const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch, roomReF
   )
 };
 
-const RoomFacilityUpdate = ({ roomData, roomReFetch }) => {
+const RoomFacilityUpdate = ({ roomData }) => {
   const { loading, data: facilityData, reFetch: facilityReFetch } = useFetch(`/facility`)
 
   return (
@@ -99,7 +97,6 @@ const RoomFacilityUpdate = ({ roomData, roomReFetch }) => {
                     facilityItem={facilityItem}
                     roomFacility={roomFacility}
                     facilityReFetch={facilityReFetch}
-                    roomReFetch={roomReFetch}
                   />
                 )
               })}

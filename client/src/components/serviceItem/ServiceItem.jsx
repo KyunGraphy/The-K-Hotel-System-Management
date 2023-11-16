@@ -1,19 +1,28 @@
 import "./serviceItem.css";
 import { Card, CardContent } from '@mui/material'
 
-const SearchItem = ({ item, date, options }) => {
+const ServiceItem = ({ data }) => {
+  if (data.using === 0) return
 
   return (
-    <Card className="serviceBlock">
-      <CardContent sx={{ display: 'flex' }}>
+    <Card
+      sx={{
+        width: 500,
+        border: '1px solid lightgray',
+        display: 'flex',
+        justifyContent: 'space-between',
+        gap: '2em',
+      }}
+    >
+      <CardContent sx={{ display: 'flex', gap: '2em', padding: '1em' }}>
         <img
-          src='https://ae01.alicdn.com/kf/HTB1h1ViOrvpK1RjSZPiq6zmwXXaf/Full-HD-1080P-42-55-65-inch-ultra-slim-android-television-Smart-TV-HD-LED-2GB.jpg'
+          src={data.img}
           alt=""
           className="siImg"
         />
         <div className="siDesc">
-          <h1 className="siTitle">Television</h1>
-          <span className="siSubtitle">Amount: 1</span>
+          <h1 className="siTitle">{data.name}</h1>
+          <span className="siSubtitle">Amount: {data.using}</span>
           <span className="siFeatures">
             quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci
           </span>
@@ -21,20 +30,10 @@ const SearchItem = ({ item, date, options }) => {
           <span className="siCancelOpSubtitle">
             You can cancel later, so lock in this great price today!
           </span>
-          {/* <div className="siServiceBtn">
-            <button
-              className="siCheckButton"
-              onClick={null}
-            >See Details</button>
-            <button
-              className="siRemoveButton"
-              onClick={null}
-            >Remove</button>
-          </div> */}
         </div>
       </CardContent>
-    </Card>
+    </Card >
   );
 };
 
-export default SearchItem;
+export default ServiceItem;

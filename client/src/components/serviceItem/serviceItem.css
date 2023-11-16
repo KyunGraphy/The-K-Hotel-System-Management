@@ -1,11 +1,3 @@
-.serviceBlock {
-    width: 500px;
-    border: 1px solid lightgray;
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
 .siImg {
     width: 200px;
     height: 200px;
