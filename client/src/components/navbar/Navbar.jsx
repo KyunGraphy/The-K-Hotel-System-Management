@@ -43,6 +43,10 @@ const Navbar = () => {
     navigate('/reservation');
   }
 
+  const handleClickChangePwBtn = () => {
+    navigate('/changePw');
+  }
+
   const handleClickRegBtn = () => {
     navigate("/register");
   };
@@ -82,9 +86,9 @@ const Navbar = () => {
                   Reservation
                   <p className="navUserBadge">{data.count}</p>
                 </p>
-                <p className="navUserOptionsAfter">
+                <p className="navUserOptionsAfter" onClick={handleClickChangePwBtn}>
                   <ion-icon name="settings-outline"></ion-icon>
-                  Setting
+                  Change Password
                 </p>
                 <p onClick={handleClickLogOutBtn}>
                   <ion-icon name="log-out-outline"></ion-icon>

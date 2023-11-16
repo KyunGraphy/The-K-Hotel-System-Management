@@ -184,9 +184,9 @@ const LeftPaper = ({ user, setErrMsg, dispatch }) => {
           <React.Fragment>
             {
               user.profilePicture?.url ? (
-                <Avatar alt="" src={user.profilePicture.url} />
+                <Avatar alt="" src={user.profilePicture.url} sx={{ boxShadow: 24 }} />
               ) : (
-                <Avatar {...stringAvatar(user.name)} />
+                <Avatar {...stringAvatar(user.name)} sx={{ boxShadow: 24 }} />
               )
             }
           </React.Fragment>

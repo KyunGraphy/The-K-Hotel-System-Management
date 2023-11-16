@@ -21,6 +21,7 @@ import Service from "./pages/service/Service";
 import Profile from "./pages/profile/Profile";
 import Reservation from "./pages/reservation/Reservation";
 import ViewStaff from "./pages/admin/staff/Components/ViewStaff";
+import ChangePassword from "./pages/changePassword/ChangePassword.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/services" element={<Service />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/reservation" element={<Reservation />} />
+        <Route path="/changePw" element={<ChangePassword />} />
 
         {/* Admin */}
         <Route path="/admin" element={<Admin />}>

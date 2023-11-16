@@ -86,7 +86,7 @@ export const changePassword = async (req, res, next) => {
       return next(createError(404, "Wrong password or username!"))
 
     const isPasswordCorrect = await bcrypt.compare(
-      req.body.password,
+      req.body.currentPassword,
       user.password
     )
     if (!isPasswordCorrect)
