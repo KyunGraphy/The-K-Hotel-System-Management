@@ -11,7 +11,6 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
     type: undefined,
     maxPeople: undefined,
     description: undefined,
-    price: undefined,
   });
 
   const handleChange = (e) => {
@@ -77,25 +76,6 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
           </p>
         </div>
         <div className='roomInfo'>
-          <p>Price:
-            <Input
-              id='price'
-              autoComplete='off'
-              placeholder={data.price}
-              type='number'
-              inputProps={ariaLabel}
-              min='1'
-              onChange={e => {
-                setRoomForm((prev) => ({
-                  ...prev,
-                  [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
-                }))
-              }}
-              sx={{
-                marginLeft: '1em'
-              }}
-            />
-          </p>
           <p>Description:
             <Input
               id='description'

@@ -11,6 +11,7 @@ import ServiceItem from '../../../components/serviceItem/ServiceItem'
 import { RoomContext } from '../../../contexts/RoomContext'
 import { Toastify } from '../../../components/toastify/Toastify'
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+import { roomPrice } from '../../../constants/Constant';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -93,7 +94,7 @@ const BusinessDetail = () => {
                 </div>
                 <div className='roomInfo'>
                   <p>Price:
-                    <span>{roomData.price}$/day</span>
+                    <span>{roomData.type === 'Single' ? roomPrice.single : roomPrice.double}$/day</span>
                   </p>
                   <p>Description:
                     <span>{roomData.description}</span>

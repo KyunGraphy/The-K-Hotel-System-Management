@@ -13,10 +13,6 @@ const RoomSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     maxPeople: {
       type: Number,
       required: true,

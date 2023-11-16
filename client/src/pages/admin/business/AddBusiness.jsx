@@ -38,7 +38,6 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
     number: undefined,
     type: undefined,
     description: undefined,
-    price: undefined,
     maxPeople: 1,
   });
 
@@ -77,8 +76,7 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
       setLoading(false)
       return;
     } else if (roomForm.number === undefined || roomForm.number === '' ||
-      roomForm.type === undefined || roomForm.type === '' ||
-      roomForm.price === undefined || roomForm.price === '') {
+      roomForm.type === undefined || roomForm.type === '') {
       setErrMsg("Please input all necessary field!")
       setTimeout(function () {
         setErrMsg('');
@@ -204,19 +202,6 @@ const AddBusiness = ({ addNewRoom, setAddNewRoom }) => {
                 required
               />
               <label>Description</label>
-            </div>
-            <div className="inputBox">
-              <span className="icon">
-                <ion-icon name="pricetag-outline"></ion-icon>
-              </span>
-              <input
-                type="number"
-                id="price"
-                min="0"
-                onChange={e => handleChange(e)}
-                required
-              />
-              <label>Price</label>
             </div>
             <div className="inputBox">
               <span className="icon">

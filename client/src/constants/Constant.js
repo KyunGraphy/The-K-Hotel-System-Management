@@ -67,3 +67,9 @@ export const roomsStatus = [
     bg: '#737373',
   },
 ];
+
+// ----------------------------------------------------------------
+export const roomPrice = {
+  single: 30,
+  double: 50,
+}

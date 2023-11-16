@@ -6,7 +6,7 @@ import { MdEmojiPeople } from "react-icons/md";
 import { FaBaby } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { MILLISECONDS_PER_DAY } from '../../../constants/Constant'
+import { MILLISECONDS_PER_DAY, roomPrice } from '../../../constants/Constant'
 import useFetch from '../../../hooks/useFetch';
 import AvailableRoom from './AvailableRoom';
 import { Button, Grid } from '@mui/material';
@@ -185,7 +185,10 @@ const ViewReservation = () => {
                   <label>Double Room</label>
                 </div>
                 <h2>
-                  <b>${dateRange * (data.singleRoom * 30 + data.doubleRoom * 50)}</b> ({dateRange} days)
+                  <b>${dateRange * (
+                    data.singleRoom * roomPrice.single +
+                    data.doubleRoom * roomPrice.double
+                  )}</b> ({Math.floor(dateRange)} days)
                 </h2>
                 <Button
                   variant='contained'

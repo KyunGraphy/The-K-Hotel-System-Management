@@ -8,7 +8,7 @@ import { Button } from '@mui/material';
 import { MdEmojiPeople } from "react-icons/md";
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
-import { MILLISECONDS_PER_DAY } from '../../../constants/Constant';
+import { MILLISECONDS_PER_DAY, roomPrice } from '../../../constants/Constant';
 import useSetDefaultDate from '../../../hooks/useSetDefaultDate';
 import { Toastify } from '../../../components/toastify/Toastify';
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
@@ -244,7 +244,10 @@ const AddReservation = ({ setAddNewReserve }) => {
               <label>Double Room</label>
             </div>
             <h2>
-              <b>${dateRange * (reservationForm.singleRoom * 30 + reservationForm.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
+              <b>${dateRange * (
+                reservationForm.singleRoom * roomPrice.single +
+                reservationForm.doubleRoom * roomPrice.double
+              )}</b> ({Math.floor(dateRange)} nights)
             </h2>
           </div>
         </div>

@@ -1,8 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+
 import "./searchItem.css";
 import Rating from "./Rating";
+import { roomPrice } from '../../constants/Constant.js'
 
 const SearchItem = ({ item, date, options }) => {
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ const SearchItem = ({ item, date, options }) => {
       <div className="siDetails">
         <Rating hotelId={item._id} />
         <div className="siDetailTexts">
-          <span className="siPrice">$30-$50/Day</span>
+          <span className="siPrice">${roomPrice.single}-${roomPrice.double}/Day</span>
           <span className="siTaxOp">Includes taxes and fees</span>
           <button
             className="siCheckButton"

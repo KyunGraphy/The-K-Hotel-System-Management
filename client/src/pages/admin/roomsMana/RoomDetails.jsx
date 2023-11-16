@@ -10,6 +10,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { RoomContext } from '../../../contexts/RoomContext';
 import useFetch from '../../../hooks/useFetch';
+import { roomPrice } from '../../../constants/Constant';
 
 // ----------------------------------------------------------------
 const RoomDetails = () => {
@@ -68,7 +69,7 @@ const RoomDetails = () => {
               </div>
               <div className='roomInfo'>
                 <p>Price:
-                  <span>{data.type === "Single" ? 30 : 50}</span>
+                  <span>{data.type === "Single" ? roomPrice.single : roomPrice.double}</span>
                 </p>
                 <p>Title:
                   <span>{data.title}</span>

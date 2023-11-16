@@ -22,7 +22,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import Rating from "../../components/searchItem/Rating";
 import Comment from "../../components/comment/Comment";
 import { Toastify } from "../../components/toastify/Toastify";
-import { MILLISECONDS_PER_DAY } from "../../constants/Constant";
+import { MILLISECONDS_PER_DAY, roomPrice } from "../../constants/Constant";
 import { HOTELS_IMAGES } from '../../constants/Images';
 import useSetDefaultDate from '../../hooks/useSetDefaultDate';
 import { Button } from '@mui/material';
@@ -304,7 +304,10 @@ const Hotel = () => {
                       </div>
                     </div>
                     <h2>
-                      <b>${dateRange * (options.singleRoom * 30 + options.doubleRoom * 50)}</b> ({Math.floor(dateRange)} nights)
+                      <b>${dateRange * (
+                        options.singleRoom * roomPrice.single +
+                        options.doubleRoom * roomPrice.double
+                      )}</b> ({Math.floor(dateRange)} nights)
                     </h2>
                     <Button
                       variant="contained"
