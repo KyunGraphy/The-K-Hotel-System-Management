@@ -141,3 +141,12 @@ export const removeAvatar = async (req, res, next) => {
     console.log(err)
   }
 }
+
+export const getAllStaffs = async (req, res, next) => {
+  try {
+    const list = await User.find({ isAdmin: true })
+    res.status(200).json(list)
+  } catch (err) {
+    next(err);
+  }
+};

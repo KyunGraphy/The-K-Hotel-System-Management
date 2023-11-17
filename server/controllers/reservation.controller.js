@@ -45,6 +45,15 @@ export const getOneReservation = async (req, res, next) => {
   }
 };
 
+export const getAllReservation = async (req, res, next) => {
+  try {
+    const list = await Reservation.find()
+    res.status(200).json(list);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const getHotelReservation = async (req, res, next) => {
   try {
     const list = await Reservation.find({ hotelID: req.params.hotelId });

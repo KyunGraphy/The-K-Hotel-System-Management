@@ -36,7 +36,7 @@ const StaffMana = () => {
                 style={{ outline: 'none' }}
                 onChange={handleSetHotel}
               >
-                <option selected value='' disabled>---</option>
+                <option selected value=''>All</option>
                 {
                   data.map(item => (
                     <option

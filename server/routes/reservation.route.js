@@ -4,6 +4,7 @@ import {
   createReservation,
   deleteHotelReservation,
   deleteOneReservation,
+  getAllReservation,
   getHotelReservation,
   getOneReservation,
   getUserReservations,
@@ -16,6 +17,7 @@ import { verifyAdmin, verifyToken } from '../utils/jwt.js';
 const router = express.Router();
 
 router.post('/:hotelId', verifyToken, createReservation)
+router.get('/', verifyToken, verifyAdmin, getAllReservation)
 router.get('/:reservationId', verifyToken, getOneReservation)
 router.get('/hotel/:hotelId', verifyToken, verifyAdmin, getHotelReservation)
 router.get('/user/:userId', verifyToken, verifyAdmin, getUserReservations)

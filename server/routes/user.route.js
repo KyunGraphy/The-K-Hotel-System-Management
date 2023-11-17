@@ -5,14 +5,16 @@ import {
   updateUser,
   deleteUser,
   uploadAvatar,
-  removeAvatar
+  removeAvatar,
+  getAllStaffs
 } from '../controllers/user.controller.js';
-import { verifyToken } from '../utils/jwt.js';
+import { verifyAdmin, verifyToken } from '../utils/jwt.js';
 
 const router = express.Router();
 
-router.get('/:id', getUser);
 router.get('/', verifyToken, getAllUsers);
+router.get('/staffs', verifyToken, verifyAdmin, getAllStaffs);
+router.get('/:id', getUser);
 router.put('/:id', verifyToken, updateUser);
 router.delete('/:id', verifyToken, deleteUser);
 

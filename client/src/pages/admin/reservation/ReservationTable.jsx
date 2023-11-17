@@ -35,7 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ----------------------------------------------------------------
 const ReservationTable = () => {
   const { hotelId } = useContext(RoomContext)
-  const { data, loading: dataLoading } = useFetch(`/reservation/hotel/${hotelId}`)
+  const { data, loading: dataLoading } = useFetch((hotelId !== null) ? `/reservation/hotel/${hotelId}` : `/reservation/`)
 
   const navigate = useNavigate()
 
