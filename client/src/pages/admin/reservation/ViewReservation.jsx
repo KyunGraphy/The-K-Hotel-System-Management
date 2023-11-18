@@ -36,6 +36,7 @@ const ViewReservation = () => {
     (date[0].startDate.getTime() === date[0].endDate.getTime()) ?
       0.6 : (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
   const { data, loading: loadingData, reFetch } = useFetch(`/reservation/${reservationId}`)
+  console.log(data)
 
   useEffect(() => {
     if (data._id) {
@@ -111,7 +112,7 @@ const ViewReservation = () => {
                   </span>
                   <input
                     type="text"
-                    value={data.department}
+                    value={data.data[0].department}
                   />
                   <label>Department</label>
                 </div>
@@ -143,6 +144,16 @@ const ViewReservation = () => {
                     value={data.name}
                   />
                   <label>Name</label>
+                </div>
+                <div className="inputBox">
+                  <span className="icon">
+                    <ion-icon name="call"></ion-icon>
+                  </span>
+                  <input
+                    type="text"
+                    value={data.data[1].phone || ''}
+                  />
+                  <label>Phone</label>
                 </div>
                 <div className="inputBox">
                   <span className="icon">

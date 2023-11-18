@@ -31,15 +31,15 @@ export const createReservation = async (req, res, next) => {
 export const getOneReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.reservationId);
-    try {
-      const hotel = await Hotel.findById(reservation.hotelID);
-      res.status(200).json({
-        ...reservation._doc,
-        department: hotel.department
-      });
-    } catch (err) {
-      next(err);
-    }
+    const data = await Promise.all([
+      Hotel.findById(reservation.hotelID),
+      User.findById(reservation.userID),
+    ])
+
+    res.status(200).json({
+      ...reservation._doc,
+      data
+    });
   } catch (err) {
     next(err);
   }

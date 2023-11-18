@@ -52,10 +52,10 @@ const ReservationTable = () => {
               <StyledTableCell align="right">Description</StyledTableCell>
               <StyledTableCell align="right">Check In Date</StyledTableCell>
               <StyledTableCell align="right">Check Out Date</StyledTableCell>
-              {/* <StyledTableCell align="right">Action</StyledTableCell> */}
+              <StyledTableCell align="right">Is assigned</StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody >
             {data.length === 0 && (
               <StyledTableRow>
                 <StyledTableCell
@@ -88,6 +88,9 @@ const ReservationTable = () => {
                 </StyledTableCell>
                 <StyledTableCell align="right">
                   {new Date(item.checkOutDate).toDateString()}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {item.rooms.length > 0 ? 'Yes' : 'No'}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
