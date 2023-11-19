@@ -10,6 +10,7 @@ import roomRoute from "./routes/room.route.js";
 import commentRoute from "./routes/comment.route.js";
 import reservationRoute from "./routes/reservation.route.js";
 import facilityRoute from "./routes/facility.route.js";
+import serviceRoute from "./routes/service.route.js";
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use('/api/room', roomRoute)
 app.use('/api/comment', commentRoute)
 app.use('/api/reservation', reservationRoute)
 app.use('/api/facility', facilityRoute)
+app.use('/api/service', serviceRoute)
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

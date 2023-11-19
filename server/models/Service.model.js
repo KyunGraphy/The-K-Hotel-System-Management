@@ -8,7 +8,15 @@ const ServiceSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
-  }
+  },
+  unit: {
+    type: String,
+    required: true,
+  },
+  img: {
+    type: String,
+    required: true,
+  },
 })
 
 export default mongoose.model('Service', ServiceSchema);
