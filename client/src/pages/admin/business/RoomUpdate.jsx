@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
-import { Box, Fab, Input, NativeSelect } from '@mui/material'
+import { Box, Fab, Grid, Input, NativeSelect, Typography } from '@mui/material'
 import { Close, DoneAll, Delete } from '@mui/icons-material';
 import RoomFacilityUpdate from './RoomFacilityUpdate';
 
 const ariaLabel = { 'aria-label': 'description' };
+
+const style = {
+  fontSize: 18,
+  fontWeight: 500,
+  minWidth: '270px',
+  '& p': {
+    margin: '2em 0',
+  }
+}
 
 const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReFetch, reFetchRoomFacility }) => {
   const [roomForm, setRoomForm] = useState({
@@ -22,8 +31,8 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
       <h2 className='roomNumber'>
         Room {data.number}
       </h2>
-      <div className='roomBlock'>
-        <div className='roomInfo'>
+      <Grid sx={{ display: 'flex', gap: 3, margin: 4, flexWrap: 'wrap' }}>
+        <Box sx={style} style={{ flex: 2 }}>
           <p>Room number:
             <Input
               id='number'
@@ -35,7 +44,7 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
                 [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
               }))}
               sx={{
-                marginLeft: '1em',
+                width: '100%',
               }}
             />
           </p>
@@ -48,8 +57,7 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
                 id: 'type',
               }}
               sx={{
-                marginLeft: '1em',
-                width: '195px',
+                width: '100%',
               }}
               onChange={e => handleChange(e)}
             >
@@ -70,12 +78,12 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
                 [e.target.id]: e.target.value === '' ? undefined : Number(e.target.value)
               }))}
               sx={{
-                marginLeft: '1em'
+                width: '100%'
               }}
             />
           </p>
-        </div>
-        <div className='roomInfo'>
+        </Box>
+        <Box sx={style} style={{ flex: 2 }}>
           <p>Description:
             <Input
               id='description'
@@ -84,17 +92,18 @@ const RoomUpdate = ({ data, editedForm, setEditedForm, handleUpdateRoom, roomReF
               inputProps={ariaLabel}
               onChange={e => handleChange(e)}
               sx={{
-                marginLeft: '1em'
+                width: '100%'
               }}
             />
           </p>
           <p>Status:
-            <span>{data.status}</span>
+            <Typography sx={{ fontWeight: 600, marginLeft: '0.5em', color: '#2e8b57' }}>{data.status}</Typography>
           </p>
-        </div>
-      </div>
-      <h2 className='roomNumber'>Furnitures</h2>
-      <RoomFacilityUpdate roomData={data} />
+        </Box>
+        <Box sx={style} style={{ flex: 3 }}>
+          <RoomFacilityUpdate roomData={data} />
+        </Box>
+      </Grid>
 
       {/* ----------------------------------------------------- */}
       <Box

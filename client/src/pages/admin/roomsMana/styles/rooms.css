@@ -75,6 +75,7 @@
 }
 
 .roomInfo {
+    flex: 1;
     margin: 1em 2em;
     font-size: 18px;
     font-weight: 500;
