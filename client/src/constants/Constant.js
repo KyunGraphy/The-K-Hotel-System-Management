@@ -29,18 +29,23 @@ export const MANAGEMENT_ITEMS = [
   },
   {
     name: 'Finance Page',
-    pathName: 'staff',
+    pathName: 'finance',
     url: '/admin/finance',
   },
   {
-    name: 'Service Page',
-    pathName: 'service',
-    url: '/admin/service',
+    name: 'Warehouse Page',
+    pathName: 'warehouse',
+    url: '/admin/warehouse',
   },
   {
     name: 'Procurement Page',
     pathName: 'procurement',
     url: '/admin/procurement',
+  },
+  {
+    name: 'Statistic Page',
+    pathName: 'statistic',
+    url: '/admin/statistic',
   },
 ]
 

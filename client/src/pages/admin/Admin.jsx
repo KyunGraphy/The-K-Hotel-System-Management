@@ -80,7 +80,6 @@ const Admin = () => {
   const [showGoToTop, setShowGoToTop] = useState();
   const theme = useTheme();
   const navigate = useNavigate();
-  const managementItems = MANAGEMENT_ITEMS;
 
   useEffect(() => {
     const handleShowScrollToTop = () => {
@@ -144,7 +143,7 @@ const Admin = () => {
           </DrawerHeader>
           <Divider />
           <List>
-            {managementItems.map((item, index) => (
+            {MANAGEMENT_ITEMS.map((item, index) => (
               <ListItem
                 key={index}
                 disablePadding
