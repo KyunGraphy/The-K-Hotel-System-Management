@@ -1,54 +1,54 @@
 .finance {
-  min-height: calc(100vh - 80px);
-  width: 100%;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  padding: 12px;
-  background-color: #fff;
-  box-shadow: 5px 5px 18px #888888;
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: 5px 5px 18px #888888;
 }
 
 .finance > h2 {
-  text-align: center;
-  text-transform: uppercase;
-  padding: 0.5em 0;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 0.5em 0;
 }
 
 .fHeader {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .fHeaderOptions {
-  display: flex;
-  border: 1px solid #008009;
-  border-radius: 4px;
+    display: flex;
+    border: 1px solid #008009;
+    border-radius: 4px;
 }
 
 .fHeaderOptions > div {
-  width: 144px;
-  padding: 0.5em 3em;
-  font-weight: 600;
-  color: #008009;
-  text-align: center;
-  text-transform: capitalize;
-  border: 1px solid #008009;
-  cursor: pointer;
+    /* width: 144px; */
+    padding: 0.5em 3em;
+    font-weight: 600;
+    color: #008009;
+    text-align: center;
+    text-transform: capitalize;
+    border: 1px solid #008009;
+    cursor: pointer;
 }
 
 .fHeaderOptions > .active {
-  background: #008009;
-  color: #fff;
+    background: #008009;
+    color: #fff;
 }
 
 .fHeaderBalance {
-  display: flex;
-  align-items: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
 }
 
 .fHeaderBalanceIcon {
-  color: #ff8c00;
-  margin-right: 0.5em;
+    color: #ff8c00;
+    margin-right: 0.5em;
 }

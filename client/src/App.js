@@ -22,6 +22,7 @@ import Profile from "./pages/profile/Profile";
 import Reservation from "./pages/reservation/Reservation";
 import ViewStaff from "./pages/admin/staff/Components/ViewStaff";
 import ChangePassword from "./pages/changePassword/ChangePassword.jsx";
+import WarehouseMana from "./pages/admin/warehouse/WarehouseMana.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="staff" element={<StaffMana />} />
           <Route path="staff/detail" element={<ViewStaff />} />
           <Route path="business" element={<Business />} />
+          <Route path="warehouse" element={<WarehouseMana />} />
           <Route path="finance" element={<Finance />} />
 
           <Route path=":id" element={<PageError />} />

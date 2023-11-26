@@ -28,14 +28,14 @@ export const MANAGEMENT_ITEMS = [
     url: '/admin/staff',
   },
   {
-    name: 'Finance Page',
-    pathName: 'finance',
-    url: '/admin/finance',
-  },
-  {
     name: 'Warehouse Page',
     pathName: 'warehouse',
     url: '/admin/warehouse',
+  },
+  {
+    name: 'Finance Page',
+    pathName: 'finance',
+    url: '/admin/finance',
   },
   {
     name: 'Procurement Page',

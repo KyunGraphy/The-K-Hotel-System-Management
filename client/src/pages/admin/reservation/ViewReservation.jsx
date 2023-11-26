@@ -112,7 +112,7 @@ const ViewReservation = () => {
                   </span>
                   <input
                     type="text"
-                    value={data.data[0].department}
+                    value={data.data ? data.data[0].department : ''}
                   />
                   <label>Department</label>
                 </div>
@@ -151,7 +151,7 @@ const ViewReservation = () => {
                   </span>
                   <input
                     type="text"
-                    value={data.data[1].phone || ''}
+                    value={data.data ? data.data[1].phone : ''}
                   />
                   <label>Phone</label>
                 </div>

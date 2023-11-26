@@ -126,7 +126,7 @@ const EditStaff = ({ editStaff, setEditStaff, staff, hotel }) => {
               component="h2"
               sx={{ textAlign: 'center' }}
             >
-              New Staff Form
+              Edit Staff Form
             </Typography>
             <div className="inputBox">
               <span className="icon">
