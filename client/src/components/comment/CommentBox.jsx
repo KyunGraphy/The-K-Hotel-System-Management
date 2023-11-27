@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import useFetch from '../../hooks/useFetch'
-import RatingStars from './RatingStars'
-import Skeleton from 'react-loading-skeleton'
-import { BiDotsVertical } from "react-icons/bi";
-import { useParams } from "react-router-dom";
-import 'react-loading-skeleton/dist/skeleton.css'
 import axios from 'axios';
 import { format } from "timeago.js"
+import { useParams } from "react-router-dom";
+import { Rating } from '@mui/material';
+import Skeleton from 'react-loading-skeleton'
+import { BiDotsVertical } from "react-icons/bi";
+import 'react-loading-skeleton/dist/skeleton.css'
+
+import useFetch from '../../hooks/useFetch'
 import { Toastify } from '../toastify/Toastify'
 
 // ----------------------------------------------------------------
@@ -51,7 +52,7 @@ const CommentBox = ({ item, reFetch }) => {
                 <div>{format(item.createdAt)}</div>
               </div>
               <div>
-                <RatingStars star={item.rating} />
+                <Rating name="half-rating-read" value={item.rating} precision={0.5} readOnly />
               </div>
               <div className='hotelCommentOption'>
                 <BiDotsVertical onClick={() => setOpenCommentOption(!openCommentOption)} />

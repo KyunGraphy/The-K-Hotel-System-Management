@@ -1,20 +1,17 @@
-import { BsFillSendFill } from "react-icons/bs";
-import React, { useState } from 'react'
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import React, { useState } from 'react'
+import { BsFillSendFill } from "react-icons/bs";
+import { useParams } from "react-router-dom";
+import { Box, Rating } from "@mui/material";
+
 import { Toastify } from "../toastify/Toastify";
 
 // ----------------------------------------------------------------
 const CommentMsg = ({ reFetch }) => {
-  const [openRating, setOpenRating] = useState(false);
   const [rating, setRating] = useState(5)
   const [comment, setComment] = useState("")
   const [errMsg, setErrMsg] = useState("");
   const params = useParams()
-
-  const handleRating = (number) => {
-    setRating(number);
-  };
 
   const handleSendComment = async () => {
     if (comment === '') {
@@ -50,47 +47,16 @@ const CommentMsg = ({ reFetch }) => {
     <React.Fragment>
       {errMsg && <Toastify msg={errMsg} type="error" />}
       <div className="hotelCommentMsg">
-        <div className="inputBox" onClick={() => setOpenRating(!openRating)}>
-          <span
-            className="starInput"
-            id="rating"
-          >
-            {Array(rating).fill(null).map(index => (
-              <div className="hotelRating">
-                <ion-icon name="star"></ion-icon>
-              </div>
-            ))}
-          </span>
-          {openRating && (
-            <div className='countryOptions' style={{ top: '50px' }}>
-              <p onClick={() => handleRating(5)} >
-                {Array(5).fill(null).map(index => (
-                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-                ))}
-              </p>
-              <p onClick={() => handleRating(4)} >
-                {Array(4).fill(null).map(index => (
-                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-                ))}
-              </p>
-              <p onClick={() => handleRating(3)} >
-                {Array(3).fill(null).map(index => (
-                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-                ))}
-              </p>
-              <p onClick={() => handleRating(2)} >
-                {Array(2).fill(null).map(index => (
-                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-                ))}
-              </p>
-              <p onClick={() => handleRating(1)} >
-                {Array(1).fill(null).map(index => (
-                  <ion-icon key={index} name="star" style={{ color: '#febb02' }}></ion-icon>
-                ))}
-              </p>
-            </div>)
-          }
-        </div>
+        <Box>
+          <Rating
+            name="half-rating"
+            precision={0.5}
+            value={rating}
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+          />
+        </Box>
 
         <div className="inputBox">
           <span className="icon">
