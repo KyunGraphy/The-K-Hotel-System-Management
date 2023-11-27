@@ -18,7 +18,11 @@ const FacilitySchema = new mongoose.Schema({
     type: Number,
     default: 0,
     required: true,
-  }
+  },
+  capacity: {
+    type: Number,
+    required: true,
+  },
 })
 
 export default mongoose.model('Facility', FacilitySchema);

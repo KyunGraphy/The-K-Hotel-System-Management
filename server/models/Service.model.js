@@ -17,6 +17,15 @@ const ServiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  amount: {
+    type: Number,
+    default: 0,
+    required: true,
+  },
+  capacity: {
+    type: Number,
+    required: true,
+  },
 })
 
 export default mongoose.model('Service', ServiceSchema);
