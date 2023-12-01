@@ -1,18 +1,19 @@
 import React, { useContext } from 'react'
 import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import "./styles/reservation.css";
 
-import useFetch from '../../../hooks/useFetch';
-import { RoomContext } from '../../../contexts/RoomContext';
+import "../styles/reservation.css";
+import useFetch from '../../../../hooks/useFetch';
+import { RoomContext } from '../../../../contexts/RoomContext';
 import { useNavigate } from "react-router-dom";
-import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+import BackdropComponent from '../../../../components/backdrop/BackdropComponent';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: '#384e71',
-    color: '#fff',
-    fontSize: 16,
+    // backgroundColor: '#384e71',
+    // color: '#fff',
+    fontSize: 14,
+    fontWeight: 600,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -40,11 +41,11 @@ const ReservationTable = () => {
   const navigate = useNavigate()
 
   return (
-    <Grid className='reservationTable'>
+    <Grid>
       {dataLoading && (<BackdropComponent />)}
-      <TableContainer component={Paper} sx={{ border: '2px solid #384e71', maxHeight: '32em' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
+      <TableContainer component={Paper} sx={{ maxHeight: '28em' }}>
+        <Table sx={{ minWidth: 640 }} aria-label="simple table">
+          <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1, background: 'ghostwhite' }}>
             <TableRow>
               <StyledTableCell>ID</StyledTableCell>
               <StyledTableCell>Customer Name</StyledTableCell>

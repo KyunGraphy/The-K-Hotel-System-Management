@@ -66,8 +66,8 @@ const WarehouseMana = () => {
         <BackdropComponent />
       ) : (
         <Grid>
-          <Box sx={{ width: '100%', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-            <Box sx={{ width: '69%' }}>
+          <Box sx={{ width: '100%', display: 'flex', gap: '1em', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+            <Box sx={{ width: '69%', flex: 1 }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'lavender' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                   <Tab sx={{ flex: 1, fontWeight: '500' }} label="Facilities" {...a11yProps(0)} />

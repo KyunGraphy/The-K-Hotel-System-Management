@@ -18,7 +18,7 @@ const CapacityProgress = () => {
           width: '30%',
           minWidth: '240px',
           padding: '0.5em',
-          background: 'dimgray',
+          background: 'coral',
           borderRadius: '0.4em',
         }}
       >
@@ -37,14 +37,14 @@ const CapacityProgress = () => {
               "--CircularProgress-size": "169px",
               "--CircularProgress-trackThickness": "12px",
               "--CircularProgress-progressThickness": "12px",
-              "--CircularProgress-progressColor": "var(--variant-solidBg, var(--joy-palette-warning-solidBg, var(--joy-palette-warning-500, #e76f51)))",
+              "--CircularProgress-progressColor": "var(--variant-solidBg, var(--joy-palette-warning-solidBg, var(--joy-palette-warning-500, #384e71)))",
             }}
             color="warning"
             determinate
             value={value2}
           >
             <Typography sx={{ textAlign: 'center', fontWeight: 500, color: 'white' }}>
-              <strong>{value2}%</strong> <br /> Location Used
+              <strong style={{ fontSize: 32 }}>{value2}%</strong> <br /> Location Used
             </Typography>
           </CircularProgress>
           <Button

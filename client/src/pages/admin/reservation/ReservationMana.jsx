@@ -1,16 +1,50 @@
 import './styles/reservation.css'
 import React, { useContext, useState } from 'react'
-import { Box, Fab, Grid } from '@mui/material';
+import { Box, Fab, Grid, Tab, Tabs, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import ReservationTable from './ReservationTable'
+import ReservationTable from './listComponent/ReservationTable'
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext';
 import AddReservation from './AddReservation';
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
+import TodayComponent from './todayComponent'
+
+// ----------------------------------------------------------------
+function CustomTabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 0 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 // ----------------------------------------------------------------
 const ReservationMana = () => {
   const [addNewReserve, setAddNewReserve] = useState(false);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const { loading, data } = useFetch("/hotel")
   const { hotelId, dispatch } = useContext(RoomContext)
@@ -60,7 +94,24 @@ const ReservationMana = () => {
                     </select>
                   </div>
                 </div>
-                <ReservationTable />
+
+                <Box sx={{ width: '100%' }}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'lavender' }}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                      <Tab sx={{ flex: 1, maxWidth: '50%', fontWeight: '500' }} label="Today's Activity" {...a11yProps(0)} />
+                      <Tab sx={{ flex: 1, maxWidth: '50%', fontWeight: '500' }} label="List Reservation" {...a11yProps(1)} />
+                    </Tabs>
+                  </Box>
+                  <CustomTabPanel value={value} index={0}>
+                    <Box >
+                      <TodayComponent />
+                    </Box>
+                  </CustomTabPanel>
+                  <CustomTabPanel value={value} index={1}>
+                    <ReservationTable />
+                  </CustomTabPanel>
+                </Box>
+
                 <Box
                   sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
                   onClick={() => setAddNewReserve(true)}
