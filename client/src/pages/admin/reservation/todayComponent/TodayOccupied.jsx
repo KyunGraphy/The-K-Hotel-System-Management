@@ -1,9 +1,9 @@
-import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
+import { Box, Grid, Typography } from '@mui/material'
 
-const TodayOccupied = () => {
+const TodayOccupied = ({ setDate }) => {
   return (
-    <Grid sx={{ display: 'flex', gap: '1em' }}>
+    <Grid sx={{ display: 'flex', gap: '0.5em' }}>
       <Box
         sx={{
           flex: 1,

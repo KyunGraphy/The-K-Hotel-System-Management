@@ -1,9 +1,7 @@
 const useSetDefaultDate = (date) => {
-  date.setHours(0)
-  date.setMinutes(0)
-  date.setSeconds(0)
-  const newDate = Math.floor(date.getTime() / 100000) * 100000
-  return newDate
+  date.setHours(0, 0, 0, 0);
+  const result = Math.floor(date.getTime() / 100000) * 100000
+  return result
 }
 
 export default useSetDefaultDate
