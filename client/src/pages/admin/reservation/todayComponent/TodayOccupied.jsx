@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Grid, Typography } from '@mui/material'
 
-const TodayOccupied = ({ setDate }) => {
+const TodayOccupied = ({ setDate, activity }) => {
   return (
     <Grid sx={{ display: 'flex', gap: '0.5em' }}>
       <Box
@@ -18,7 +18,7 @@ const TodayOccupied = ({ setDate }) => {
         }}
       >
         <Typography sx={{ fontWeight: 500, color: 'white', textAlign: 'center' }}>
-          <strong style={{ fontSize: 32 }}>3</strong> <br /> ARRIVALS
+          <strong style={{ fontSize: 32 }}>{activity.arrival ? activity.arrival.length : 0}</strong> <br /> ARRIVALS
         </Typography>
       </Box>
       <Box
@@ -35,7 +35,7 @@ const TodayOccupied = ({ setDate }) => {
         }}
       >
         <Typography sx={{ fontWeight: 500, color: 'white', textAlign: 'center' }}>
-          <strong style={{ fontSize: 32 }}>2</strong> <br /> DEPARTURES
+          <strong style={{ fontSize: 32 }}>{activity.departure ? activity.departure.length : 0}</strong> <br /> DEPARTURES
         </Typography>
       </Box>
       <Box
@@ -52,7 +52,7 @@ const TodayOccupied = ({ setDate }) => {
         }}
       >
         <Typography sx={{ fontWeight: 500, color: 'white', textAlign: 'center' }}>
-          <strong style={{ fontSize: 32 }}>12/30</strong> <br /> Rooms Occupied
+          <strong style={{ fontSize: 32 }}>{activity.stay ? activity.stay.length : 0}</strong> <br /> STAY OVER
         </Typography>
       </Box>
     </Grid>

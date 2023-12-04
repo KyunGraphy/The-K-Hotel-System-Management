@@ -36,7 +36,6 @@ const ViewReservation = () => {
     (date[0].startDate.getTime() === date[0].endDate.getTime()) ?
       0.6 : (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
   const { data, loading: loadingData, reFetch } = useFetch(`/reservation/${reservationId}`)
-  console.log(data)
 
   useEffect(() => {
     if (data._id) {

@@ -51,6 +51,10 @@ const ReservationSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isCheckOut: {
+      type: Boolean,
+      default: false,
+    },
     services: {
       type: [{
         serviceId: {

@@ -181,43 +181,127 @@ export const removeReservation = async (req, res, next) => {
 };
 
 // Get user reservations
-export const getUserReservations = async (req, res) => {
-  const reservationList = await Reservation.find({ userID: req.params.userId })
-  const hotelList = await Promise.all(
-    reservationList.map(item => {
-      return Hotel.findById(item.hotelID)
-    })
-  )
-  const roomList = await Promise.all(
-    reservationList.map(async (item) =>
-      await Promise.all(
-        item.rooms.map(room => {
-          return Room.findById(room)
-        })
-      ),
+export const getUserReservations = async (req, res, next) => {
+  try {
+    const reservationList = await Reservation.find({ userID: req.params.userId })
+    const hotelList = await Promise.all(
+      reservationList.map(item => {
+        return Hotel.findById(item.hotelID)
+      })
     )
-  )
+    const roomList = await Promise.all(
+      reservationList.map(async (item) =>
+        await Promise.all(
+          item.rooms.map(room => {
+            return Room.findById(room)
+          })
+        ),
+      )
+    )
 
-  const result = reservationList.map((reservation, index) => {
-    return {
-      id: reservation._id,
-      // name: reservation.name,
-      adult: reservation.adult,
-      children: reservation.children,
-      singleRoom: reservation.singleRoom,
-      doubleRoom: reservation.doubleRoom,
-      checkInDate: new Date(reservation.checkInDate).getDate() + "/" + new Date(reservation.checkInDate).getMonth() + "/" + new Date(reservation.checkInDate).getFullYear(),
-      checkOutDate: new Date(reservation.checkOutDate).getDate() + "/" + new Date(reservation.checkOutDate).getMonth() + "/" + new Date(reservation.checkOutDate).getFullYear(),
-      createdAt: new Date(reservation.createdAt).getDate() + "/" + new Date(reservation.createdAt).getMonth() + "/" + new Date(reservation.createdAt).getFullYear(),
-      department: hotelList[index].department,
-      rooms: roomList[index].map(room => room.number),
-    };
-  })
+    const result = reservationList.map((reservation, index) => {
+      return {
+        id: reservation._id,
+        // name: reservation.name,
+        adult: reservation.adult,
+        children: reservation.children,
+        singleRoom: reservation.singleRoom,
+        doubleRoom: reservation.doubleRoom,
+        checkInDate: new Date(reservation.checkInDate).getDate() + "/" + new Date(reservation.checkInDate).getMonth() + "/" + new Date(reservation.checkInDate).getFullYear(),
+        checkOutDate: new Date(reservation.checkOutDate).getDate() + "/" + new Date(reservation.checkOutDate).getMonth() + "/" + new Date(reservation.checkOutDate).getFullYear(),
+        createdAt: new Date(reservation.createdAt).getDate() + "/" + new Date(reservation.createdAt).getMonth() + "/" + new Date(reservation.createdAt).getFullYear(),
+        department: hotelList[index].department,
+        rooms: roomList[index].map(room => room.number),
+      };
+    })
 
-  res.json(result);
+    res.json(result);
+  } catch (err) {
+    next(err);
+  }
 };
 
-export const getUserReservationsCount = async (req, res) => {
-  const reservationList = await Reservation.find({ userID: req.params.userId })
-  res.status(200).json({ count: reservationList.length });
+export const getUserReservationsCount = async (req, res, next) => {
+  try {
+    const reservationList = await Reservation.find({ userID: req.params.userId })
+    res.status(200).json({ count: reservationList.length });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get activity
+export const getActivity = async (req, res, next) => {
+  let result = {
+    arrival: [],
+    departure: [],
+    stay: [],
+  }
+
+  try {
+    const reservationList = await Reservation.find({
+      $or: [
+        { checkInDate: { $eq: Number(req.params.date) } },
+        { checkOutDate: { $eq: Number(req.params.date) } },
+        {
+          $and: [
+            { checkInDate: { $lt: Number(req.params.date) } },
+            { checkOutDate: { $gt: Number(req.params.date) } },
+          ],
+        }
+      ],
+    })
+    reservationList.map(item => {
+      if (item.checkInDate === Number(req.params.date)) {
+        result.arrival.push(item)
+      } else if (item.checkOutDate === Number(req.params.date)) {
+        result.departure.push(item)
+      } else {
+        result.stay.push(item)
+      }
+    })
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getHotelActivity = async (req, res, next) => {
+  let result = {
+    arrival: [],
+    departure: [],
+    stay: [],
+  }
+
+  try {
+    const reservationList = await Reservation.find({
+      $and: [
+        { hotelID: { $eq: req.params.hotelId } },
+        {
+          $or: [
+            { checkInDate: { $eq: Number(req.params.date) } },
+            { checkOutDate: { $eq: Number(req.params.date) } },
+            {
+              $and: [
+                { checkInDate: { $lt: Number(req.params.date) } },
+                { checkOutDate: { $gt: Number(req.params.date) } },
+              ],
+            }
+          ],
+        },
+      ],
+    })
+    reservationList.map(item => {
+      if (item.checkInDate === Number(req.params.date)) {
+        result.arrival.push(item)
+      } else if (item.checkOutDate === Number(req.params.date)) {
+        result.departure.push(item)
+      } else {
+        result.stay.push(item)
+      }
+    })
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
 };

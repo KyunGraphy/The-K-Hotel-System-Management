@@ -14,7 +14,7 @@ import CheckIn from './CheckIn';
 import CheckOut from './CheckOut';
 import StayOvers from './StayOvers';
 
-export default function BasicAccordion({ setDate }) {
+export default function BasicAccordion({ setDate, activity }) {
   return (
     <Grid sx={{ display: 'flex', gap: '0.5em', marginY: 1 }}>
       <Box>
@@ -38,7 +38,7 @@ export default function BasicAccordion({ setDate }) {
             <Typography>Arrivals</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <CheckIn />
+            <CheckIn activity={activity.arrival} />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -50,7 +50,7 @@ export default function BasicAccordion({ setDate }) {
             <Typography>Departures</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <CheckOut />
+            <CheckOut activity={activity.departure} />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -62,7 +62,7 @@ export default function BasicAccordion({ setDate }) {
             <Typography>Stay Overs</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <StayOvers />
+            <StayOvers activity={activity.stay} />
           </AccordionDetails>
         </Accordion>
       </Box>

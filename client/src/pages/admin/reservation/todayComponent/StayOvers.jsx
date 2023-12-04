@@ -1,12 +1,9 @@
-import React, { useContext } from 'react'
-import { Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
+import React from 'react'
+import { useNavigate } from "react-router-dom";
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import "../styles/reservation.css";
-import useFetch from '../../../../hooks/useFetch';
-import { RoomContext } from '../../../../contexts/RoomContext';
-import { useNavigate } from "react-router-dom";
-import BackdropComponent from '../../../../components/backdrop/BackdropComponent';
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,15 +31,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------
-const StayOvers = () => {
-  const { hotelId } = useContext(RoomContext)
-  const { data, loading: dataLoading } = useFetch((hotelId !== null) ? `/reservation/hotel/${hotelId}` : `/reservation/`)
-
+const StayOvers = ({ activity }) => {
   const navigate = useNavigate()
 
   return (
     <Grid sx={{ flex: 1 }}>
-      {dataLoading && (<BackdropComponent />)}
       <TableContainer component={Paper} sx={{ maxHeight: '28em' }}>
         <Table sx={{ minWidth: 640 }} aria-label="simple table">
           <TableHead sx={{ position: 'sticky', top: 0, zIndex: 1, background: 'ghostwhite' }}>
@@ -54,10 +47,11 @@ const StayOvers = () => {
               <StyledTableCell align="right">Description</StyledTableCell>
               <StyledTableCell align="right">Check In Date</StyledTableCell>
               <StyledTableCell align="right">Check Out Date</StyledTableCell>
+              <StyledTableCell align="right">View</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody >
-            {data.length === 0 && (
+            {activity?.length === 0 && (
               <StyledTableRow>
                 <StyledTableCell
                   component="th"
@@ -69,24 +63,32 @@ const StayOvers = () => {
                 </StyledTableCell>
               </StyledTableRow>
             )}
-            <StyledTableRow
-              hover
-              // onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id, rooms: item.rooms } })}
-              // key={item._id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <StyledTableCell component="th" scope="row">Toni Kroos</StyledTableCell>
-              <StyledTableCell component="th" scope="row">...{('abcd1234efgh5678').slice(-8)}</StyledTableCell>
-              <StyledTableCell align="right">102</StyledTableCell>
-              <StyledTableCell align="right">
-                1 Single Room <br /> 1 Double Room
-              </StyledTableCell>
-              <StyledTableCell align="right">
-                2 Adult <br /> 2 Children
-              </StyledTableCell>
-              <StyledTableCell align="right">01/12/2023</StyledTableCell>
-              <StyledTableCell align="right">01/12/2023</StyledTableCell>
-            </StyledTableRow>
+            {activity?.map(item => (
+              <StyledTableRow
+                hover
+                // onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id, rooms: item.rooms } })}
+                key={item._id}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <StyledTableCell component="th" scope="row">{item.name}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">...{(item._id).slice(-8)}</StyledTableCell>
+                <StyledTableCell align="right">{item.room}</StyledTableCell>
+                <StyledTableCell align="right">
+                  {item.singleRoom} Single Room <br /> {item.doubleRoom} Double Room
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {item.adult} Adult <br /> {item.children} Children
+                </StyledTableCell>
+                <StyledTableCell align="right">{new Date(item.checkInDate).toDateString()}</StyledTableCell>
+                <StyledTableCell align="right">{new Date(item.checkOutDate).toDateString()}</StyledTableCell>
+                <StyledTableCell
+                  sx={{ fontSize: '1.2em', textAlign: 'center' }}
+                  onClick={() => navigate('/admin/reservation/detail', { state: { id: item._id, rooms: item.rooms } })}
+                >
+                  <ion-icon name="pencil"></ion-icon>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
