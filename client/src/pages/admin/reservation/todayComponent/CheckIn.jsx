@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { Grid, Paper, Switch, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, tableCellClasses } from '@mui/material';
@@ -33,6 +34,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 // ----------------------------------------------------------------
 const CheckIn = ({ activity }) => {
   const navigate = useNavigate()
+
+  const handleCheckIn = async (e) => {
+    try {
+      await axios.put(`/reservation/${e.target.id}`, { isCheckIn: e.target.checked })
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <Grid sx={{ flex: 1 }}>
@@ -72,7 +81,12 @@ const CheckIn = ({ activity }) => {
                 <StyledTableCell align="right">{item.rooms}</StyledTableCell>
                 <StyledTableCell align="right">{new Date(item.checkOutDate).toDateString()}</StyledTableCell>
                 <StyledTableCell align="right">
-                  <Switch />
+                  <Switch
+                    id={item._id}
+                    defaultChecked={item.isCheckIn}
+                    color="success"
+                    onChange={handleCheckIn}
+                  />
                 </StyledTableCell>
                 <StyledTableCell
                   sx={{ fontSize: '1.2em', textAlign: 'center' }}

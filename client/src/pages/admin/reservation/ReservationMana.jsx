@@ -113,7 +113,7 @@ const ReservationMana = () => {
                 </Box>
 
                 <Box
-                  sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em' }}
+                  sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', right: '3em', bottom: '3em', zIndex: 2 }}
                   onClick={() => setAddNewReserve(true)}
                 >
                   <Fab color="primary" aria-label="add">
