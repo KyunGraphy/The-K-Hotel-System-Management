@@ -17,6 +17,7 @@ const CapacityProgress = () => {
         sx={{
           width: '30%',
           minWidth: '240px',
+          height: '360px',
           padding: '0.5em',
           background: 'coral',
           borderRadius: '0.4em',
@@ -60,6 +61,9 @@ const CapacityProgress = () => {
           >
             Reload
           </Button>
+          <Typography sx={{ fontSize: 14, textAlign: 'center', color: 'white' }}>
+            Warehouse total volume: 108 m<sup>3</sup>
+          </Typography>
         </Stack>
       </Box>
     </React.Fragment>
