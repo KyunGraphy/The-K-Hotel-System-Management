@@ -75,7 +75,7 @@ const Login = () => {
       <div className='loginWrapper'>
         <Link to='/'>
           <span className="iconClose">
-            <ion-icon name="close"></ion-icon>
+            X
           </span>
         </Link>
         <div className='formBox'>

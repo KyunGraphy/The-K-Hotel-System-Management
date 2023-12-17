@@ -39,7 +39,7 @@ function a11yProps(index) {
   };
 }
 
-const WarehouseTabs = () => {
+const WarehouseTabs = ({ facilityData, serviceData }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,10 +55,10 @@ const WarehouseTabs = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <FacilityTab />
+        <FacilityTab facilityData={facilityData} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <ServicesTab />
+        <ServicesTab serviceData={serviceData} />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         Other

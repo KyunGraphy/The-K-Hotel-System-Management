@@ -5,6 +5,8 @@ import { PiBeerBottleFill, PiTelevisionSimpleFill } from "react-icons/pi";
 
 import CapacityProgress from './CapacityProgress'
 import WarehouseTabs from './WarehouseTabs'
+import BackdropComponent from '../../../components/backdrop/BackdropComponent'
+import useFetch from '../../../hooks/useFetch';
 
 const warehouseBox = {
   position: 'relative',
@@ -22,18 +24,22 @@ const actions = [
 ];
 
 const WarehouseComponent = () => {
+  const { data: facilityData, loading: facilityLoading } = useFetch('/facility')
+  const { data: serviceData, loading: serviceLoading } = useFetch('/service')
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <Grid>
+      {(facilityLoading || serviceLoading) && (<BackdropComponent />)}
       <Grid sx={warehouseBox}>
         <h2 style={{ textAlign: 'center', padding: '0.5em 0' }}>WAREHOUSE</h2>
         <Grid>
           <Box sx={{ width: '100%', display: 'flex', gap: '1em', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-            <WarehouseTabs />
-            <CapacityProgress />
+            <WarehouseTabs facilityData={facilityData} serviceData={serviceData} />
+            <CapacityProgress data={[...facilityData, ...serviceData]} />
           </Box>
         </Grid>
       </Grid>

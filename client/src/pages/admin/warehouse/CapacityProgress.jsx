@@ -1,14 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CircularProgress, Stack } from '@mui/joy'
 import { Box, Button, Typography } from '@mui/material'
 import { useCountUp } from 'use-count-up';
+import { WAREHOUSE_CAPACITY } from '../../../constants/Constant';
 
-const CapacityProgress = () => {
+const CapacityProgress = ({ data }) => {
+  const [totalCapacity, setTotalCapacity] = useState(0)
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const result = data.reduce((total, item) => {
+        return total + item.amount * item.capacity;
+      }, 0)
+
+      setTotalCapacity(result)
+    }
+  }, [data])
+
+
   const { value: value2, reset } = useCountUp({
     isCounting: true,
     duration: 1,
     start: 0,
-    end: 75,
+    end: Math.round(totalCapacity / WAREHOUSE_CAPACITY * 100),
   });
 
   return (
@@ -62,7 +76,7 @@ const CapacityProgress = () => {
             Reload
           </Button>
           <Typography sx={{ fontSize: 14, textAlign: 'center', color: 'white' }}>
-            Warehouse total volume: 108 m<sup>3</sup>
+            Warehouse total volume: {WAREHOUSE_CAPACITY} m<sup>3</sup>
           </Typography>
         </Stack>
       </Box>
