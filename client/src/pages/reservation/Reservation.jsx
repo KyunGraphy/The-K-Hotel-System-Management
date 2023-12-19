@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Box, Button, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
@@ -6,6 +6,9 @@ import Navbar from '../../components/navbar/Navbar'
 import Footer from '../../components/footer/Footer'
 import useFetch from '../../hooks/useFetch';
 import { AuthContext } from '../../contexts/AuthContext';
+import axios from 'axios';
+import ConfirmBox from '../../components/confirmForm/ConfirmBox';
+import { Toastify } from '../../components/toastify/Toastify';
 
 const columns = [
   { field: 'id', headerName: 'Reservation ID' },
@@ -17,11 +20,46 @@ const columns = [
 ];
 
 function Row(props) {
-  const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  const { row, reFetch } = props;
+
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [delReservationId, setDelReservationId] = useState(undefined);
+  const [confirmForm, setConfirmForm] = useState(false);
+
+  const handleSetDeleteReservation = (reservationId) => {
+    setConfirmForm(true)
+    setDelReservationId(reservationId)
+  };
+
+  const handleDeleteReservation = async () => {
+    setLoading(true)
+    try {
+      await axios.delete(`/reservation/${delReservationId}`)
+      setSuccessMsg('Delete Reservation successfully');
+      setLoading(false)
+      reFetch()
+    } catch (err) {
+      console.err(err)
+    }
+    setLoading(false)
+    setConfirmForm(false);
+    setDelReservationId(undefined)
+  }
 
   return (
     <React.Fragment>
+      {confirmForm && (
+        <ConfirmBox
+          msg='Do you want to delete this reservation?'
+          type='delete'
+          callBack={handleDeleteReservation}
+          cancelFunc={() => setConfirmForm(false)}
+          loading={loading}
+        />
+      )}
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <TableCell>
           <IconButton
@@ -67,6 +105,7 @@ function Row(props) {
                       variant="contained"
                       color="error"
                       disabled={(row.rooms.length !== 0)}
+                      onClick={() => handleSetDeleteReservation(row.id)}
                     >Cancel</Button>
                   </TableCell>
                 </TableBody>
@@ -81,9 +120,8 @@ function Row(props) {
 
 const Reservation = () => {
   const { user } = useContext(AuthContext);
-  const { data: rows } = useFetch(`/reservation/user/${user._id}`)
+  const { data: rows, reFetch } = useFetch(`/reservation/user/${user._id}`)
 
-  console.log(rows)
   return (
     <React.Fragment>
       <Navbar />
@@ -107,7 +145,7 @@ const Reservation = () => {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.name} row={row} />
+                <Row key={row.name} row={row} reFetch={reFetch} />
               ))}
             </TableBody>
           </Table>
