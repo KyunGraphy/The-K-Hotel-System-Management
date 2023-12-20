@@ -1,0 +1,9 @@
+.addWarehouseItem {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 12px;
+    background-color: #fff;
+    box-shadow: 5px 5px 18px #888888;
+}

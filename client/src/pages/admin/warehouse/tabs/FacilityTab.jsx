@@ -7,8 +7,8 @@ const FacilityTab = ({ facilityData }) => {
       {facilityData.map(item => (
         <Card sx={{ width: '49%', marginY: '1em', display: 'flex', flexDirection: 'column' }} key={item._id} >
           <CardMedia
-            sx={{ height: 240 }}
-            image={item.img}
+            sx={{ height: 400 }}
+            image={item.img.url}
             title={item.name}
           />
           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>

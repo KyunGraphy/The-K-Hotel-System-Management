@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const ServiceSchema = new mongoose.Schema({
-  serviceName: {
+  name: {
     type: String,
     required: true,
   },
@@ -14,8 +14,12 @@ const ServiceSchema = new mongoose.Schema({
     required: true,
   },
   img: {
-    type: String,
-    required: true,
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    }
   },
   amount: {
     type: Number,

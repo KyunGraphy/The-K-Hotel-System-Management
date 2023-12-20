@@ -6,8 +6,12 @@ const FacilitySchema = new mongoose.Schema({
     required: true,
   },
   img: {
-    type: String,
-    required: true,
+    public_id: {
+      type: String,
+    },
+    url: {
+      type: String,
+    }
   },
   amount: {
     type: Number,

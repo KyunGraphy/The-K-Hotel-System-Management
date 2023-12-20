@@ -1,5 +1,6 @@
 import Facility from '../models/Facility.model.js';
 import Room from '../models/Room.model.js';
+import cloudinary from "../utils/cloudinary.js"
 
 export const getAllFacilities = async (req, res, next) => {
   try {
@@ -20,8 +21,21 @@ export const getOneFacility = async (req, res, next) => {
 };
 
 export const createFacility = async (req, res, next) => {
-  const newFacility = new Facility(req.body)
   try {
+    const result = await cloudinary.uploader.upload(req.body.facilityImg, {
+      folder: "facility",
+    })
+
+    const newFacility = new Facility({
+      name: req.body.name,
+      capacity: Number(req.body.capacity),
+      img: {
+        public_id: result.public_id,
+        url: result.secure_url,
+      },
+      using: 0,
+      amount: 0,
+    })
     await newFacility.save();
     res.status(200).json(newFacility);
   } catch (err) {

@@ -23,6 +23,8 @@ import Reservation from "./pages/reservation/Reservation";
 import ViewStaff from "./pages/admin/staff/Components/ViewStaff";
 import ChangePassword from "./pages/changePassword/ChangePassword.jsx";
 import WarehouseComponent from "./pages/admin/warehouse";
+import AddFacility from "./pages/admin/warehouse/tabs/addForm/AddFacility.jsx";
+import AddService from "./pages/admin/warehouse/tabs/addForm/AddService.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -48,6 +50,8 @@ function App() {
           <Route path="staff/detail" element={<ViewStaff />} />
           <Route path="business" element={<Business />} />
           <Route path="warehouse" element={<WarehouseComponent />} />
+          <Route path="warehouse/newFacility" element={<AddFacility />} />
+          <Route path="warehouse/newService" element={<AddService />} />
           <Route path="finance" element={<Finance />} />
 
           <Route path=":id" element={<PageError />} />

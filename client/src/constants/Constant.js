@@ -34,14 +34,14 @@ export const MANAGEMENT_ITEMS = [
     url: '/admin/warehouse',
   },
   {
-    name: 'Finance Page',
-    pathName: 'finance',
-    url: '/admin/finance',
-  },
-  {
     name: 'Procurement Page',
     pathName: 'procurement',
     url: '/admin/procurement',
+  },
+  {
+    name: 'Finance Page',
+    pathName: 'finance',
+    url: '/admin/finance',
   },
   {
     name: 'Statistic Page',

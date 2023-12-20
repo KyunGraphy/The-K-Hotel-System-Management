@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { Backdrop, Box, Grid, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material'
 import { PiBeerBottleFill, PiTelevisionSimpleFill } from "react-icons/pi";
 
-
+import './styles/warehouse.css'
 import CapacityProgress from './CapacityProgress'
 import WarehouseTabs from './WarehouseTabs'
 import BackdropComponent from '../../../components/backdrop/BackdropComponent'
@@ -19,13 +20,15 @@ const warehouseBox = {
 }
 
 const actions = [
-  { icon: <PiTelevisionSimpleFill />, name: 'Facility' },
-  { icon: <PiBeerBottleFill />, name: 'Service' },
+  { icon: <PiTelevisionSimpleFill />, name: 'Facility', url: 'newFacility' },
+  { icon: <PiBeerBottleFill />, name: 'Service', url: 'newService' },
 ];
 
 const WarehouseComponent = () => {
   const { data: facilityData, loading: facilityLoading } = useFetch('/facility')
   const { data: serviceData, loading: serviceLoading } = useFetch('/service')
+
+  const navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -62,7 +65,7 @@ const WarehouseComponent = () => {
               icon={action.icon}
               tooltipTitle={action.name}
               tooltipOpen
-              onClick={handleClose}
+              onClick={() => navigate(`/admin/warehouse/${action.url}`)}
             />
           ))}
         </SpeedDial>
