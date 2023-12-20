@@ -13,6 +13,10 @@ const ServiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  unitPurchasePrice: {
+    type: Number,
+    required: true,
+  },
   img: {
     public_id: {
       type: String,

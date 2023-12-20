@@ -29,6 +29,7 @@ export const createFacility = async (req, res, next) => {
     const newFacility = new Facility({
       name: req.body.name,
       capacity: Number(req.body.capacity),
+      unitPurchasePrice: Number(req.body.unitPurchasePrice),
       img: {
         public_id: result.public_id,
         url: result.secure_url,

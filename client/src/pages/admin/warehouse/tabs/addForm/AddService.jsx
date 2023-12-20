@@ -18,6 +18,7 @@ const AddService = () => {
     capacity: undefined,
     price: undefined,
     unit: undefined,
+    unitPurchasePrice: undefined,
   });
 
   const navigate = useNavigate()
@@ -57,6 +58,7 @@ const AddService = () => {
       form.capacity === undefined || form.capacity === '' ||
       form.price === undefined || form.price === '' ||
       form.unit === undefined || form.unit === '' ||
+      form.unitPurchasePrice === undefined || form.unitPurchasePrice === '' ||
       serviceImg === undefined || serviceImg === AddImg) {
       setErrMsg("Please input all necessary field!")
       setTimeout(function () {
@@ -157,6 +159,19 @@ const AddService = () => {
                 required
               />
               <label>Unit</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="cart-outline"></ion-icon>
+              </span>
+              <input
+                type="text"
+                id="unitPurchasePrice"
+                onChange={e => handleChange(e)}
+                autoComplete='off'
+                required
+              />
+              <label>Purchase price per unit ($)</label>
             </div>
             <div className="inputBox">
               <span className="icon">

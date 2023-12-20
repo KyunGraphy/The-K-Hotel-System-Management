@@ -30,6 +30,7 @@ export const createService = async (req, res, next) => {
       capacity: Number(req.body.capacity),
       price: Number(req.body.price),
       unit: req.body.unit,
+      unitPurchasePrice: Number(req.body.unitPurchasePrice),
       img: {
         public_id: result.public_id,
         url: result.secure_url,

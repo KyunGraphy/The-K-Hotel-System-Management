@@ -13,6 +13,10 @@ const FacilitySchema = new mongoose.Schema({
       type: String,
     }
   },
+  unitPurchasePrice: {
+    type: Number,
+    required: true,
+  },
   amount: {
     type: Number,
     default: 0,

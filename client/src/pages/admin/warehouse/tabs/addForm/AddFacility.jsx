@@ -15,6 +15,7 @@ const AddFacility = () => {
   const [form, setForm] = useState({
     name: undefined,
     capacity: undefined,
+    unitPurchasePrice: undefined,
   });
 
   const navigate = useNavigate()
@@ -52,6 +53,7 @@ const AddFacility = () => {
     setLoading(true)
     if (form.name === undefined || form.name === '' ||
       form.capacity === undefined || form.capacity === '' ||
+      form.unitPurchasePrice === undefined || form.unitPurchasePrice === '' ||
       facilityImg === undefined || facilityImg === AddImg) {
       setErrMsg("Please input all necessary field!")
       setTimeout(function () {
@@ -137,6 +139,19 @@ const AddFacility = () => {
                 required
               />
               <label>Capacity (m<sup>3</sup>)</label>
+            </div>
+            <div className="inputBox">
+              <span className="icon">
+                <ion-icon name="cart-outline"></ion-icon>
+              </span>
+              <input
+                type="text"
+                id="unitPurchasePrice"
+                onChange={e => handleChange(e)}
+                autoComplete='off'
+                required
+              />
+              <label>Purchase price per unit ($)</label>
             </div>
             <Button
               variant="contained"
