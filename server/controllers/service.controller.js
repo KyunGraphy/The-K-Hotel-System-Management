@@ -66,7 +66,8 @@ export const serviceRequest = async (req, res, next) => {
       const newRequest = new Request({
         itemId: req.body.itemId,
         isService: true,
-        quantity: Number(req.body.quantity),
+        quantity: req.body.quantity,
+        description: req.body.description,
         isDone: false,
       })
       await newRequest.save();

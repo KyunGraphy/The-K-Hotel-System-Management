@@ -77,7 +77,8 @@ export const facilityRequest = async (req, res, next) => {
       const newRequest = new Request({
         itemId: req.body.itemId,
         isService: false,
-        quantity: Number(req.body.quantity),
+        quantity: req.body.quantity,
+        description: req.body.description,
         isDone: false,
       })
       await newRequest.save();
