@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const RequestSchema = new mongoose.Schema({
-  itemID: {
+  itemId: {
     type: String,
     required: true,
   },
@@ -22,4 +22,4 @@ const RequestSchema = new mongoose.Schema({
   }
 });
 
-export default mongoose.model('Request', RequestModel);
+export default mongoose.model('Request', RequestSchema);

@@ -1,5 +1,5 @@
 export const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-export const WAREHOUSE_CAPACITY = 42;
+export const WAREHOUSE_CAPACITY = 420;
 
 // ----------------------------------------------------------------
 export const MANAGEMENT_ITEMS = [
