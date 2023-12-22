@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material'
-import { Remove as RemoveIcon, Add as AddIcon } from '@mui/icons-material';
+import React from 'react'
+import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import DialogRequest from './DialogRequest';
 
 const FacilityCard = ({ item }) => {
-  const [reqQuantity, setReqQuantity] = useState(1)
+  const [open, setOpen] = React.useState(false);
 
-  const handleDecrease = async () => {
-    setReqQuantity(prev => prev - 1)
-  };
-
-  const handleIncrease = async () => {
-    setReqQuantity(prev => prev + 1)
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
   return (
     <Card sx={{ width: '49%', marginY: '1em', display: 'flex', flexDirection: 'column' }} key={item._id}>
+      <DialogRequest open={open} setOpen={setOpen} />
       <CardMedia
         sx={{ height: 400 }}
         image={item.img.url}
@@ -33,30 +30,17 @@ const FacilityCard = ({ item }) => {
             <Typography sx={{ flex: 1 }}><strong>Capacity: </strong>{item.capacity}</Typography>
           </Box>
         </CardContent>
-        <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end' }}>
+        <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Box>
             <Button size="small">Edit</Button>
             <Button color="error" size="small">Remove</Button>
           </Box>
           <Box>
-            <Box sx={{ textAlign: 'center' }}>
-              <IconButton
-                aria-label=""
-                disabled={reqQuantity === 1}
-                onClick={handleDecrease}
-              >
-                <RemoveIcon />
-              </IconButton>
-              {reqQuantity}
-              <IconButton
-                aria-label=""
-                disabled={false}
-                onClick={handleIncrease}
-              >
-                <AddIcon />
-              </IconButton>
-            </Box>
-            <Button color="warning" size="small">Send request</Button>
+            <Button
+              color="warning"
+              size="small"
+              onClick={handleClickOpen}
+            >Send request</Button>
           </Box>
         </CardActions>
       </Box>
