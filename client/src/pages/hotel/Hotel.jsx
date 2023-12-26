@@ -1,8 +1,4 @@
 import React from 'react'
-import "./hotel.css";
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
-import Footer from "../../components/footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -16,8 +12,13 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Button } from '@mui/material';
+
+import "./hotel.css";
 import useFetch from "../../hooks/useFetch";
-import axios from "axios";
+import Navbar from "../../components/navbar/Navbar";
+import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import { AuthContext } from "../../contexts/AuthContext";
 import Rating from "../../components/searchItem/Rating";
 import Comment from "../../components/comment/Comment";
@@ -25,7 +26,6 @@ import { Toastify } from "../../components/toastify/Toastify";
 import { MILLISECONDS_PER_DAY, roomPrice } from "../../constants/Constant";
 import { HOTELS_IMAGES } from '../../constants/Images';
 import useSetDefaultDate from '../../hooks/useSetDefaultDate';
-import { Button } from '@mui/material';
 
 
 // ----------------------------------------------------------------
@@ -33,10 +33,7 @@ const Hotel = () => {
   const [dateRange, setDateRange] = useState(0.6)
   const [loading, setLoading] = useState(false)
   const [errMsg, setErrMsg] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
   const params = useParams()
-
-  const { dispatch } = useContext(AuthContext)
 
   const defaultToday = useSetDefaultDate(new Date())
 
@@ -114,7 +111,7 @@ const Hotel = () => {
       return navigate("/login", { state: { errMsg: "You have to login to make reservation" } })
     }
 
-    if (user && options.singleRoom === 0 && options.doubleRoom === 0) {
+    if (options.singleRoom === 0 && options.doubleRoom === 0) {
       setErrMsg("Single room or Double room must be better than 0")
       setLoading(false);
       setTimeout(function () {
@@ -125,39 +122,41 @@ const Hotel = () => {
       setErrMsg(null)
       const reservationForm = {
         ...options,
-        userId: user._id,
+        department: data.department,
         checkInDate: date[0].startDate.getTime(),
         checkOutDate: date[0].endDate.getTime(),
         isOnline: true,
       }
-      try {
-        await axios.post(`/reservation/${params.id}`, reservationForm)
-        setSuccessMsg('Booking successfully!!');
-        setLoading(false);
-        setTimeout(function () {
-          setSuccessMsg('')
-        }, 10000);
-        return
-      } catch (err) {
-        if (err.response.data.message === 'You are not authenticated!') {
-          try {
-            await axios.get("/auth/logout")
-            dispatch({
-              type: "LOGOUT",
-            });
-            navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-          } catch (err) {
-            console.error(err);
-          }
-        } else {
-          setErrMsg('Something went wrong!');
-          setTimeout(function () {
-            setErrMsg('')
-          }, 10000);
-        }
-        setLoading(false);
-        return
-      }
+      return navigate("/payment", { state: { reservationData: reservationForm } })
+
+      // try {
+      //   await axios.post(`/reservation/${params.id}`, reservationForm)
+      //   setSuccessMsg('Booking successfully!!');
+      //   setLoading(false);
+      //   setTimeout(function () {
+      //     setSuccessMsg('')
+      //   }, 10000);
+      //   return
+      // } catch (err) {
+      //   if (err.response.data.message === 'You are not authenticated!') {
+      //     try {
+      //       await axios.get("/auth/logout")
+      //       dispatch({
+      //         type: "LOGOUT",
+      //       });
+      //       navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
+      //     } catch (err) {
+      //       console.error(err);
+      //     }
+      //   } else {
+      //     setErrMsg('Something went wrong!');
+      //     setTimeout(function () {
+      //       setErrMsg('')
+      //     }, 10000);
+      //   }
+      //   setLoading(false);
+      //   return
+      // }
     }
   };
 
@@ -165,7 +164,6 @@ const Hotel = () => {
     <div>
       <Navbar />
       {errMsg && <Toastify msg={errMsg} type="error" />}
-      {successMsg && <Toastify msg={successMsg} type="success" />}
       <Header type="list" />
       <div className="hotelContainer">
         {open && (

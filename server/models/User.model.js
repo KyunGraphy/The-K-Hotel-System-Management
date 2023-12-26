@@ -34,6 +34,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  creditCard: {
+    type: String,
+  },
+  visaCard: {
+    type: String,
+  },
+  paypal: {
+    type: String,
+  },
   country: {
     common: {
       type: String

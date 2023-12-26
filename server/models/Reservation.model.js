@@ -55,6 +55,15 @@ const ReservationSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    payment: {
+      isDone: {
+        type: Boolean,
+        default: false,
+      },
+      method: {
+        type: String,
+      },
+    },
     services: {
       type: [{
         serviceId: {
