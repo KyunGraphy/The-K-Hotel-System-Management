@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import React, { useContext, useState } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { Box, Button, Card, CardContent, Container, Divider, Grid, Step, StepLabel, Stepper, Typography } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton';
 import { List, ListDivider, ListItem, Radio, RadioGroup } from '@mui/joy'
 
 import Navbar from '../../components/navbar/Navbar'
@@ -10,6 +12,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import useFetch from '../../hooks/useFetch'
 import BackdropComponent from '../../components/backdrop/BackdropComponent'
 import { roomPrice } from '../../constants/Constant'
+import { Toastify } from '../../components/toastify/Toastify'
 
 const steps = [
   'Enter booking information',
@@ -18,14 +21,56 @@ const steps = [
 ];
 
 const Payment = () => {
+  const [method, setMethod] = useState('Cash payment')
+  const [successMsg, setSuccessMsg] = useState(false)
+  const [errMsg, setErrMsg] = useState(false)
+  const [handleLoading, setHandleLoading] = useState(false)
+
+  const params = useParams()
   const location = useLocation()
   const reservation = location.state.reservationData
 
   const { user } = useContext(AuthContext)
   const { data, loading } = useFetch(`/users/${user._id}`)
 
+  const handleChange = (e) => {
+    setMethod(e.target.value);
+  };
+
+  // Handle make online reservation
+  const handleReservation = async () => {
+    setHandleLoading(true);
+    try {
+      await axios.post(`/reservation/${params.id}`, {
+        ...reservation,
+        name: data.name,
+        payment: {
+          isDone: false,
+          method: method,
+        },
+        isOnline: true,
+      })
+      setSuccessMsg('Booking successfully!!');
+      setHandleLoading(false);
+      setTimeout(function () {
+        setSuccessMsg('')
+      }, 10000);
+      return
+    } catch (err) {
+      setErrMsg('Something went wrong!');
+      console.log(err);
+      setTimeout(function () {
+        setErrMsg('')
+      }, 10000);
+      setHandleLoading(false);
+      return
+    }
+  };
+
   return (
     <Grid>
+      {successMsg && <Toastify msg={successMsg} type="success" />}
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <Navbar />
       <Header type="list" />
       {loading ? (
@@ -62,7 +107,8 @@ const Payment = () => {
                       aria-labelledby="example-payment-channel-label"
                       overlay
                       name="example-payment-channel"
-                      defaultValue="Paypal"
+                      defaultValue="Payment In Cash"
+                      onChange={handleChange}
                     >
                       <List
                         component="div"
@@ -73,20 +119,29 @@ const Payment = () => {
                           p: 2,
                         }}
                       >
-                        {['Cash payment', 'Credit Card', 'Visa Card', 'Paypal'].map((value, index) => (
-                          <React.Fragment key={value}>
-                            {index !== 0 && <ListDivider />}
-                            <ListItem>
-                              <Radio id={value} value={value} label={value} />
-                            </ListItem>
-                          </React.Fragment>
-                        ))}
+                        <ListItem>
+                          <Radio value='Payment In Cash' label='Payment In Cash' />
+                        </ListItem>
+                        <ListDivider />
+                        <ListItem>
+                          <Radio value='Credit Card' label='Credit Card' disabled={!data.creditCard} />
+                        </ListItem>
+                        <ListDivider />
+                        <ListItem>
+                          <Radio value='Visa Cash' label='Visa Cash' disabled={!data.visaCard} />
+                        </ListItem>
+                        <ListDivider />
+                        <ListItem>
+                          <Radio value='Paypal' label='Paypal' disabled={!data.paypal} />
+                        </ListItem>
                       </List>
                     </RadioGroup>
                     <Button
                       variant="contained"
                       color='success'
                       sx={{ marginY: 2, width: '100%' }}
+                      onClick={handleReservation}
+                      disabled={handleLoading}
                     >Continue to payment</Button>
                     <Link to='/hotels' style={{ color: '#000', fontWeight: '600' }}>
                       Cancel

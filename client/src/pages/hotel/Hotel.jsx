@@ -127,36 +127,7 @@ const Hotel = () => {
         checkOutDate: date[0].endDate.getTime(),
         isOnline: true,
       }
-      return navigate("/payment", { state: { reservationData: reservationForm } })
-
-      // try {
-      //   await axios.post(`/reservation/${params.id}`, reservationForm)
-      //   setSuccessMsg('Booking successfully!!');
-      //   setLoading(false);
-      //   setTimeout(function () {
-      //     setSuccessMsg('')
-      //   }, 10000);
-      //   return
-      // } catch (err) {
-      //   if (err.response.data.message === 'You are not authenticated!') {
-      //     try {
-      //       await axios.get("/auth/logout")
-      //       dispatch({
-      //         type: "LOGOUT",
-      //       });
-      //       navigate("/login", { state: { errMsg: "Login session expired, please login!" } })
-      //     } catch (err) {
-      //       console.error(err);
-      //     }
-      //   } else {
-      //     setErrMsg('Something went wrong!');
-      //     setTimeout(function () {
-      //       setErrMsg('')
-      //     }, 10000);
-      //   }
-      //   setLoading(false);
-      //   return
-      // }
+      return navigate(`/payment/${params.id}`, { state: { reservationData: reservationForm } })
     }
   };
 

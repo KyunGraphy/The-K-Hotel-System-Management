@@ -7,17 +7,10 @@ export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
   const reservation = new Reservation(req.body);
   try {
-    if (req.body.userId) {
+    if (req.body.isOnline) {
       // Booking online
-      reservation.userID = req.body.userId
-      const user = await User.findOne({ _id: req.body.userId });
-      reservation.name = user.name
-      try {
-        const savedReservation = await reservation.save();
-        res.status(200).json(savedReservation);
-      } catch (err) {
-        next(err);
-      }
+      const savedReservation = await reservation.save();
+      res.status(200).json(savedReservation);
     } else {
       // Booking directly
       const savedReservation = await reservation.save();
