@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
-import { Box, Grid, IconButton, List, ListItem, ListItemText, ListSubheader } from '@mui/material'
+import { Box, Divider, Grid, IconButton, List, ListItem, ListItemText, ListSubheader } from '@mui/material'
 import { Remove as RemoveIcon, Add as AddIcon } from '@mui/icons-material';
 import useFetch from '../../../hooks/useFetch';
 import { RoomContext } from '../../../contexts/RoomContext'
@@ -58,7 +58,7 @@ const ListFacilityItem = ({ facilityItem, roomFacility, facilityReFetch }) => {
           </IconButton>
         </Box>
       }>
-      <ListItemText primary={facilityItem.name} />
+      <ListItemText primary={facilityItem.name} sx={{ paddingRight: '2em', textAlign: 'justify' }} />
     </ListItem>
   )
 };
@@ -92,12 +92,15 @@ const RoomFacilityUpdate = ({ roomData }) => {
               {facilityData.map((facilityItem, index) => {
                 const roomFacility = roomData.facility.find(item => item.facilityId === facilityItem._id);
                 return (
-                  <ListFacilityItem
-                    key={index}
-                    facilityItem={facilityItem}
-                    roomFacility={roomFacility}
-                    facilityReFetch={facilityReFetch}
-                  />
+                  <React.Fragment>
+                    <ListFacilityItem
+                      key={index}
+                      facilityItem={facilityItem}
+                      roomFacility={roomFacility}
+                      facilityReFetch={facilityReFetch}
+                    />
+                    <Divider />
+                  </React.Fragment>
                 )
               })}
             </ul>

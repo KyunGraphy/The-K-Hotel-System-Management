@@ -42,6 +42,7 @@ const Payment = () => {
     try {
       await axios.post(`/reservation/${params.id}`, {
         ...reservation,
+        userID: data._id,
         email: data.email,
         name: data.name,
         payment: {
@@ -177,7 +178,7 @@ const Payment = () => {
                       >
                         <strong style={{ width: 240 }}>Check in date: </strong>
                         {(new Date(reservation.checkInDate)).getDate()}-
-                        {(new Date(reservation.checkInDate)).getMonth()}-
+                        {(new Date(reservation.checkInDate)).getMonth() + 1}-
                         {(new Date(reservation.checkInDate)).getFullYear()}
                       </Typography>
                       <Typography
@@ -188,7 +189,7 @@ const Payment = () => {
                       >
                         <strong style={{ width: 240 }}>Check out date: </strong>
                         {(new Date(reservation.checkOutDate)).getDate()}-
-                        {(new Date(reservation.checkOutDate)).getMonth()}-
+                        {(new Date(reservation.checkOutDate)).getMonth() + 1}-
                         {(new Date(reservation.checkOutDate)).getFullYear()}
                       </Typography>
                     </Box>

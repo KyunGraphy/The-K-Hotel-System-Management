@@ -202,9 +202,9 @@ export const getUserReservations = async (req, res, next) => {
         children: reservation.children,
         singleRoom: reservation.singleRoom,
         doubleRoom: reservation.doubleRoom,
-        checkInDate: new Date(reservation.checkInDate).getDate() + "/" + new Date(reservation.checkInDate).getMonth() + "/" + new Date(reservation.checkInDate).getFullYear(),
-        checkOutDate: new Date(reservation.checkOutDate).getDate() + "/" + new Date(reservation.checkOutDate).getMonth() + "/" + new Date(reservation.checkOutDate).getFullYear(),
-        createdAt: new Date(reservation.createdAt).getDate() + "/" + new Date(reservation.createdAt).getMonth() + "/" + new Date(reservation.createdAt).getFullYear(),
+        checkInDate: new Date(reservation.checkInDate).getDate() + "/" + (new Date(reservation.checkInDate).getMonth() + 1) + "/" + new Date(reservation.checkInDate).getFullYear(),
+        checkOutDate: new Date(reservation.checkOutDate).getDate() + "/" + (new Date(reservation.checkOutDate).getMonth() + 1) + "/" + new Date(reservation.checkOutDate).getFullYear(),
+        createdAt: new Date(reservation.createdAt).getDate() + "/" + (new Date(reservation.createdAt).getMonth() + 1) + "/" + new Date(reservation.createdAt).getFullYear(),
         department: hotelList[index].department,
         rooms: roomList[index].map(room => room.number),
       };
