@@ -2,6 +2,7 @@ import Reservation from "../models/Reservation.model.js";
 import User from "../models/User.model.js";
 import Hotel from "../models/Hotel.model.js";
 import Room from "../models/Room.model.js";
+import { bookingSuccessMailer } from "../utils/mailer.js";
 
 export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
@@ -10,6 +11,7 @@ export const createReservation = async (req, res, next) => {
     if (req.body.isOnline) {
       // Booking online
       const savedReservation = await reservation.save();
+      bookingSuccessMailer(req.body)
       res.status(200).json(savedReservation);
     } else {
       // Booking directly

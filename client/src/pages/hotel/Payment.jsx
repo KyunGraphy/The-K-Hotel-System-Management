@@ -2,7 +2,6 @@ import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { Box, Button, Card, CardContent, Container, Divider, Grid, Step, StepLabel, Stepper, Typography } from '@mui/material'
-import LoadingButton from '@mui/lab/LoadingButton';
 import { List, ListDivider, ListItem, Radio, RadioGroup } from '@mui/joy'
 
 import Navbar from '../../components/navbar/Navbar'
@@ -43,6 +42,7 @@ const Payment = () => {
     try {
       await axios.post(`/reservation/${params.id}`, {
         ...reservation,
+        email: data.email,
         name: data.name,
         payment: {
           isDone: false,
@@ -78,79 +78,15 @@ const Payment = () => {
       ) : (
         <Box sx={{ paddingY: 4, background: '#f2dcd0' }}>
           <Container>
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Box sx={{ paddingY: 2, paddingX: 6 }}>
+              <Link to='/hotels' style={{ display: 'flex', alignItems: 'center', color: '#000', fontWeight: '600' }}>
+                <ion-icon name="chevron-back-outline"></ion-icon>
+                Back to hotels page
+              </Link>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
               <Box>
-                <Box sx={{ p: 1 }}>
-                  <Link to='/hotels' style={{ display: 'flex', alignItems: 'center', color: '#000', fontWeight: '600' }}>
-                    <ion-icon name="chevron-back-outline"></ion-icon>
-                    Back to hotels page
-                  </Link>
-                </Box>
-                <Box sx={{ p: 2 }}>
-                  <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={1} alternativeLabel>
-                      {steps.map((label) => (
-                        <Step key={label}>
-                          <StepLabel>{label}</StepLabel>
-                        </Step>
-                      ))}
-                    </Stepper>
-                  </Box>
-                </Box>
-                <Card sx={{ width: '48%', minWidth: 480 }}>
-                  <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography sx={{ fontSize: 20, fontWeight: '600', p: 1 }} color="text.secondary" gutterBottom>
-                      How would you like to pay:
-                    </Typography>
-                    <Typography variant="h5" component="div"></Typography>
-                    <RadioGroup
-                      aria-labelledby="example-payment-channel-label"
-                      overlay
-                      name="example-payment-channel"
-                      defaultValue="Payment In Cash"
-                      onChange={handleChange}
-                    >
-                      <List
-                        component="div"
-                        variant="outlined"
-                        sx={{
-                          borderRadius: 'sm',
-                          boxShadow: 'sm',
-                          p: 2,
-                        }}
-                      >
-                        <ListItem>
-                          <Radio value='Payment In Cash' label='Payment In Cash' />
-                        </ListItem>
-                        <ListDivider />
-                        <ListItem>
-                          <Radio value='Credit Card' label='Credit Card' disabled={!data.creditCard} />
-                        </ListItem>
-                        <ListDivider />
-                        <ListItem>
-                          <Radio value='Visa Cash' label='Visa Cash' disabled={!data.visaCard} />
-                        </ListItem>
-                        <ListDivider />
-                        <ListItem>
-                          <Radio value='Paypal' label='Paypal' disabled={!data.paypal} />
-                        </ListItem>
-                      </List>
-                    </RadioGroup>
-                    <Button
-                      variant="contained"
-                      color='success'
-                      sx={{ marginY: 2, width: '100%' }}
-                      onClick={handleReservation}
-                      disabled={handleLoading}
-                    >Continue to payment</Button>
-                    <Link to='/hotels' style={{ color: '#000', fontWeight: '600' }}>
-                      Cancel
-                    </Link>
-                  </CardContent>
-                </Card>
-              </Box>
-              <Box>
-                <Card sx={{ width: '48%', minWidth: 480 }}>
+                <Card sx={{ minWidth: 480 }}>
                   <CardContent>
                     <Typography sx={{ fontSize: 20, fontWeight: '600', p: 1 }} color="text.secondary" gutterBottom>
                       Order Summary
@@ -302,6 +238,74 @@ const Payment = () => {
                           }
                         </b>
                       </Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ p: 2 }}>
+                  <Box sx={{ width: '100%' }}>
+                    <Stepper activeStep={1} alternativeLabel>
+                      {steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel>{label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
+                  </Box>
+                </Box>
+                <Card sx={{ width: '48%', minWidth: 480, flex: 1 }}>
+                  <CardContent sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Box>
+                      <Typography sx={{ fontSize: 20, fontWeight: '600', p: 1 }} color="text.secondary" gutterBottom>
+                        How would you like to pay:
+                      </Typography>
+                      <Typography variant="h5" component="div"></Typography>
+                      <RadioGroup
+                        aria-labelledby="example-payment-channel-label"
+                        overlay
+                        name="example-payment-channel"
+                        defaultValue="Payment In Cash"
+                        onChange={handleChange}
+                      >
+                        <List
+                          component="div"
+                          variant="outlined"
+                          sx={{
+                            borderRadius: 'sm',
+                            boxShadow: 'sm',
+                            p: 2,
+                          }}
+                        >
+                          <ListItem>
+                            <Radio value='Payment In Cash' label='Payment In Cash' />
+                          </ListItem>
+                          <ListDivider />
+                          <ListItem>
+                            <Radio value='Credit Card' label='Credit Card' disabled={!data.creditCard} />
+                          </ListItem>
+                          <ListDivider />
+                          <ListItem>
+                            <Radio value='Visa Card' label='Visa Card' disabled={!data.visaCard} />
+                          </ListItem>
+                          <ListDivider />
+                          <ListItem>
+                            <Radio value='Paypal' label='Paypal' disabled={!data.paypal} />
+                          </ListItem>
+                        </List>
+                      </RadioGroup>
+                    </Box>
+                    <Box>
+                      <Button
+                        variant="contained"
+                        color='success'
+                        sx={{ marginY: 2, width: '100%' }}
+                        onClick={handleReservation}
+                        disabled={handleLoading}
+                      >Continue to payment</Button>
+                      <Link to='/hotels' style={{ color: '#000', fontWeight: '600' }}>
+                        Cancel
+                      </Link>
                     </Box>
                   </CardContent>
                 </Card>
