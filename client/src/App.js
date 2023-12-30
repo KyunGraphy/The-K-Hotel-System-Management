@@ -26,6 +26,7 @@ import WarehouseComponent from "./pages/admin/warehouse";
 import AddFacility from "./pages/admin/warehouse/tabs/addForm/AddFacility.jsx";
 import AddService from "./pages/admin/warehouse/tabs/addForm/AddService.jsx";
 import Payment from "./pages/hotel/Payment.jsx";
+import BookingSuccess from "./pages/hotel/BookingSuccess.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path="/hotels" element={<List />} />
         <Route path="/hotels/:id" element={<Hotel />} />
         <Route path="/payment/:id" element={<Payment />} />
+        <Route path="/bookingSuccess" element={<BookingSuccess />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/services" element={<Service />} />

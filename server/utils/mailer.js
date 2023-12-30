@@ -54,21 +54,25 @@ export const bookingSuccessMailer = (reservation) => {
         <p>${(new Date(reservation.checkOutDate)).toString()}</p>
         </div>
         <div style='display: flex'>
+        <h3 style='font-weight: bold; width: 180px; color: #384e71'>Night:</h3>
+        <p>${reservation.night}</p>
+        </div>
+        <div style='display: flex'>
         <h3 style='font-weight: bold; width: 180px; color: #384e71'>Payment Method:</h3>
         <p>${reservation.payment.method}</p>
         </div>
         <hr>
         <div style='display: flex'>
           <h3 style='font-weight: bold; width: 180px; color: #384e71'>Expense:</h3>
-          <p>${reservation.singleRoom * 30 + reservation.doubleRoom * 50}$</p>
+          <p>${reservation.price}$</p>
         </div>
         <div style='display: flex'>
           <h3 style='font-weight: bold; width: 180px; color: #384e71'>Tax:</h3>
-          <p>${(reservation.singleRoom * 30 + reservation.doubleRoom * 50) * 0.1}$</p>
+          <p>${reservation.price * 0.1}$</p>
         </div>
         <div style='display: flex'>
           <h1 style='font-weight: bold; width: 180px; color: red'>Total fee:</h1>
-          <h1 style='font-weight: bold'>${(reservation.singleRoom * 30 + reservation.doubleRoom * 50) + (reservation.singleRoom * 30 + reservation.doubleRoom * 50) * 0.1}$</h1>
+          <h1 style='font-weight: bold'>${reservation.price + reservation.price * 0.1}$</h1>
         </div>
         <button style='
           border-radius: 4px; 

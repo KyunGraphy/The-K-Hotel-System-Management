@@ -127,7 +127,18 @@ const Hotel = () => {
         checkOutDate: date[0].endDate.getTime(),
         isOnline: true,
       }
-      return navigate(`/payment/${params.id}`, { state: { reservationData: reservationForm } })
+      return navigate(`/payment/${params.id}`, {
+        state: {
+          reservationData: {
+            ...reservationForm,
+            night: Math.floor(dateRange),
+            price: dateRange * (
+              options.singleRoom * roomPrice.single +
+              options.doubleRoom * roomPrice.double
+            )
+          }
+        }
+      })
     }
   };
 

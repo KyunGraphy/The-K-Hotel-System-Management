@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useState } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Box, Button, Card, CardContent, Container, Divider, Grid, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import { List, ListDivider, ListItem, Radio, RadioGroup } from '@mui/joy'
 
@@ -10,7 +10,6 @@ import Footer from '../../components/footer/Footer'
 import { AuthContext } from '../../contexts/AuthContext'
 import useFetch from '../../hooks/useFetch'
 import BackdropComponent from '../../components/backdrop/BackdropComponent'
-import { roomPrice } from '../../constants/Constant'
 import { Toastify } from '../../components/toastify/Toastify'
 
 const steps = [
@@ -21,11 +20,11 @@ const steps = [
 
 const Payment = () => {
   const [method, setMethod] = useState('Cash payment')
-  const [successMsg, setSuccessMsg] = useState(false)
   const [errMsg, setErrMsg] = useState(false)
   const [handleLoading, setHandleLoading] = useState(false)
 
   const params = useParams()
+  const navigate = useNavigate()
   const location = useLocation()
   const reservation = location.state.reservationData
 
@@ -40,7 +39,7 @@ const Payment = () => {
   const handleReservation = async () => {
     setHandleLoading(true);
     try {
-      await axios.post(`/reservation/${params.id}`, {
+      const response = await axios.post(`/reservation/${params.id}`, {
         ...reservation,
         userID: data._id,
         email: data.email,
@@ -51,11 +50,8 @@ const Payment = () => {
         },
         isOnline: true,
       })
-      setSuccessMsg('Booking successfully!!');
       setHandleLoading(false);
-      setTimeout(function () {
-        setSuccessMsg('')
-      }, 10000);
+      navigate('/bookingSuccess', { state: { data: response.data } })
       return
     } catch (err) {
       setErrMsg('Something went wrong!');
@@ -70,7 +66,6 @@ const Payment = () => {
 
   return (
     <Grid>
-      {successMsg && <Toastify msg={successMsg} type="success" />}
       {errMsg && <Toastify msg={errMsg} type="error" />}
       <Navbar />
       <Header type="list" />
@@ -192,6 +187,15 @@ const Payment = () => {
                         {(new Date(reservation.checkOutDate)).getMonth() + 1}-
                         {(new Date(reservation.checkOutDate)).getFullYear()}
                       </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        gutterBottom
+                        sx={{ display: 'flex', gap: 2, p: 0.25 }}
+                      >
+                        <strong style={{ width: 240 }}>Nights: </strong>
+                        {reservation.night}
+                      </Typography>
                     </Box>
                     <Divider />
                     <Box sx={{ p: 1 }}>
@@ -202,10 +206,7 @@ const Payment = () => {
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
                         <strong style={{ width: 240 }}>Expense: </strong>
-                        ${
-                          reservation.singleRoom * roomPrice.single +
-                          reservation.doubleRoom * roomPrice.double
-                        }
+                        ${reservation.price}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -214,10 +215,7 @@ const Payment = () => {
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
                         <strong style={{ width: 240 }}>Tax: </strong>
-                        ${
-                          (reservation.singleRoom * roomPrice.single +
-                            reservation.doubleRoom * roomPrice.double) * 0.1
-                        }
+                        ${reservation.price * 0.1}
                       </Typography>
                     </Box>
                     <Divider />
@@ -230,13 +228,7 @@ const Payment = () => {
                       >
                         <strong style={{ width: 240 }}>Total fee: </strong>
                         <b>
-                          ${
-                            (reservation.singleRoom * roomPrice.single +
-                              reservation.doubleRoom * roomPrice.double)
-                            +
-                            (reservation.singleRoom * roomPrice.single +
-                              reservation.doubleRoom * roomPrice.double) * 0.1
-                          }
+                          ${reservation.price + reservation.price * 0.1}
                         </b>
                       </Typography>
                     </Box>
