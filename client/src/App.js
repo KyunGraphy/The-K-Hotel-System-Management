@@ -27,6 +27,7 @@ import AddFacility from "./pages/admin/warehouse/tabs/addForm/AddFacility.jsx";
 import AddService from "./pages/admin/warehouse/tabs/addForm/AddService.jsx";
 import Payment from "./pages/hotel/Payment.jsx";
 import BookingSuccess from "./pages/hotel/BookingSuccess.jsx";
+import ProcurementComponent from "./pages/admin/procurement/index.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -57,6 +58,7 @@ function App() {
           <Route path="warehouse/newFacility" element={<AddFacility />} />
           <Route path="warehouse/newService" element={<AddService />} />
           <Route path="finance" element={<Finance />} />
+          <Route path="procurement" element={<ProcurementComponent />} />
 
           <Route path=":id" element={<PageError />} />
         </Route>
