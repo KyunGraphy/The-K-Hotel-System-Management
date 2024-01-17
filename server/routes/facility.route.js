@@ -2,6 +2,7 @@ import express from 'express';
 import {
   createFacility,
   deleteFacility,
+  facilityCart,
   facilityRequest,
   getAllFacilities,
   getOneFacility,
@@ -18,5 +19,6 @@ router.delete('/:facilityId', deleteFacility)
 
 // Send request
 router.put('/request', facilityRequest)
+router.put('/cart', facilityCart)
 
 export default router;

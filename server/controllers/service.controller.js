@@ -60,15 +60,35 @@ export const updateService = async (req, res, next) => {
 // Send request
 export const serviceRequest = async (req, res, next) => {
   try {
-    const isExisted = await Request.find({ itemId: req.body.itemId })
+    const newRequest = new Request({
+      itemId: req.body.itemId,
+      isService: true,
+      quantity: req.body.quantity,
+      description: req.body.description,
+      inCart: false,
+      isFromShop: false,
+    })
+    await newRequest.save();
+    res.status(200).json(newRequest);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const serviceCart = async (req, res, next) => {
+  try {
+    const isExisted = await Request.find({
+      itemId: req.body.itemId,
+      isFromShop: true,
+    })
 
     if (isExisted.length === 0) {
       const newRequest = new Request({
         itemId: req.body.itemId,
         isService: true,
         quantity: req.body.quantity,
-        description: req.body.description,
-        isDone: false,
+        inCart: true,
+        isFromShop: true,
       })
       await newRequest.save();
       res.status(200).json(newRequest);
