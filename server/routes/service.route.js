@@ -3,7 +3,6 @@ import {
   createService,
   getAllServices,
   getOneServices,
-  serviceCart,
   serviceRequest,
   updateService,
 } from '../controllers/service.controller.js';
@@ -17,6 +16,5 @@ router.post('/', createService);
 
 // Send request
 router.put('/request', serviceRequest)
-router.put('/cart', serviceCart)
 
 export default router;
