@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material'
 import { Remove as RemoveIcon, Add as AddIcon } from '@mui/icons-material';
 
-const ShopCard = () => {
+import imgNone from '../../../../assets/Flag_of_None.png'
+
+const ShopCard = ({ item }) => {
   const [reqQuantity, setReqQuantity] = useState(1)
 
   const handleDecrease = () => {
@@ -14,22 +16,25 @@ const ShopCard = () => {
   };
 
   return (
-    <Card sx={{ width: '49%', marginY: '1em', display: 'flex', flexDirection: 'column' }} key={null}>
+    <Card sx={{ width: '320px', marginY: '1em', display: 'flex', flexDirection: 'column' }} key={null}>
       <CardMedia
         sx={{ height: 280 }}
-        image={'https://res.cloudinary.com/dvroxew0r/image/upload/v1703062643/ny3xdetxif7dc0zfhsff.jpg'}
+        image={item.img ? item.img.url : imgNone}
         title={null}
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', flex: 1 }}>
         <CardContent>
           <Typography gutterBottom variant="h6" sx={{ textAlign: "center" }}>
-            Shop Item
+            {item?.name}
           </Typography>
           <Box sx={{ display: 'flex', marginY: '0.5em' }}>
-            <Typography sx={{ flex: 1 }}><strong>Price: </strong>5$/bottle</Typography>
+            <Typography sx={{ flex: 1 }}>
+              <strong>Price: </strong>
+              {item?.unitPurchasePrice}$/{item?.unit || 'item'}
+            </Typography>
           </Box>
           <Box sx={{ marginY: '0.5em' }}>
-            <Typography sx={{ flex: 1 }}><strong>Capacity: </strong>123</Typography>
+            <Typography sx={{ flex: 1 }}><strong>Capacity: </strong>{item?.capacity}</Typography>
           </Box>
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
@@ -61,11 +66,11 @@ const ShopCard = () => {
   )
 }
 
-const ShopTab = ({ facilityData }) => {
+const ShopTab = ({ list }) => {
   return (
-    <Grid sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-      {Array(4).fill(null).map(item => (
-        <ShopCard />
+    <Grid sx={{ display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
+      {list.map(item => (
+        <ShopCard key={item._id} item={item} />
       ))}
     </Grid>
   )

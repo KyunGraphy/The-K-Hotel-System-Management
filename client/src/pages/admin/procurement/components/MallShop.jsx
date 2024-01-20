@@ -29,7 +29,7 @@ function a11yProps(index) {
   };
 }
 
-const MallShop = () => {
+const MallShop = ({ facility, service }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -47,21 +47,21 @@ const MallShop = () => {
           value={value}
           onChange={handleChange}
           aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
+          sx={{ borderRight: 1, borderColor: 'divider', width: '100px' }}
         >
           <Tab label="Facility Shop" {...a11yProps(0)} />
           <Tab label="Service Shop" {...a11yProps(1)} />
         </Tabs>
-        <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ overflow: 'auto', width: '54vw' }}>
           <TabPanel value={value} index={0}>
-            <ShopTab />
+            <ShopTab list={facility} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <ShopTab />
+            <ShopTab list={service} />
           </TabPanel>
         </Box>
       </Box>
-    </Grid >
+    </Grid>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   Box,
   Checkbox,
@@ -33,32 +33,6 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, quantity, description, capacity, createdAt) {
-  return {
-    name,
-    quantity,
-    description,
-    capacity,
-    createdAt,
-  };
-}
-
-const rows = [
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 305, 'abcdefgh', 67, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 452, 'abcdefgh', 51, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 262, 'abcdefgh', 24, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 159, 'abcdefgh', 24, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 356, 'abcdefgh', 49, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 408, 'abcdefgh', 87, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 237, 'abcdefgh', 37, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 375, 'abcdefgh', 94, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 518, 'abcdefgh', 65, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 392, 'abcdefgh', 98, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 318, 'abcdefgh', 81, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 360, 'abcdefgh', 9, '2023-05-19T04:42:23.519+00:00'),
-  createData('HIM Grape Soju with green grape flavor, green grape Soju', 437, 'abcdefgh', 63, '2023-05-19T04:42:23.519+00:00'),
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -76,15 +50,15 @@ function getComparator(order, orderBy) {
 }
 
 function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
+  const stabilizedThis = array?.map((el, index) => [el, index]);
+  stabilizedThis?.sort((a, b) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) {
       return order;
     }
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis?.map((el) => el[0]);
 }
 
 const headCells = [
@@ -105,12 +79,6 @@ const headCells = [
     numeric: false,
     disablePadding: false,
     label: 'Description',
-  },
-  {
-    id: 'capacity',
-    numeric: true,
-    disablePadding: false,
-    label: 'Capacity',
   },
   {
     id: 'createdAt',
@@ -214,7 +182,7 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-const RequestItem = () => {
+const RequestItem = ({ list }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('createdAt');
   const [selected, setSelected] = useState([]);
@@ -231,14 +199,14 @@ const RequestItem = () => {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = list.map((item) => item.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
+  const handleClick = (id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -270,15 +238,15 @@ const RequestItem = () => {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
 
-  const visibleRows = React.useMemo(
+  const visibleRows = useMemo(
     () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
+      stableSort(list, getComparator(order, orderBy))?.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage,
       ),
-    [order, orderBy, page, rowsPerPage],
+    [list, order, orderBy, page, rowsPerPage],
   );
 
   return (
@@ -297,10 +265,10 @@ const RequestItem = () => {
                 orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
                 onRequestSort={handleRequestSort}
-                rowCount={rows.length}
+                rowCount={list?.length}
               />
               <TableBody>
-                {visibleRows.map((row, index) => {
+                {visibleRows?.map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -334,7 +302,6 @@ const RequestItem = () => {
                       </TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
                       <TableCell align="right">{row.description}</TableCell>
-                      <TableCell align="right">{row.capacity}</TableCell>
                       <TableCell align="right">{row.createdAt}</TableCell>
                     </TableRow>
                   );
@@ -354,7 +321,7 @@ const RequestItem = () => {
           <TablePagination
             rowsPerPageOptions={[5, 10, 15]}
             component="div"
-            count={rows.length}
+            count={list?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

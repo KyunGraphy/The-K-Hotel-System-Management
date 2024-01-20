@@ -12,7 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
 const Cart = () => {
   return (
     <Grid sx={{
-      width: '400px',
+      width: '360px',
       backgroundColor: '#febb02',
       padding: '10px',
       borderRadius: '10px',

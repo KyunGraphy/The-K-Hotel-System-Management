@@ -9,7 +9,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { ArrowForwardIosSharp } from '@mui/icons-material';
 
-import RequestItem from './RequestItemTable';
+import RequestTable from './RequestItemTable';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -44,7 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const MallRequest = () => {
+const MallRequest = ({ facility, service }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -61,7 +61,7 @@ const MallRequest = () => {
           <Typography>#Facility Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestItem />
+          <RequestTable list={facility} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -72,7 +72,7 @@ const MallRequest = () => {
           <Typography>#Service Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestItem />
+          <RequestTable list={service} />
         </AccordionDetails>
       </Accordion>
     </Grid>
