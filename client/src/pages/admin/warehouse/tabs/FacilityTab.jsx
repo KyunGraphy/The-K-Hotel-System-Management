@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+
 import DialogRequest from './DialogRequest';
 
 const FacilityCard = ({ item }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

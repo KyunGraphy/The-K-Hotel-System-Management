@@ -47,11 +47,10 @@ const WarehouseTabs = ({ facilityData, serviceData }) => {
   };
   return (
     <Grid sx={{ width: '69%', flex: 1 }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'lavender' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'rgb(56, 78, 113, 0.2)' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           <Tab sx={{ flex: 1, fontWeight: '500' }} label="Facilities" {...a11yProps(0)} />
           <Tab sx={{ flex: 1, fontWeight: '500' }} label="Services" {...a11yProps(1)} />
-          <Tab sx={{ flex: 1, fontWeight: '500' }} label="Others" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -59,9 +58,6 @@ const WarehouseTabs = ({ facilityData, serviceData }) => {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <ServicesTab serviceData={serviceData} />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Other
       </CustomTabPanel>
     </Grid>
   )

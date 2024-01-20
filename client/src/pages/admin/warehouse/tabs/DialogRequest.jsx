@@ -26,6 +26,7 @@ const DialogRequest = ({ open, setOpen, itemId, isService }) => {
   const [reqQuantity, setReqQuantity] = useState(1)
   const [reqDesc, setReqDesc] = useState('')
   const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
   const [loading, setLoading] = useState(false)
 
   const handleClose = () => {
@@ -47,6 +48,16 @@ const DialogRequest = ({ open, setOpen, itemId, isService }) => {
   // Send Request
   const handleSendRequest = async () => {
     setLoading(true)
+    if (reqDesc === '') {
+      setErrMsg('Please type a description')
+      setLoading(false)
+
+      setTimeout(function () {
+        setErrMsg('')
+      }, 10000);
+      return
+    }
+
     try {
       if (isService) {
         await axios.put('/service/request', {
@@ -75,6 +86,7 @@ const DialogRequest = ({ open, setOpen, itemId, isService }) => {
   return (
     <Grid>
       {successMsg && <Toastify msg={successMsg} type="success" />}
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -109,7 +121,6 @@ const DialogRequest = ({ open, setOpen, itemId, isService }) => {
               <TextField
                 id="standard-textarea"
                 label="Description"
-                placeholder="Placeholder"
                 multiline
                 variant="standard"
                 sx={{ width: '240px' }}

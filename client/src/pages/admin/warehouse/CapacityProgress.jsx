@@ -35,6 +35,8 @@ const CapacityProgress = ({ data }) => {
           padding: '0.5em',
           background: 'coral',
           borderRadius: '0.4em',
+          position: 'sticky',
+          top: '90px',
         }}
       >
         <Typography variant='h6' sx={{ textAlign: 'center', fontWeight: 500, color: 'white' }}>Warehouse Capacity</Typography>
