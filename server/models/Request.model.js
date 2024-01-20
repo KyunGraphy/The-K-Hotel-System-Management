@@ -6,6 +6,10 @@ const RequestSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     isService: {
       type: Boolean,
       required: true,

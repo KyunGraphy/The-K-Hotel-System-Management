@@ -60,11 +60,12 @@ export const updateService = async (req, res, next) => {
 // Send request
 export const serviceRequest = async (req, res, next) => {
   try {
+    const { name } = await Service.findById(req.body.itemId);
+
     const newRequest = new Request({
-      itemId: req.body.itemId,
+      ...req.body,
+      name: name,
       isService: true,
-      quantity: req.body.quantity,
-      description: req.body.description,
       inCart: false,
       isFromShop: false,
     })
@@ -77,6 +78,8 @@ export const serviceRequest = async (req, res, next) => {
 
 export const serviceCart = async (req, res, next) => {
   try {
+    const { name } = await Service.findById(req.body.itemId);
+
     const isExisted = await Request.find({
       itemId: req.body.itemId,
       isFromShop: true,
@@ -84,9 +87,9 @@ export const serviceCart = async (req, res, next) => {
 
     if (isExisted.length === 0) {
       const newRequest = new Request({
-        itemId: req.body.itemId,
+        ...req.body,
+        name: name,
         isService: true,
-        quantity: req.body.quantity,
         inCart: true,
         isFromShop: true,
       })

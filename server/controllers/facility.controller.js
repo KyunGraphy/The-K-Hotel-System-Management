@@ -71,11 +71,12 @@ export const getRoomFacility = async (req, res, next) => {
 // Send request
 export const facilityRequest = async (req, res, next) => {
   try {
+    const { name } = await Facility.findById(req.body.itemId);
+
     const newRequest = new Request({
-      itemId: req.body.itemId,
+      ...req.body,
+      name: name,
       isService: false,
-      quantity: req.body.quantity,
-      description: req.body.description,
       inCart: false,
       isFromShop: false,
     })
@@ -88,6 +89,8 @@ export const facilityRequest = async (req, res, next) => {
 
 export const facilityCart = async (req, res, next) => {
   try {
+    const { name } = await Facility.findById(req.body.itemId);
+
     const isExisted = await Request.find({
       itemId: req.body.itemId,
       isFromShop: true,
@@ -95,9 +98,9 @@ export const facilityCart = async (req, res, next) => {
 
     if (isExisted.length === 0) {
       const newRequest = new Request({
-        itemId: req.body.itemId,
+        ...req.body,
+        name: name,
         isService: false,
-        quantity: req.body.quantity,
         inCart: true,
         isFromShop: true,
       })
