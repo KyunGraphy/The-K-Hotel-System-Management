@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   Accordion as MuiAccordion,
   AccordionSummary as MuiAccordionSummary,
@@ -61,7 +61,7 @@ const MallRequest = ({ facility, service }) => {
           <Typography>#Facility Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestTable list={facility} />
+          <RequestTable rows={facility} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -72,7 +72,7 @@ const MallRequest = ({ facility, service }) => {
           <Typography>#Service Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestTable list={service} />
+          <RequestTable rows={service} />
         </AccordionDetails>
       </Accordion>
     </Grid>

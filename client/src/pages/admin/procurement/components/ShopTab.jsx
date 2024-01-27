@@ -1,18 +1,39 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import axios from 'axios';
 import { Box, Button, Card, CardActions, CardContent, CardMedia, Grid, IconButton, Typography } from '@mui/material'
 import { Remove as RemoveIcon, Add as AddIcon } from '@mui/icons-material';
 
 import imgNone from '../../../../assets/Flag_of_None.png'
 
-const ShopCard = ({ item }) => {
-  const [reqQuantity, setReqQuantity] = useState(1)
+const ShopCard = ({ item, reFetch, isService }) => {
+  const [quantity, setQuantity] = useState(1)
 
   const handleDecrease = () => {
-    setReqQuantity(prev => prev - 1)
+    setQuantity(prev => prev - 1)
   };
 
   const handleIncrease = () => {
-    setReqQuantity(prev => prev + 1)
+    setQuantity(prev => prev + 1)
+  };
+
+  const handleAddCart = async () => {
+    try {
+      if (isService) {
+        await axios.put('/service/cart', {
+          itemId: item._id,
+          quantity,
+        })
+        reFetch()
+      } else {
+        await axios.put('/facility/cart', {
+          itemId: item._id,
+          quantity,
+        })
+        reFetch()
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -41,12 +62,12 @@ const ShopCard = ({ item }) => {
           <Box>
             <IconButton
               aria-label=""
-              disabled={reqQuantity === 1}
+              disabled={quantity === 1}
               onClick={handleDecrease}
             >
               <RemoveIcon />
             </IconButton>
-            {reqQuantity}
+            {quantity}
             <IconButton
               aria-label=""
               disabled={false}
@@ -58,7 +79,7 @@ const ShopCard = ({ item }) => {
           <Button
             color="success"
             size="small"
-            onClick={null}
+            onClick={handleAddCart}
           >Add to Cart</Button>
         </CardActions>
       </Box>
@@ -66,11 +87,11 @@ const ShopCard = ({ item }) => {
   )
 }
 
-const ShopTab = ({ list }) => {
+const ShopTab = ({ list, isService, reFetch }) => {
   return (
     <Grid sx={{ display: 'flex', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
       {list.map(item => (
-        <ShopCard key={item._id} item={item} />
+        <ShopCard key={item._id} item={item} isService={isService} reFetch={reFetch} />
       ))}
     </Grid>
   )
