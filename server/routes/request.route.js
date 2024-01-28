@@ -1,8 +1,9 @@
 import express from 'express';
-import { getAllRequests } from '../controllers/request.controller.js';
+import { getAllRequests, getCartRequests } from '../controllers/request.controller.js';
 
 const router = express.Router();
 
-router.get('/', getAllRequests)
+router.get('/all', getAllRequests)
+router.get('/cart', getCartRequests)
 
 export default router;

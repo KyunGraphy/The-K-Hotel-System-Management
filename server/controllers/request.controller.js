@@ -1,4 +1,6 @@
 import Request from "../models/Request.model.js";
+import Service from "../models/Service.model.js";
+import Facility from "../models/Facility.model.js";
 
 export const getAllRequests = async (req, res, next) => {
   try {
@@ -11,9 +13,6 @@ export const getAllRequests = async (req, res, next) => {
         isService: true,
         inCart: false,
       }),
-      Request.find({
-        inCart: true,
-      }),
     ]);
 
     res.status(200).json(requestsList)
@@ -21,3 +20,32 @@ export const getAllRequests = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getCartRequests = async (req, res, next) => {
+  try {
+    const requestsCart = await Request.find({ inCart: true, })
+
+    const cartList = await Promise.all(
+      requestsCart.map(async (request) => {
+        if (request.isService) {
+          const item = await Service.findById(request.itemId);
+          return {
+            ...request._doc,
+            ...item._doc,
+          }
+        } else {
+          const item = await Facility.findById(request.itemId);
+          return {
+            ...request._doc,
+            ...item._doc,
+          }
+        }
+      }
+      )
+    )
+
+    res.status(200).json(cartList)
+  } catch (err) {
+    next(err);
+  }
+}
