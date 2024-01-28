@@ -40,7 +40,7 @@ function a11yProps(index) {
 // ----------------------------------------------------------------
 const ReservationMana = () => {
   const [addNewReserve, setAddNewReserve] = useState(false);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -96,7 +96,7 @@ const ReservationMana = () => {
                 </div>
 
                 <Box sx={{ width: '100%' }}>
-                  <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'lavender' }}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider', background: 'rgb(56, 78, 113, 0.2)' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                       <Tab sx={{ flex: 1, maxWidth: '50%', fontWeight: '500' }} label="Today's Activity" {...a11yProps(0)} />
                       <Tab sx={{ flex: 1, maxWidth: '50%', fontWeight: '500' }} label="List Reservation" {...a11yProps(1)} />

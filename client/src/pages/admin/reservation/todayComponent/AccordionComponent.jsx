@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react'
 import dayjs from 'dayjs';
 import MuiAccordion from '@mui/material/Accordion'
 import MuiAccordionSummary from '@mui/material/AccordionSummary'
@@ -32,10 +32,7 @@ const AccordionSummary = styled((props) => (
     {...props}
   />
 ))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === 'dark'
-      ? 'rgba(255, 255, 255, .05)'
-      : 'rgba(0, 0, 0, .03)',
+  backgroundColor: 'rgb(56,78,113, 0.2)',
   flexDirection: 'row-reverse',
   '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
@@ -46,7 +43,7 @@ const AccordionSummary = styled((props) => (
 }));
 
 export default function BasicAccordion({ setDate, activity }) {
-  const [expanded, setExpanded] = React.useState('panel1');
+  const [expanded, setExpanded] = useState('panel1');
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -65,7 +62,7 @@ export default function BasicAccordion({ setDate, activity }) {
           </DemoContainer>
         </LocalizationProvider>
       </Box>
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, background: 'rgb(56, 78, 113, 0.2)', borderRadius: 4, overflow: 'hidden', height: 'fit-content' }}>
         <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

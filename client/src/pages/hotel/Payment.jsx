@@ -275,15 +275,15 @@ const Payment = () => {
                           </ListItem>
                           <ListDivider />
                           <ListItem>
-                            <Radio value='Credit Card' label='Credit Card' disabled={!data.creditCard} />
+                            <Radio value='Credit Card' label='Credit Card' />
                           </ListItem>
                           <ListDivider />
                           <ListItem>
-                            <Radio value='Visa Card' label='Visa Card' disabled={!data.visaCard} />
+                            <Radio value='Visa Card' label='Visa Card' />
                           </ListItem>
                           <ListDivider />
                           <ListItem>
-                            <Radio value='Paypal' label='Paypal' disabled={!data.paypal} />
+                            <Radio value='Paypal' label='Paypal' />
                           </ListItem>
                         </List>
                       </RadioGroup>

@@ -8,7 +8,7 @@ import {
   updateFacility,
   updateRooms
 } from '../controllers/room.controller.js';
-import { verifyAdmin, verifyToken } from '../utils/jwt.js';
+import { verifyAdmin, verifyToken } from '../middlewares/jwt.js';
 
 const router = express.Router();
 

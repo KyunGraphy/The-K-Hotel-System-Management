@@ -14,7 +14,7 @@ import {
   removeReservation,
   updateReservation,
 } from '../controllers/reservation.controller.js';
-import { verifyAdmin, verifyToken } from '../utils/jwt.js';
+import { verifyAdmin, verifyToken } from '../middlewares/jwt.js';
 
 const router = express.Router();
 

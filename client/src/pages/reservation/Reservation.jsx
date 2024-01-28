@@ -60,7 +60,7 @@ function Row(props) {
         />
       )}
       {successMsg && <Toastify msg={successMsg} type="success" />}
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }} hover>
         <TableCell>
           <IconButton
             aria-label="expand row"
