@@ -21,6 +21,7 @@ const ProcurementComponent = () => {
   const { loading: loadingRequest, data: requestList, reFetch } = useFetch('/request/all')
   const { loading: loadingFacility, data: facilityList } = useFetch('/facility')
   const { loading: loadingService, data: serviceList } = useFetch('/service')
+  const { loading: cartLoading, data: cartList, reFetch: cartReFetch } = useFetch('/request/cart')
 
   return (
     <Grid>
@@ -40,6 +41,7 @@ const ProcurementComponent = () => {
                 facility={requestList[0]}
                 service={requestList[1]}
                 reFetch={reFetch}
+                cartReFetch={cartReFetch}
               />
               <MallShop
                 facility={facilityList}
@@ -47,7 +49,7 @@ const ProcurementComponent = () => {
                 reFetch={reFetch}
               />
             </Grid>
-            <Cart />
+            <Cart cartLoading={cartLoading} cartList={cartList} />
           </Box>
         </Grid>
       </Grid>

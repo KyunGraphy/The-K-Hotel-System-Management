@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useMemo } from 'react';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -21,7 +22,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { AddShoppingCart } from '@mui/icons-material';
+
 import { getComparator, stableSort } from '../functions';
+import BackdropComponent from '../../../../components/backdrop/BackdropComponent';
+import { Toastify } from '../../../../components/toastify/Toastify';
 
 const headCells = [
   {
@@ -98,7 +102,7 @@ function EnhancedTableHead(props) {
 }
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, handleAddOrder } = props;
 
   return (
     <Toolbar
@@ -123,7 +127,7 @@ function EnhancedTableToolbar(props) {
             {numSelected} selected
           </Typography>
           <Tooltip title="Add to Cart">
-            <IconButton>
+            <IconButton onClick={handleAddOrder}>
               <AddShoppingCart />
             </IconButton>
           </Tooltip>
@@ -144,12 +148,14 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-export default function EnhancedTable({ rows }) {
+export default function EnhancedTable({ rows, reFetch, cartReFetch }) {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -160,14 +166,14 @@ export default function EnhancedTable({ rows }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = rows.map((n) => n._id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
+  const handleChecked = (event, id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -201,6 +207,23 @@ export default function EnhancedTable({ rows }) {
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
+  const handleAddOrder = async () => {
+    setLoading(true);
+    try {
+      await axios.put('/request/addOrder', { ids: selected })
+
+      setSuccessMsg('Send request successfully!');
+      setTimeout(function () {
+        setSuccessMsg('');
+      }, 10000)
+      setLoading(false);
+      reFetch()
+      cartReFetch()
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -215,8 +238,10 @@ export default function EnhancedTable({ rows }) {
 
   return (
     <Box sx={{ width: '100%' }}>
+      {loading && <BackdropComponent />}
+      {successMsg && <Toastify msg={successMsg} type="success" />}
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} handleAddOrder={handleAddOrder} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -233,17 +258,17 @@ export default function EnhancedTable({ rows }) {
             />
             <TableBody>
               {visibleRows?.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected(row._id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleChecked(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={row._id}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -293,6 +318,7 @@ export default function EnhancedTable({ rows }) {
         />
       </Paper>
       <FormControlLabel
+        sx={{ margin: '0.5em' }}
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />

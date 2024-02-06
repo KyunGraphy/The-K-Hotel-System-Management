@@ -49,3 +49,24 @@ export const getCartRequests = async (req, res, next) => {
     next(err);
   }
 }
+
+export const addOrder = async (req, res, next) => {
+  try {
+    const updateRequest = await Promise.all(
+      req.body.ids.map(async id => {
+        await Request.findByIdAndUpdate(
+          id,
+          {
+            $set: {
+              inCart: true,
+            }
+          },
+          { new: true }
+        )
+      })
+    )
+    res.status(201).json(updateRequest)
+  } catch (err) {
+    next(err);
+  }
+};

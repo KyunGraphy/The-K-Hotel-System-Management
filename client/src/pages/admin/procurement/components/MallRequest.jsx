@@ -44,7 +44,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-const MallRequest = ({ facility, service }) => {
+const MallRequest = ({ facility, service, reFetch, cartReFetch }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -61,7 +61,7 @@ const MallRequest = ({ facility, service }) => {
           <Typography>#Facility Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestTable rows={facility} />
+          <RequestTable rows={facility} reFetch={reFetch} cartReFetch={cartReFetch} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
@@ -72,7 +72,7 @@ const MallRequest = ({ facility, service }) => {
           <Typography>#Service Requests</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <RequestTable rows={service} />
+          <RequestTable rows={service} reFetch={reFetch} cartReFetch={cartReFetch} />
         </AccordionDetails>
       </Accordion>
     </Grid>

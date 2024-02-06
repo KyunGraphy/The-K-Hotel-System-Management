@@ -52,6 +52,8 @@ export const updateService = async (req, res, next) => {
       { $set: req.body },
       { new: true }
     )
+
+    res.status(201).json(updateService)
   } catch (err) {
     next(err);
   }
