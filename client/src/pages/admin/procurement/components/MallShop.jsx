@@ -29,7 +29,7 @@ function a11yProps(index) {
   };
 }
 
-const MallShop = ({ facility, service, reFetch }) => {
+const MallShop = ({ facility, service, reFetch, cartReFetch }) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -54,10 +54,10 @@ const MallShop = ({ facility, service, reFetch }) => {
         </Tabs>
         <Box sx={{ overflow: 'auto', width: '54vw' }}>
           <TabPanel value={value} index={0}>
-            <ShopTab list={facility} reFetch={reFetch} isService={false} />
+            <ShopTab list={facility} reFetch={reFetch} isService={false} cartReFetch={cartReFetch} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <ShopTab list={service} reFetch={reFetch} isService={true} />
+            <ShopTab list={service} reFetch={reFetch} isService={true} cartReFetch={cartReFetch} />
           </TabPanel>
         </Box>
       </Box>

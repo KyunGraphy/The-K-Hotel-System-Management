@@ -29,15 +29,17 @@ export const getCartRequests = async (req, res, next) => {
       requestsCart.map(async (request) => {
         if (request.isService) {
           const item = await Service.findById(request.itemId);
+          const { _id, ...otherDetails } = item._doc;
           return {
             ...request._doc,
-            ...item._doc,
+            ...otherDetails,
           }
         } else {
           const item = await Facility.findById(request.itemId);
+          const { _id, ...otherDetails } = item._doc;
           return {
             ...request._doc,
-            ...item._doc,
+            ...otherDetails,
           }
         }
       }
@@ -70,3 +72,25 @@ export const addOrder = async (req, res, next) => {
     next(err);
   }
 };
+
+export const removeOrder = async (req, res, next) => {
+  if (req.body.isFromShop) {
+    await Request.findByIdAndDelete(req.params.id)
+    res.status(204).json({
+      msg: 'Order deleted successfully',
+    })
+  } else {
+    await Request.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          inCart: false,
+        }
+      },
+      { new: true }
+    )
+    res.status(204).json({
+      msg: 'Order deleted successfully',
+    })
+  }
+}

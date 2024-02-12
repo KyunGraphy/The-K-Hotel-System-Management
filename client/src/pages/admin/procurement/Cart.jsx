@@ -1,5 +1,6 @@
+import React, { useMemo, useState } from 'react'
+import axios from 'axios';
 import { Box, Button, Grid, Paper, Typography, styled } from '@mui/material'
-import React, { useMemo } from 'react'
 
 import BackdropComponent from '../../../components/backdrop/BackdropComponent';
 
@@ -11,7 +12,8 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: 4,
 }));
 
-const Cart = ({ cartLoading, cartList }) => {
+const Cart = ({ cartLoading, cartList, reFetch, cartReFetch }) => {
+  const [loading, setLoading] = useState(false)
 
   const totalPrice = useMemo(() => {
     const result = cartList.reduce((result, item) => {
@@ -20,6 +22,16 @@ const Cart = ({ cartLoading, cartList }) => {
 
     return result
   }, [cartList])
+
+  const handleRemoveOrderItem = async (item) => {
+    setLoading(true)
+    await axios.put(`/request/removeOrder/${item._id}`, {
+      isFromShop: item.isFromShop,
+    })
+    reFetch()
+    cartReFetch()
+    setLoading(false)
+  }
 
   return (
     <Grid sx={{
@@ -31,6 +43,7 @@ const Cart = ({ cartLoading, cartList }) => {
       top: '90px',
       height: '540px',
     }}>
+      {loading && <BackdropComponent />}
       {cartLoading && <BackdropComponent />}
       <Typography variant="h5" gutterBottom sx={{ textAlign: 'center', p: 1 }}>Orders List</Typography>
       <Grid sx={{ display: 'flex', gap: 2, flexDirection: 'column', height: '75%', overflowY: 'auto' }}>
@@ -62,7 +75,9 @@ const Cart = ({ cartLoading, cartList }) => {
                       fontSize: '24px',
                       color: 'chocolate',
                       cursor: 'pointer',
-                    }}></ion-icon>
+                    }}
+                    onClick={() => handleRemoveOrderItem(item)}
+                  ></ion-icon>
                 </Box>
               </Box>
             </Box>

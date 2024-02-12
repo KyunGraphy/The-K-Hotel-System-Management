@@ -47,9 +47,15 @@ const ProcurementComponent = () => {
                 facility={facilityList}
                 service={serviceList}
                 reFetch={reFetch}
+                cartReFetch={cartReFetch}
               />
             </Grid>
-            <Cart cartLoading={cartLoading} cartList={cartList} />
+            <Cart
+              cartLoading={cartLoading}
+              cartList={cartList}
+              reFetch={reFetch}
+              cartReFetch={cartReFetch}
+            />
           </Box>
         </Grid>
       </Grid>
