@@ -8,19 +8,19 @@ import { FaBaby } from "react-icons/fa";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import { MILLISECONDS_PER_DAY, roomPrice } from '../../../constants/Constant'
-import useFetch from '../../../hooks/useFetch';
-import AvailableRoom from './AvailableRoom';
+import { MILLISECONDS_PER_DAY, roomPrice } from '../../constants/Constant.js'
+import useFetch from '../../hooks/useFetch';
 import { Button, Grid } from '@mui/material';
-import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
-import { Toastify } from '../../../components/toastify/Toastify';
+import ConfirmBox from '../../components/confirmForm/ConfirmBox';
+import { Toastify } from '../../components/toastify/Toastify';
+import Navbar from '../../components/navbar/Navbar.jsx';
+import Footer from '../../components/footer/Footer.jsx';
 
 // ----------------------------------------------------------------
-const ViewReservation = () => {
+const ClientReservation = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [confirmForm, setConfirmForm] = useState(false);
   const [delReservationId, setDelReservationId] = useState(undefined);
-  const [openAvailableRoom, setOpenAvailableRoom] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const location = useLocation()
@@ -36,7 +36,7 @@ const ViewReservation = () => {
   const dateRange =
     (date[0].startDate.getTime() === date[0].endDate.getTime()) ?
       0.6 : (date[0].endDate.getTime() - date[0].startDate.getTime()) / MILLISECONDS_PER_DAY;
-  const { data, loading: loadingData, reFetch } = useFetch(`/reservation/${reservationId}`)
+  const { data, loading: loadingData } = useFetch(`/reservation/${reservationId}`)
 
   useEffect(() => {
     if (data._id) {
@@ -72,6 +72,7 @@ const ViewReservation = () => {
 
   return (
     <Grid>
+      <Navbar />
       {confirmForm && (
         <ConfirmBox
           msg='Do you want to delete this reservation?'
@@ -84,7 +85,7 @@ const ViewReservation = () => {
       {successMsg && <Toastify msg={successMsg} type="success" />}
       <span
         className='backIcon'
-        onClick={() => navigate('/admin/reservation')}
+        onClick={() => navigate('/reservation')}
       >
         <ion-icon name="chevron-back-outline"></ion-icon>
         Back
@@ -211,23 +212,10 @@ const ViewReservation = () => {
             </React.Fragment>
           )}
         </div>
-        <div className='reservationRoom'>
-          <Button
-            variant='contained'
-            color="success"
-            sx={{ width: '100%' }}
-            onClick={() => setOpenAvailableRoom(!openAvailableRoom)}
-          >{openAvailableRoom ? 'Close available rooms' : 'See available room'}</Button>
-          {openAvailableRoom && (
-            <AvailableRoom
-              reserve={data}
-              date={date}
-              reFetchReservation={reFetch}
-            />)}
-        </div>
       </div>
+      <Footer />
     </Grid>
   )
 }
 
-export default ViewReservation
+export default ClientReservation

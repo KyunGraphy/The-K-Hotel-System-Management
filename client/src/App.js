@@ -28,6 +28,7 @@ import AddService from "./pages/admin/warehouse/tabs/addForm/AddService.jsx";
 import Payment from "./pages/hotel/Payment.jsx";
 import BookingSuccess from "./pages/hotel/BookingSuccess.jsx";
 import ProcurementComponent from "./pages/admin/procurement/index.jsx";
+import ClientReservation from "./pages/reservation/ClientReservation.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/services" element={<Service />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/reservation" element={<Reservation />} />
+        <Route path="/reservation/:id" element={<ClientReservation />} />
         <Route path="/changePw" element={<ChangePassword />} />
 
         {/* Admin */}

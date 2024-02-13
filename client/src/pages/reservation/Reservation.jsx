@@ -9,6 +9,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import axios from 'axios';
 import ConfirmBox from '../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../components/toastify/Toastify';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   { field: 'id', headerName: 'Reservation ID' },
@@ -27,6 +28,8 @@ function Row(props) {
   const [successMsg, setSuccessMsg] = useState("");
   const [delReservationId, setDelReservationId] = useState(undefined);
   const [confirmForm, setConfirmForm] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSetDeleteReservation = (reservationId) => {
     setConfirmForm(true)
@@ -60,7 +63,10 @@ function Row(props) {
         />
       )}
       {successMsg && <Toastify msg={successMsg} type="success" />}
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }} hover>
+      <TableRow
+        sx={{ '& > *': { borderBottom: 'unset' }, cursor: 'pointer' }}
+        hover
+      >
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -103,10 +109,15 @@ function Row(props) {
                   <TableCell align="right">
                     <Button
                       variant="contained"
+                      color="primary"
+                      onClick={() => navigate(`/reservation/${row.id}`, { state: { id: row.id, rooms: row.rooms } })}
+                    >Detail</Button>
+                    <Button
+                      variant="contained"
                       color="error"
                       disabled={(row.rooms.length !== 0)}
                       onClick={() => handleSetDeleteReservation(row.id)}
-                    >Cancel</Button>
+                    >Delete</Button>
                   </TableCell>
                 </TableBody>
               </Table>
@@ -145,7 +156,7 @@ const Reservation = () => {
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.name} row={row} reFetch={reFetch} />
+                <Row key={row.id} row={row} reFetch={reFetch} />
               ))}
             </TableBody>
           </Table>
