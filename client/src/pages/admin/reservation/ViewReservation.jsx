@@ -11,7 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { MILLISECONDS_PER_DAY, roomPrice } from '../../../constants/Constant'
 import useFetch from '../../../hooks/useFetch';
 import AvailableRoom from './AvailableRoom';
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Switch, Typography } from '@mui/material';
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../../components/toastify/Toastify';
 
@@ -49,6 +49,29 @@ const ViewReservation = () => {
       ])
     }
   }, [data])
+
+  const handleCheckIn = async (data) => {
+    setLoading(true)
+    try {
+      await axios.put(`/reservation/${data._id}`, { isCheckIn: !data.isCheckIn });
+      setLoading(false)
+      setLoading(false)
+      reFetch()
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const handleCheckOut = async (data) => {
+    setLoading(true)
+    try {
+      await axios.put(`/reservation/${data._id}`, { isCheckOut: !data.isCheckOut });
+      setLoading(false)
+      reFetch()
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   const handleSetDeleteReservation = (reservationId) => {
     setConfirmForm(true)
@@ -201,12 +224,38 @@ const ViewReservation = () => {
                     data.doubleRoom * roomPrice.double
                   )}</b> ({Math.floor(dateRange)} days)
                 </h2>
-                <Button
-                  variant='contained'
-                  color='error'
-                  onClick={() => handleSetDeleteReservation(reservationId)}
-                  disabled={rooms.length !== 0}
-                >Delete</Button>
+                <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                  <Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography sx={{ width: '80px' }}>Check in:</Typography>
+                      <Switch
+                        id={data._id}
+                        defaultChecked={data.isCheckIn}
+                        color="success"
+                        onChange={() => handleCheckIn(data)}
+                      />
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                      <Typography sx={{ width: '80px' }}>Check out:</Typography>
+                      <Switch
+                        id={data._id}
+                        defaultChecked={data.isCheckOut}
+                        color="warning"
+                        onClick={() => handleCheckOut(data)}
+                        disabled={data.isCheckIn === false}
+                      />
+                    </Box>
+                  </Box>
+                  <Button
+                    variant='contained'
+                    color='error'
+                    onClick={() => handleSetDeleteReservation(reservationId)}
+                    disabled={rooms.length !== 0}
+                    sx={{ margin: '1em 0', fontSize: 18 }}
+                  >
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </Button>
+                </Box>
               </div>
             </React.Fragment>
           )}
