@@ -14,6 +14,7 @@ import AvailableRoom from './AvailableRoom';
 import { Box, Button, Grid, Switch, Typography } from '@mui/material';
 import ConfirmBox from '../../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../../components/toastify/Toastify';
+import ServiceTable from './ServiceTable';
 
 // ----------------------------------------------------------------
 const ViewReservation = () => {
@@ -122,6 +123,21 @@ const ViewReservation = () => {
           ) : (
             <React.Fragment>
               <div>
+                <div className='roomSchedule'>
+                  <DateRange
+                    editableDateInputs={false}
+                    onChange={() => null}
+                    moveRangeOnFirstSelection={false}
+                    ranges={date}
+                    showPreview={false}
+                    dragSelectionEnabled={false}
+                  />
+                </div>
+                <Box>
+                  <ServiceTable reservationId={reservationId} />
+                </Box>
+              </div>
+              <div>
                 <div className="inputBox">
                   <input
                     type="text"
@@ -139,18 +155,6 @@ const ViewReservation = () => {
                   />
                   <label>Department</label>
                 </div>
-                <div className='roomSchedule'>
-                  <DateRange
-                    editableDateInputs={false}
-                    onChange={() => null}
-                    moveRangeOnFirstSelection={false}
-                    ranges={date}
-                    showPreview={false}
-                    dragSelectionEnabled={false}
-                  />
-                </div>
-              </div>
-              <div>
                 <div className="inputBox">
                   <input
                     type="text"

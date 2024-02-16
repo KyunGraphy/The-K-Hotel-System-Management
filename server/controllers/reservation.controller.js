@@ -2,6 +2,7 @@ import Reservation from "../models/Reservation.model.js";
 import User from "../models/User.model.js";
 import Hotel from "../models/Hotel.model.js";
 import Room from "../models/Room.model.js";
+import Service from "../models/Service.model.js";
 import { bookingSuccessMailer } from "../utils/mailer.js";
 
 export const createReservation = async (req, res, next) => {
@@ -35,6 +36,38 @@ export const getOneReservation = async (req, res, next) => {
       ...reservation._doc,
       data
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getReservationService = async (req, res, next) => {
+  try {
+    const { services } = await Reservation.findById(req.params.reservationId)
+    const serviceList = await Service.find()
+
+    console.log(serviceList);
+
+    const result = serviceList.map(item => {
+      const { name, price, unit } = item._doc
+      for (let i = 0; i < services.length; i++) {
+        if (services[i].id === item._id) {
+          return {
+            name,
+            price,
+            unit,
+            qty: services[i].amount,
+          }
+        }
+      }
+      return {
+        name,
+        price,
+        unit,
+        qty: 0,
+      }
+    })
+    res.status(200).json(result);
   } catch (err) {
     next(err);
   }
