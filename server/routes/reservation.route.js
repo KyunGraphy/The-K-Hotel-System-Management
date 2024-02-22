@@ -14,6 +14,7 @@ import {
   removeReservation,
   updateReservation,
   getReservationService,
+  updateService,
 } from '../controllers/reservation.controller.js';
 import { verifyAdmin, verifyToken } from '../middlewares/jwt.js';
 
@@ -29,7 +30,8 @@ router.get('/user/count/:userId', getUserReservationsCount)
 router.get('/service/:reservationId', verifyToken, getReservationService)
 router.get('/:reservationId', verifyToken, getOneReservation)
 
-router.put('/:reservationId', verifyToken, updateReservation)
+router.put('/service/:reservationId', verifyToken, verifyAdmin, updateService)
+router.put('/:reservationId', verifyToken, verifyAdmin, updateReservation)
 router.post('/assign/:reservationId', verifyToken, verifyAdmin, assignReservation)
 router.post('/remove/:reservationId', verifyToken, removeReservation)
 router.delete('/:reservationId', verifyToken, deleteOneReservation)

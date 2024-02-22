@@ -69,7 +69,7 @@ const ReservationSchema = new mongoose.Schema(
         serviceId: {
           type: String,
         },
-        quantity: {
+        qty: {
           type: Number,
         }
       }],
