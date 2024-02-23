@@ -44,28 +44,24 @@ export const getOneReservation = async (req, res, next) => {
 // Handle reservations services
 export const getReservationService = async (req, res, next) => {
   try {
-    const { services } = await Reservation.findById(req.params.reservationId)
+    const reservation = await Reservation.findById(req.params.reservationId)
     const serviceList = await Service.find()
 
-    console.log(serviceList);
+    const servicesIds = reservation.services.map(item => item.serviceId)
 
     const result = serviceList.map(item => {
-      const { name, price, unit } = item._doc
-      for (let i = 0; i < services.length; i++) {
-        if (services[i].id === item._id) {
-          return {
-            name,
-            price,
-            unit,
-            qty: services[i].amount,
-          }
+      if (servicesIds.includes(item.id)) {
+        const index = servicesIds.indexOf(item.id)
+
+        return {
+          ...item._doc,
+          qty: reservation.services[index].qty,
         }
-      }
-      return {
-        name,
-        price,
-        unit,
-        qty: 0,
+      } else {
+        return {
+          ...item._doc,
+          qty: 0,
+        }
       }
     })
     res.status(200).json(result);
@@ -86,63 +82,28 @@ export const updateService = async (req, res, next) => {
     // Get service instances by reservation service id
     const serviceItem = await Service.findById(req.body.id)
 
-    if (req.body.increase === true) {
-      if (servicesIds.includes(req.body.id)) {
-        const index = servicesIds.indexOf(req.body.id)
+    if (servicesIds.includes(req.body.id)) {
+      const index = servicesIds.indexOf(req.body.id)
 
-        const diff = req.body.qty - servicesList[index]._doc.qty
-        if (diff > serviceItem.amount) {
-          return res.status(200).json({
-            msg: 'Service quantity is not enough to satisfy',
-          })
-        }
-
-        const abc = await Reservation.find({ _id: req.params.reservationId, 'services.serviceId': req.body.id })
-
-        // return res.json(abc)
-        await Promise.all([
-          Reservation.updateOne(
-            { _id: req.params.reservationId, 'services.serviceId': req.body.id },
-            {
-              $set: { 'services.$.qty': req.body.qty }
-            },
-          ),
-          Service.findByIdAndUpdate(
-            req.body.id,
-            {
-              $set: {
-                amount: serviceItem.amount - diff,
-              }
-            },
-          )
-        ])
-
+      const diff = req.body.qty - servicesList[index]._doc.qty
+      if (diff > serviceItem.amount) {
         return res.status(200).json({
-          msg: 'Service quantity satisfy',
+          msg: 'Service quantity is not enough to satisfy',
         })
       }
 
-      // Push new service item into reservation service queue
-      servicesList.push({
-        serviceId: req.body.id,
-        qty: req.body.qty,
-      })
-
-      // Update service quantity in warehouse
       await Promise.all([
-        Reservation.findByIdAndUpdate(
-          req.params.reservationId,
+        Reservation.updateOne(
+          { _id: req.params.reservationId, 'services.serviceId': req.body.id },
           {
-            $set: {
-              services: servicesList,
-            }
+            $set: { 'services.$.qty': req.body.qty }
           },
         ),
         Service.findByIdAndUpdate(
           req.body.id,
           {
             $set: {
-              amount: serviceItem.amount - req.body.qty,
+              amount: serviceItem.amount - diff,
             }
           },
         )
@@ -151,10 +112,37 @@ export const updateService = async (req, res, next) => {
       return res.status(200).json({
         msg: 'Service quantity satisfy',
       })
-    } else {
-      // Update services in reservation
-      // Update service quantity in warehouse
     }
+
+    // Push new service item into reservation service queue
+    servicesList.push({
+      serviceId: req.body.id,
+      qty: req.body.qty,
+    })
+
+    // Update service quantity in warehouse
+    await Promise.all([
+      Reservation.findByIdAndUpdate(
+        req.params.reservationId,
+        {
+          $set: {
+            services: servicesList,
+          }
+        },
+      ),
+      Service.findByIdAndUpdate(
+        req.body.id,
+        {
+          $set: {
+            amount: serviceItem.amount - req.body.qty,
+          }
+        },
+      )
+    ])
+
+    return res.status(200).json({
+      msg: 'Service quantity satisfy',
+    })
     res.status(200).json(servicesIds);
   } catch (err) {
     next(err)
