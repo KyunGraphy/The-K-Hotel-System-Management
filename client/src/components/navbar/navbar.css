@@ -52,6 +52,9 @@
     font-weight: 600;
     cursor: pointer;
     text-transform: capitalize;
+    display: flex;
+    gap: 0.25em;
+    align-items: center;
 }
 
 .navUserOptions {

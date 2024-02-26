@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
 import "./propertyList.css";
+import { Languages } from "../../constants/Languages";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const PropertyList = () => {
+  const { lang } = useContext(AuthContext)
   const navigate = useNavigate()
 
   return (
@@ -17,7 +21,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Relax Space</h1>
+          <h1>{Languages.service.relaxSpace[lang]}</h1>
         </div>
       </div>
       <div
@@ -30,7 +34,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Party Organization</h1>
+          <h1>{Languages.service.partyOrg[lang]}</h1>
         </div>
       </div>
       <div
@@ -43,7 +47,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Rent Cars</h1>
+          <h1>{Languages.service.rentCars[lang]}</h1>
         </div>
       </div>
       <div
@@ -56,7 +60,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Gym & Fitness</h1>
+          <h1>{Languages.service.gym[lang]}</h1>
         </div>
       </div>
       <div
@@ -69,7 +73,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Swimming Pool</h1>
+          <h1>{Languages.service.pool[lang]}</h1>
         </div>
       </div>
       <div
@@ -82,7 +86,7 @@ const PropertyList = () => {
           className="pListImg"
         />
         <div className="pListTitles">
-          <h1>Billiards</h1>
+          <h1>{Languages.service.billiards[lang]}</h1>
         </div>
       </div>
     </div>

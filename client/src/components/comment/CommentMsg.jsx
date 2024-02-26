@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { BsFillSendFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import { Box, Rating } from "@mui/material";
 
 import { Toastify } from "../toastify/Toastify";
+import { AuthContext } from "../../contexts/AuthContext";
+import { Languages } from "../../constants/Languages";
 
 // ----------------------------------------------------------------
 const CommentMsg = ({ reFetch }) => {
@@ -12,6 +14,7 @@ const CommentMsg = ({ reFetch }) => {
   const [comment, setComment] = useState("")
   const [errMsg, setErrMsg] = useState("");
   const params = useParams()
+  const { lang } = useContext(AuthContext)
 
   const handleSendComment = async () => {
     if (comment === '') {
@@ -69,7 +72,7 @@ const CommentMsg = ({ reFetch }) => {
           <input
             type="text"
             id="description"
-            placeholder="Type your comment"
+            placeholder={Languages.other.cmtType[lang]}
             onChange={(e) => setComment(e.target.value)}
             autoComplete="off"
           />

@@ -8,6 +8,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext.js"
+import { Languages } from "../../constants/Languages.js";
 
 const Header = ({ type }) => {
   const [openDate, setOpenDate] = useState(false);
@@ -52,7 +53,7 @@ const Header = ({ type }) => {
     navigate("/admin/room");
   };
 
-  const { user } = useContext(AuthContext)
+  const { user, lang } = useContext(AuthContext)
 
   return (
     <div className="header">
@@ -64,43 +65,42 @@ const Header = ({ type }) => {
         <div className="headerList">
           <div className="headerListItem active">
             <FontAwesomeIcon icon={faBed} />
-            <span>Stays</span>
+            <span>{Languages.header.stay[lang]}</span>
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faUtensils} />
-            <span>Restaurant</span>
+            <span>{Languages.header.restaurant[lang]}</span>
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faCar} />
-            <span>Car rentals</span>
+            <span>{Languages.header.carRental[lang]}</span>
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faDumbbell} />
-            <span>Gym Fitness</span>
+            <span>{Languages.header.gym[lang]}</span>
           </div>
           <div className="headerListItem">
             <FontAwesomeIcon icon={faPersonSwimming} />
-            <span>Pool</span>
+            <span>{Languages.header.pool[lang]}</span>
           </div>
         </div>
         {type !== "list" && (
           <>
             <h1 className="headerTitle">
-              A lifetime of discounts? It's Genius.
+              {Languages.header.title[lang]}
             </h1>
             <p className="headerDesc">
-              Get rewarded for your travels – unlock instant savings of 10% or
-              more with a free account
+              {Languages.header.desc[lang]}
             </p>
             <div>
               <button
                 className="headerBtn"
                 onClick={handleSearch}
-              >Get Started !</button>
+              >{Languages.header.startBtn[lang]}</button>
               {(user?.isAdmin) && <button
                 className="headerBtn"
                 onClick={handleManagePage}
-              >Admin page</button>}
+              >{Languages.header.adminBtn[lang]}</button>}
             </div>
             <div className="headerSearch">
               <div className="headerSearchItem">
@@ -128,11 +128,11 @@ const Header = ({ type }) => {
                 <span
                   onClick={() => setOpenOptions(!openOptions)}
                   className="headerSearchText"
-                >{`${options.adult} adult · ${options.children} children · ${options.singleRoom} singleRoom · ${options.doubleRoom} doubleRoom`}</span>
+                >{`${options.adult} ${Languages.reservation.adult[lang]} · ${options.children} ${Languages.reservation.children[lang]} · ${options.singleRoom} ${Languages.reservation.singleRoom[lang]} · ${options.doubleRoom} ${Languages.reservation.doubleRoom[lang]}`}</span>
                 {openOptions && (
                   <div className="options">
                     <div className="optionItem">
-                      <span className="optionText">Adult</span>
+                      <span className="optionText">{Languages.reservation.adult[lang]}</span>
                       <div className="optionCounter">
                         <button
                           disabled={options.adult <= 1}
@@ -153,7 +153,7 @@ const Header = ({ type }) => {
                       </div>
                     </div>
                     <div className="optionItem">
-                      <span className="optionText">Children</span>
+                      <span className="optionText">{Languages.reservation.children[lang]}</span>
                       <div className="optionCounter">
                         <button
                           disabled={options.children <= 0}
@@ -174,7 +174,7 @@ const Header = ({ type }) => {
                       </div>
                     </div>
                     <div className="optionItem">
-                      <span className="optionText">Single Room</span>
+                      <span className="optionText">{Languages.reservation.singleRoom[lang]}</span>
                       <div className="optionCounter">
                         <button
                           disabled={options.singleRoom <= 0}
@@ -195,7 +195,7 @@ const Header = ({ type }) => {
                       </div>
                     </div>
                     <div className="optionItem">
-                      <span className="optionText">Double Room</span>
+                      <span className="optionText">{Languages.reservation.doubleRoom[lang]}</span>
                       <div className="optionCounter">
                         <button
                           disabled={options.doubleRoom <= 0}
@@ -220,7 +220,7 @@ const Header = ({ type }) => {
               </div>
               <div className="headerSearchItem">
                 <button className="headerSearchBtn" onClick={handleSearch}>
-                  Search
+                  {Languages.other.search[lang]}
                 </button>
               </div>
             </div>

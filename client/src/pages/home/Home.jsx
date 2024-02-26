@@ -1,5 +1,6 @@
-import "./home.css";
+import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import "./home.css";
 import Featured from "../../components/featured/Featured";
 import FeaturedProperties from "../../components/featuredProperties/FeaturedProperties";
 import Footer from "../../components/footer/Footer";
@@ -10,14 +11,14 @@ import PropertyList from "../../components/propertyList/PropertyList";
 import ScrollTop from "../../components/scrollTop/ScrollTop";
 import useFetch from "../../hooks/useFetch";
 import { AuthContext } from "../../contexts/AuthContext";
-import axios from "axios";
+import { Languages } from "../../constants/Languages";
 
 // ----------------------------------------------------------------
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [showGoToTop, setShowGoToTop] = useState();
   const { data, loading: loadingData } = useFetch("/hotel")
-  const { user, dispatch } = useContext(AuthContext);
+  const { user, lang, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     setLoading(true);
@@ -63,11 +64,11 @@ const Home = () => {
           <Navbar />
           <Header />
           <div className="homeContainer">
-            <h1 className="homeTitle">Overview about The K</h1>
+            <h1 className="homeTitle">{Languages.home.overview[lang]}</h1>
             <Featured />
-            <h1 className="homeTitle">Our service</h1>
+            <h1 className="homeTitle">{Languages.home.services[lang]}</h1>
             <PropertyList />
-            <h1 className="homeTitle">Our departments</h1>
+            <h1 className="homeTitle">{Languages.home.departments[lang]}</h1>
             <FeaturedProperties hotels={data} />
             {/* <MailList /> */}
             <Footer />

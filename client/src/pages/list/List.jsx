@@ -1,17 +1,22 @@
-import "./list.css";
+import React, { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { format } from "date-fns";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation } from "react-router-dom";
-import React, { useState } from "react";
-import { format } from "date-fns";
+import Footer from "../../components/footer/Footer";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import useFetch from "../../hooks/useFetch";
+import { Languages } from "../../constants/Languages";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const List = () => {
   const location = useLocation();
+  const { lang } = useContext(AuthContext)
 
   const today = new Date();
   today.setHours(0)
@@ -52,9 +57,9 @@ const List = () => {
       <div className="listContainer">
         <div className="listWrapper">
           <div className="listSearch">
-            <h1 className="lsTitle">Search</h1>
+            <h1 className="lsTitle">{Languages.other.search[lang]}</h1>
             <div className="lsItem">
-              <label>Check-in Date</label>
+              <label>{Languages.reservation.checkInDate[lang]}</label>
               <span onClick={() => setOpenDate(!openDate)}>{`${format(
                 date[0].startDate,
                 "MM/dd/yyyy"
@@ -70,10 +75,10 @@ const List = () => {
               )}
             </div>
             <div className="lsItem">
-              <label>Options</label>
+              <label>{Languages.other.options[lang]}</label>
               <div className="lsOptions">
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
+                  <span className="lsOptionText">{Languages.reservation.adult[lang]}</span>
                   <input
                     type="number"
                     min={1}
@@ -84,7 +89,7 @@ const List = () => {
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
+                  <span className="lsOptionText">{Languages.reservation.children[lang]}</span>
                   <input
                     type="number"
                     min={0}
@@ -95,7 +100,7 @@ const List = () => {
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Single Room</span>
+                  <span className="lsOptionText">{Languages.reservation.singleRoom[lang]}</span>
                   <input
                     type="number"
                     min={0}
@@ -106,7 +111,7 @@ const List = () => {
                   />
                 </div>
                 <div className="lsOptionItem">
-                  <span className="lsOptionText">Double Room</span>
+                  <span className="lsOptionText">{Languages.reservation.doubleRoom[lang]}</span>
                   <input
                     type="number"
                     min={0}
@@ -156,6 +161,7 @@ const List = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

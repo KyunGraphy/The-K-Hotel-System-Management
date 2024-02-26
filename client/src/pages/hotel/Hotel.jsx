@@ -26,6 +26,7 @@ import { Toastify } from "../../components/toastify/Toastify";
 import { MILLISECONDS_PER_DAY, roomPrice } from "../../constants/Constant";
 import { HOTELS_IMAGES } from '../../constants/Images';
 import useSetDefaultDate from '../../hooks/useSetDefaultDate';
+import { Languages } from '../../constants/Languages';
 
 
 // ----------------------------------------------------------------
@@ -76,7 +77,7 @@ const Hotel = () => {
   }, [date])
 
   const { loading: loadingData, data } = useFetch(`/hotel/${params.id}`)
-  const { user } = useContext(AuthContext)
+  const { user, lang } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const handleOption = (name, value) => {
@@ -211,7 +212,7 @@ const Hotel = () => {
                 <div className="hotelDetailsContent">
                   <h1 className="hotelTitle">Stay in the {data.title}</h1>
                   <p className="hotelDesc">
-                    {data.description}
+                    {Languages.hotel.hotelDesc[lang]}
                   </p>
                   <Comment hotelId={params.id} />
                 </div>
@@ -219,7 +220,7 @@ const Hotel = () => {
                   <div className="listSearch">
                     <h1 className="lsTitle">Search</h1>
                     <div className="lsItem">
-                      <label>Check-in Date</label>
+                      <label>{Languages.reservation.checkInDate[lang]}</label>
                       <span onClick={() => setOpenDate(!openDate)}>{`${format(
                         date[0].startDate,
                         "MM/dd/yyyy"
@@ -235,10 +236,10 @@ const Hotel = () => {
                       )}
                     </div>
                     <div className="lsItem">
-                      <label>Options</label>
+                      <label>{Languages.other.options[lang]}</label>
                       <div className="lsOptions">
                         <div className="lsOptionItem">
-                          <span className="lsOptionText">Adult</span>
+                          <span className="lsOptionText">{Languages.reservation.adult[lang]}</span>
                           <input
                             type="number"
                             min={1}
@@ -249,7 +250,7 @@ const Hotel = () => {
                           />
                         </div>
                         <div className="lsOptionItem">
-                          <span className="lsOptionText">Children</span>
+                          <span className="lsOptionText">{Languages.reservation.children[lang]}</span>
                           <input
                             type="number"
                             min={0}
@@ -260,7 +261,7 @@ const Hotel = () => {
                           />
                         </div>
                         <div className="lsOptionItem">
-                          <span className="lsOptionText">Single Room</span>
+                          <span className="lsOptionText">{Languages.reservation.singleRoom[lang]}</span>
                           <input
                             type="number"
                             min={0}
@@ -271,7 +272,7 @@ const Hotel = () => {
                           />
                         </div>
                         <div className="lsOptionItem">
-                          <span className="lsOptionText">Double Room</span>
+                          <span className="lsOptionText">{Languages.reservation.doubleRoom[lang]}</span>
                           <input
                             type="number"
                             min={0}
@@ -287,13 +288,13 @@ const Hotel = () => {
                       <b>${dateRange * (
                         options.singleRoom * roomPrice.single +
                         options.doubleRoom * roomPrice.double
-                      )}</b> ({Math.floor(dateRange)} nights)
+                      )}</b> ({Math.floor(dateRange)} {Languages.reservation.day[lang]})
                     </h2>
                     <Button
                       variant="contained"
                       onClick={handleReserve}
                       disabled={loading}
-                    >Reserve or Book Now!</Button>
+                    >{Languages.reservation.reserve[lang]}</Button>
                   </div>
                 </div>
               </div>

@@ -11,6 +11,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import useFetch from '../../hooks/useFetch'
 import BackdropComponent from '../../components/backdrop/BackdropComponent'
 import { Toastify } from '../../components/toastify/Toastify'
+import { Languages } from '../../constants/Languages'
 
 const steps = [
   'Enter booking information',
@@ -28,7 +29,7 @@ const Payment = () => {
   const location = useLocation()
   const reservation = location.state.reservationData
 
-  const { user } = useContext(AuthContext)
+  const { user, lang } = useContext(AuthContext)
   const { data, loading } = useFetch(`/users/${user._id}`)
 
   const handleChange = (e) => {
@@ -77,7 +78,7 @@ const Payment = () => {
             <Box sx={{ paddingY: 2, paddingX: 6 }}>
               <Link to='/hotels' style={{ display: 'flex', alignItems: 'center', color: '#000', fontWeight: '600' }}>
                 <ion-icon name="chevron-back-outline"></ion-icon>
-                Back to hotels page
+                {Languages.other.back[lang]}
               </Link>
             </Box>
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-evenly' }}>
@@ -85,7 +86,7 @@ const Payment = () => {
                 <Card sx={{ minWidth: 480 }}>
                   <CardContent>
                     <Typography sx={{ fontSize: 20, fontWeight: '600', p: 1 }} color="text.secondary" gutterBottom>
-                      Order Summary
+                      {Languages.other.bookingSum[lang]}
                     </Typography>
                     <Typography variant="h5" component="div"></Typography>
                     <Divider />
@@ -96,7 +97,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Customer Name: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.customerName[lang]}: </strong>
                         {data.name}
                       </Typography>
                       <Typography
@@ -105,7 +106,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Email address: </strong>
+                        <strong style={{ width: 240 }}>{Languages.user.email[lang]}: </strong>
                         {data.email}
                       </Typography>
                       <Typography
@@ -114,7 +115,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Phone number: </strong>
+                        <strong style={{ width: 240 }}>{Languages.user.phone[lang]}: </strong>
                         {data.phone}
                       </Typography>
                     </Box>
@@ -126,7 +127,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Hotel department: </strong>
+                        <strong style={{ width: 240 }}>{Languages.hotel.department[lang]}: </strong>
                         {reservation.department}
                       </Typography>
                       <Typography
@@ -135,7 +136,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Adult: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.adult[lang]}: </strong>
                         {reservation.adult}
                       </Typography>
                       <Typography
@@ -144,7 +145,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Children: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.children[lang]}: </strong>
                         {reservation.children}
                       </Typography>
                       <Typography
@@ -153,7 +154,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Single room: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.singleRoom[lang]}: </strong>
                         {reservation.singleRoom}
                       </Typography>
                       <Typography
@@ -162,7 +163,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Double room: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.doubleRoom[lang]}: </strong>
                         {reservation.doubleRoom}
                       </Typography>
                       <Typography
@@ -171,7 +172,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Check in date: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.checkInDate[lang]}: </strong>
                         {(new Date(reservation.checkInDate)).getDate()}-
                         {(new Date(reservation.checkInDate)).getMonth() + 1}-
                         {(new Date(reservation.checkInDate)).getFullYear()}
@@ -182,7 +183,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Check out date: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.checkOutDate[lang]}: </strong>
                         {(new Date(reservation.checkOutDate)).getDate()}-
                         {(new Date(reservation.checkOutDate)).getMonth() + 1}-
                         {(new Date(reservation.checkOutDate)).getFullYear()}
@@ -193,7 +194,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Nights: </strong>
+                        <strong style={{ width: 240 }}>{Languages.reservation.day[lang]}: </strong>
                         {reservation.night}
                       </Typography>
                     </Box>
@@ -205,7 +206,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Expense: </strong>
+                        <strong style={{ width: 240 }}>{Languages.other.expense[lang]}: </strong>
                         ${reservation.price}
                       </Typography>
                       <Typography
@@ -214,7 +215,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Tax: </strong>
+                        <strong style={{ width: 240 }}>{Languages.other.tax[lang]}: </strong>
                         ${reservation.price * 0.1}
                       </Typography>
                     </Box>
@@ -226,7 +227,7 @@ const Payment = () => {
                         gutterBottom
                         sx={{ display: 'flex', gap: 2, p: 0.25 }}
                       >
-                        <strong style={{ width: 240 }}>Total fee: </strong>
+                        <strong style={{ width: 240 }}>{Languages.other.total[lang]}: </strong>
                         <b>
                           ${reservation.price + reservation.price * 0.1}
                         </b>
@@ -251,7 +252,7 @@ const Payment = () => {
                   <CardContent sx={{ height: '100%', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <Box>
                       <Typography sx={{ fontSize: 20, fontWeight: '600', p: 1 }} color="text.secondary" gutterBottom>
-                        How would you like to pay:
+                        {Languages.msg.payMethod[lang]}:
                       </Typography>
                       <Typography variant="h5" component="div"></Typography>
                       <RadioGroup
@@ -295,9 +296,9 @@ const Payment = () => {
                         sx={{ marginY: 2, width: '100%' }}
                         onClick={handleReservation}
                         disabled={handleLoading}
-                      >Continue to payment</Button>
+                      >{Languages.other.continue[lang]}</Button>
                       <Link to='/hotels' style={{ color: '#000', fontWeight: '600' }}>
-                        Cancel
+                        {Languages.other.cancel[lang]}
                       </Link>
                     </Box>
                   </CardContent>
