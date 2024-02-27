@@ -65,7 +65,7 @@ export default function ServiceTable({ reservationId }) {
             <TableRow sx={{ background: 'lightgray' }}>
               <TableCell>Service Name</TableCell>
               <TableCell align="center">Qty.</TableCell>
-              <TableCell align="right">Unit</TableCell>
+              <TableCell align="right">Unit ($)</TableCell>
               <TableCell align="right">Sum</TableCell>
             </TableRow>
           </TableHead>
@@ -142,7 +142,7 @@ const ServiceItem = ({ row, reFetch, reservationId }) => {
         <TableCell align="right">
           {row.qty}
         </TableCell>
-        <TableCell align="right">{row.price} ($)</TableCell>
+        <TableCell align="right">{row.price}</TableCell>
         <TableCell align="right">{ccyFormat(priceRow(row.qty, row.price))}</TableCell>
       </TableRow>
       {/* Service modify dialog */}

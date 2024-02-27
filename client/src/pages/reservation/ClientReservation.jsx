@@ -10,11 +10,12 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 import { MILLISECONDS_PER_DAY, roomPrice } from '../../constants/Constant.js'
 import useFetch from '../../hooks/useFetch';
-import { Button, Grid } from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 import ConfirmBox from '../../components/confirmForm/ConfirmBox';
 import { Toastify } from '../../components/toastify/Toastify';
 import Navbar from '../../components/navbar/Navbar.jsx';
 import Footer from '../../components/footer/Footer.jsx';
+import ServiceTable from './ServiceTable.jsx';
 
 // ----------------------------------------------------------------
 const ClientReservation = () => {
@@ -60,7 +61,7 @@ const ClientReservation = () => {
     try {
       await axios.delete(`/reservation/${delReservationId}`)
       setSuccessMsg('Delete Reservation successfully');
-      navigate("/admin/reservation")
+      navigate("/reservation")
       setLoading(false)
     } catch (err) {
       console.log(err);
@@ -100,6 +101,21 @@ const ClientReservation = () => {
           ) : (
             <React.Fragment>
               <div>
+                <div className='roomSchedule'>
+                  <DateRange
+                    editableDateInputs={false}
+                    onChange={() => null}
+                    moveRangeOnFirstSelection={false}
+                    ranges={date}
+                    showPreview={false}
+                    dragSelectionEnabled={false}
+                  />
+                </div>
+                <Box>
+                  <ServiceTable reservationId={reservationId} />
+                </Box>
+              </div>
+              <div>
                 <div className="inputBox">
                   <input
                     type="text"
@@ -117,18 +133,6 @@ const ClientReservation = () => {
                   />
                   <label>Department</label>
                 </div>
-                <div className='roomSchedule'>
-                  <DateRange
-                    editableDateInputs={false}
-                    onChange={() => null}
-                    moveRangeOnFirstSelection={false}
-                    ranges={date}
-                    showPreview={false}
-                    dragSelectionEnabled={false}
-                  />
-                </div>
-              </div>
-              <div>
                 <div className="inputBox">
                   <input
                     type="text"

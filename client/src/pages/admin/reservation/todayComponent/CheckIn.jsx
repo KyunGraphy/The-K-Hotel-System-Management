@@ -51,7 +51,7 @@ const CheckIn = ({ activity }) => {
             <TableRow>
               <StyledTableCell>Customer Name</StyledTableCell>
               <StyledTableCell>Reservation ID</StyledTableCell>
-              <StyledTableCell align="right">Room</StyledTableCell>
+              <StyledTableCell align="right">Room Number</StyledTableCell>
               <StyledTableCell align="right">Check Out Date</StyledTableCell>
               <StyledTableCell align="right">Check In</StyledTableCell>
               <StyledTableCell align="right">View</StyledTableCell>

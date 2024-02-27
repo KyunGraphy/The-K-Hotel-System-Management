@@ -254,7 +254,7 @@ const ViewReservation = () => {
                     variant='contained'
                     color='error'
                     onClick={() => handleSetDeleteReservation(reservationId)}
-                    disabled={rooms.length !== 0}
+                    disabled={rooms.length !== 0 || data.isCheckIn}
                     sx={{ margin: '1em 0', fontSize: 18 }}
                   >
                     <ion-icon name="trash-outline"></ion-icon>

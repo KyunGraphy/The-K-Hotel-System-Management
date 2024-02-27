@@ -42,7 +42,7 @@ const CheckOut = ({ activity }) => {
             <TableRow>
               <StyledTableCell>Customer Name</StyledTableCell>
               <StyledTableCell>Reservation ID</StyledTableCell>
-              <StyledTableCell align="right">Room</StyledTableCell>
+              <StyledTableCell align="right">Room Number</StyledTableCell>
               <StyledTableCell align="right">Check In Date</StyledTableCell>
               <StyledTableCell align="right">Check Out</StyledTableCell>
               <StyledTableCell align="right">View</StyledTableCell>
