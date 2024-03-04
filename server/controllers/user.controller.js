@@ -3,11 +3,12 @@ import { createError } from "../utils/error.js";
 import User from '../models/User.model.js';
 import Hotel from '../models/Hotel.model.js';
 import cloudinary from "../utils/cloudinary.js"
+import { HTTPStatus } from "../constants/Constants.js";
 
 export const getUser = async (req, res, next) => {
   try {
     const users = await User.findById(req.params.id);
-    res.status(200).json(users);
+    res.status(HTTPStatus.OK).json(users);
   } catch (err) {
     next(err);
   }
@@ -16,7 +17,7 @@ export const getUser = async (req, res, next) => {
 export const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find();
-    res.status(200).json(users);
+    res.status(HTTPStatus.OK).json(users);
   } catch (err) {
     next(err);
   }
@@ -44,9 +45,9 @@ export const updateUser = async (req, res, next) => {
             { new: true }
           ),
         ])
-        res.status(200).json(updateUser);
+        res.status(HTTPStatus.ACCEPTED).json(updateUser);
       } else {
-        return next(createError(403, "Something wrong!"))
+        return next(createError(HTTPStatus.FORBIDDEN, "Something wrong!"))
       }
     } else {
       // Update Customer object
@@ -56,9 +57,9 @@ export const updateUser = async (req, res, next) => {
           { $set: req.body },
           { new: true }
         );
-        res.status(200).json(updateUser);
+        res.status(HTTPStatus.ACCEPTED).json(updateUser);
       } else {
-        return next(createError(403, "You can only update your account!"))
+        return next(createError(HTTPStatus.FORBIDDEN, "You can only update your account!"))
       }
     }
 
@@ -71,18 +72,18 @@ export const deleteUser = async (req, res, next) => {
   try {
     if (req.params.id === req.userId || req.isAdmin) {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json({
+      res.status(HTTPStatus.ACCEPTED).json({
         message: 'User deleted',
       })
     } else {
-      return next(createError(403, "You can only delete your account!"))
+      return next(createError(HTTPStatus.FORBIDDEN, "You can only delete your account!"))
     }
   } catch (err) {
     next(err);
   }
 };
 
-export const uploadAvatar = async (req, res) => {
+export const uploadAvatar = async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.params.userId)
 
@@ -106,12 +107,12 @@ export const uploadAvatar = async (req, res) => {
       },
       { new: true }
     )
-    res.status(201).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       success: true,
       newUpdate
     })
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 };
 
@@ -131,21 +132,21 @@ export const removeAvatar = async (req, res, next) => {
         },
         { new: true }
       )
-      res.status(200).json({
+      res.status(HTTPStatus.ACCEPTED).json({
         msg: 'Remove profile picture successfully',
         newUpdate,
       });
     }
-    return next(createError(403, "Profile picture is not valid!"))
+    return next(createError(HTTPStatus.FORBIDDEN, "Profile picture is not valid!"))
   } catch (err) {
-    console.log(err)
+    next(err)
   }
 }
 
 export const getAllStaffs = async (req, res, next) => {
   try {
     const list = await User.find({ isAdmin: true })
-    res.status(200).json(list)
+    res.status(HTTPStatus.OK).json(list)
   } catch (err) {
     next(err);
   }

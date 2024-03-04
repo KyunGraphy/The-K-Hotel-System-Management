@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
-import { padWithLeadingZeros, roleKeys } from "../constants/Constants.js";
+import { HTTPStatus, defaultPassword, padWithLeadingZeros, roleKeys } from "../constants/Constants.js";
 
 import User from "../models/User.model.js";
 import Hotel from "../models/Hotel.model.js";
@@ -10,7 +10,7 @@ export const register = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username })
     if (user) {
-      return next(createError(401, 'Username has already existed!'))
+      return next(createError(HTTPStatus.NOT_ACCEPT, 'Username has already existed!'))
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -22,7 +22,7 @@ export const register = async (req, res, next) => {
     })
 
     await newUser.save();
-    res.status(201).json(newUser);
+    res.status(HTTPStatus.CREATED).json(newUser);
   } catch (err) {
     next(err);
   }
@@ -32,14 +32,14 @@ export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user)
-      return next(createError(404, "User not found!"))
+      return next(createError(HTTPStatus.NOT_ACCEPT, "User not found!"))
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.password,
       user.password
     )
     if (!isPasswordCorrect)
-      return next(createError(400, "Wrong password or username!"));
+      return next(createError(HTTPStatus.NOT_ACCEPT, "Wrong password or username!"));
 
     const token = jwt.sign(
       {
@@ -56,7 +56,7 @@ export const login = async (req, res, next) => {
       .cookie("access_token", token, {
         httpOnly: true,
       })
-      .status(200)
+      .status(HTTPStatus.OK)
       .json(otherDetails);
   } catch (err) {
     next(err);
@@ -69,7 +69,7 @@ export const logout = async (req, res, next) => {
       sameSite: 'none',
       secure: true,
     })
-    .status(200)
+    .status(HTTPStatus.OK)
     .json({
       message: 'Logout successful'
     });
@@ -80,17 +80,17 @@ export const changePassword = async (req, res, next) => {
     const user = await User.findOne({ username: req.body.username });
 
     if (req.userId !== user.id)
-      return next(createError(404, "You are not authorization!"))
+      return next(createError(HTTPStatus.UNAUTHORIZED, "You are not authorization!"))
 
     if (!user)
-      return next(createError(404, "Wrong password or username!"))
+      return next(createError(HTTPStatus.NOT_ACCEPT, "Wrong password or username!"))
 
     const isPasswordCorrect = await bcrypt.compare(
       req.body.currentPassword,
       user.password
     )
     if (!isPasswordCorrect)
-      return next(createError(400, "Wrong password or username!"));
+      return next(createError(HTTPStatus.NOT_ACCEPT, "Wrong password or username!"));
 
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.newPassword, salt);
@@ -100,7 +100,7 @@ export const changePassword = async (req, res, next) => {
       { $set: { password: hash } },
       { new: true }
     );
-    res.status(200).json(updateUser);
+    res.status(HTTPStatus.ACCEPTED).json(updateUser);
   } catch (err) {
     next(err);
   }
@@ -110,12 +110,12 @@ export const newStaff = async (req, res, next) => {
   try {
     const admin = await User.find({ isAdmin: true })
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync('1234', salt);
+    const hash = bcrypt.hashSync(defaultPassword, salt);
     const roleKey = roleKeys[req.body.role]
     const roleNum = padWithLeadingZeros(admin.length + 1, 3)
 
     if (!roleKey)
-      return next(createError(400, "Invalid role!"))
+      return next(createError(HTTPStatus.NOT_ACCEPT, "Invalid role!"))
 
     const newStaff = new User({
       ...req.body,
@@ -136,9 +136,8 @@ export const newStaff = async (req, res, next) => {
       )
     }
 
-    res.status(200).json(savedStaff)
+    res.status(HTTPStatus.CREATED).json(savedStaff)
   } catch (err) {
-    console.log(err)
     next(err)
   }
 };

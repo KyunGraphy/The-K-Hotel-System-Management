@@ -1,6 +1,7 @@
 import Request from "../models/Request.model.js";
 import Service from "../models/Service.model.js";
 import Facility from "../models/Facility.model.js";
+import { HTTPStatus } from "../constants/Constants.js";
 
 export const getAllRequests = async (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ export const getAllRequests = async (req, res, next) => {
       }),
     ]);
 
-    res.status(200).json(requestsList)
+    res.status(HTTPStatus.OK).json(requestsList)
   } catch (err) {
     next(err);
   }
@@ -46,7 +47,7 @@ export const getCartRequests = async (req, res, next) => {
       )
     )
 
-    res.status(200).json(cartList)
+    res.status(HTTPStatus.OK).json(cartList)
   } catch (err) {
     next(err);
   }
@@ -67,7 +68,7 @@ export const addOrder = async (req, res, next) => {
         )
       })
     )
-    res.status(201).json(updateRequest)
+    res.status(HTTPStatus.CREATED).json(updateRequest)
   } catch (err) {
     next(err);
   }
@@ -76,7 +77,7 @@ export const addOrder = async (req, res, next) => {
 export const removeOrder = async (req, res, next) => {
   if (req.body.isFromShop) {
     await Request.findByIdAndDelete(req.params.id)
-    res.status(204).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       msg: 'Order deleted successfully',
     })
   } else {
@@ -89,7 +90,7 @@ export const removeOrder = async (req, res, next) => {
       },
       { new: true }
     )
-    res.status(204).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       msg: 'Order deleted successfully',
     })
   }

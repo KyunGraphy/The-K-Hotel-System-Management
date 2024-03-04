@@ -1,11 +1,12 @@
 import Service from "../models/Service.model.js";
 import Request from '../models/Request.model.js';
 import cloudinary from "../utils/cloudinary.js"
+import { HTTPStatus } from "../constants/Constants.js";
 
 export const getOneServices = async (req, res, next) => {
   try {
     const data = await Service.findById(req.params.serviceId);
-    res.status(200).json(data);
+    res.status(HTTPStatus.OK).json(data);
   } catch (err) {
     next(err);
   }
@@ -14,7 +15,7 @@ export const getOneServices = async (req, res, next) => {
 export const getAllServices = async (req, res, next) => {
   try {
     const data = await Service.find();
-    res.status(200).json(data);
+    res.status(HTTPStatus.OK).json(data);
   } catch (err) {
     next(err);
   }
@@ -39,7 +40,7 @@ export const createService = async (req, res, next) => {
       amount: 0,
     })
     await newService.save();
-    res.status(200).json(newService);
+    res.status(HTTPStatus.CREATED).json(newService);
   } catch (err) {
     next(err);
   }
@@ -53,7 +54,7 @@ export const updateService = async (req, res, next) => {
       { new: true }
     )
 
-    res.status(201).json(updateService)
+    res.status(HTTPStatus.ACCEPTED).json(updateService)
   } catch (err) {
     next(err);
   }
@@ -72,7 +73,7 @@ export const serviceRequest = async (req, res, next) => {
       isFromShop: false,
     })
     await newRequest.save();
-    res.status(200).json(newRequest);
+    res.status(HTTPStatus.CREATED).json(newRequest);
   } catch (err) {
     next(err);
   }
@@ -96,7 +97,7 @@ export const serviceCart = async (req, res, next) => {
         isFromShop: true,
       })
       await newRequest.save();
-      res.status(200).json(newRequest);
+      res.status(HTTPStatus.CREATED).json(newRequest);
     } else {
       const updateRequest = await Request.findByIdAndUpdate(
         isExisted[0]._id,
@@ -107,7 +108,7 @@ export const serviceCart = async (req, res, next) => {
         },
         { new: true }
       )
-      res.status(201).json(updateRequest);
+      res.status(HTTPStatus.ACCEPTED).json(updateRequest);
     }
   } catch (err) {
     next(err);

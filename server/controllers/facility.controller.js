@@ -1,3 +1,4 @@
+import { HTTPStatus } from '../constants/Constants.js';
 import Facility from '../models/Facility.model.js';
 import Request from '../models/Request.model.js';
 import Room from '../models/Room.model.js';
@@ -6,7 +7,7 @@ import cloudinary from "../utils/cloudinary.js"
 export const getAllFacilities = async (req, res, next) => {
   try {
     const facilities = await Facility.find();
-    res.status(200).json(facilities);
+    res.status(HTTPStatus.OK).json(facilities);
   } catch (err) {
     next(err);
   }
@@ -15,7 +16,7 @@ export const getAllFacilities = async (req, res, next) => {
 export const getOneFacility = async (req, res, next) => {
   try {
     const facility = await Facility.findById(req.params.facilityId);
-    res.status(200).json(facility)
+    res.status(HTTPStatus.OK).json(facility)
   } catch (err) {
     next(err);
   }
@@ -39,7 +40,7 @@ export const createFacility = async (req, res, next) => {
       amount: 0,
     })
     await newFacility.save();
-    res.status(200).json(newFacility);
+    res.status(HTTPStatus.CREATED).json(newFacility);
   } catch (err) {
     next(err);
   }
@@ -48,7 +49,7 @@ export const createFacility = async (req, res, next) => {
 export const deleteFacility = async (req, res, next) => {
   try {
     await Facility.findByIdAndDelete(req.params.facilityId)
-    res.status(200).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       message: 'Facility deleted successfully'
     })
   } catch (err) {
@@ -62,7 +63,7 @@ export const getRoomFacility = async (req, res, next) => {
     const roomFacilityList = await Promise.all(
       data.facility.map(item => Facility.findById(item.facilityId))
     )
-    res.status(200).json(roomFacilityList);
+    res.status(HTTPStatus.OK).json(roomFacilityList);
   } catch (err) {
     next(err);
   }
@@ -81,7 +82,7 @@ export const facilityRequest = async (req, res, next) => {
       isFromShop: false,
     })
     await newRequest.save();
-    res.status(200).json(newRequest);
+    res.status(HTTPStatus.CREATED).json(newRequest);
   } catch (err) {
     next(err);
   }
@@ -105,7 +106,7 @@ export const facilityCart = async (req, res, next) => {
         isFromShop: true,
       })
       await newRequest.save();
-      res.status(200).json(newRequest);
+      res.status(HTTPStatus.CREATED).json(newRequest);
     } else {
       const updateRequest = await Request.findByIdAndUpdate(
         isExisted[0]._id,
@@ -116,7 +117,7 @@ export const facilityCart = async (req, res, next) => {
         },
         { new: true }
       )
-      res.status(201).json(updateRequest);
+      res.status(HTTPStatus.CREATED).json(updateRequest);
     }
   } catch (err) {
     next(err);

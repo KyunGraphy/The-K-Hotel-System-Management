@@ -4,6 +4,7 @@ import Hotel from "../models/Hotel.model.js";
 import Room from "../models/Room.model.js";
 import Service from "../models/Service.model.js";
 import { bookingSuccessMailer } from "../utils/mailer.js";
+import { HTTPStatus } from "../constants/Constants.js";
 
 export const createReservation = async (req, res, next) => {
   req.body.hotelID = req.params.hotelId
@@ -13,11 +14,11 @@ export const createReservation = async (req, res, next) => {
       // Booking online
       const savedReservation = await reservation.save();
       bookingSuccessMailer(req.body)
-      res.status(200).json(savedReservation);
+      res.status(HTTPStatus.CREATED).json(savedReservation);
     } else {
       // Booking directly
       const savedReservation = await reservation.save();
-      res.status(200).json(savedReservation);
+      res.status(HTTPStatus.CREATED).json(savedReservation);
     }
   } catch (err) {
     next(err);
@@ -32,7 +33,7 @@ export const getOneReservation = async (req, res, next) => {
       User.findById(reservation.userID),
     ])
 
-    res.status(200).json({
+    res.status(HTTPStatus.OK).json({
       ...reservation._doc,
       data
     });
@@ -64,7 +65,7 @@ export const getReservationService = async (req, res, next) => {
         }
       }
     })
-    res.status(200).json(result);
+    res.status(HTTPStatus.OK).json(result);
   } catch (err) {
     next(err);
   }
@@ -87,7 +88,7 @@ export const updateService = async (req, res, next) => {
 
       const diff = req.body.qty - servicesList[index]._doc.qty
       if (diff > serviceItem.amount) {
-        return res.status(200).json({
+        return res.status(HTTPStatus.NOT_ACCEPT).json({
           msg: 'Service quantity is not enough to satisfy',
         })
       }
@@ -109,7 +110,7 @@ export const updateService = async (req, res, next) => {
         )
       ])
 
-      return res.status(200).json({
+      return res.status(HTTPStatus.ACCEPTED).json({
         msg: 'Service quantity satisfy',
       })
     }
@@ -140,10 +141,9 @@ export const updateService = async (req, res, next) => {
       )
     ])
 
-    return res.status(200).json({
+    return res.status(HTTPStatus.ACCEPTED).json({
       msg: 'Service quantity satisfy',
     })
-    res.status(200).json(servicesIds);
   } catch (err) {
     next(err)
   }
@@ -152,7 +152,7 @@ export const updateService = async (req, res, next) => {
 export const getAllReservation = async (req, res, next) => {
   try {
     const list = await Reservation.find()
-    res.status(200).json(list);
+    res.status(HTTPStatus.OK).json(list);
   } catch (err) {
     next(err);
   }
@@ -161,7 +161,7 @@ export const getAllReservation = async (req, res, next) => {
 export const getHotelReservation = async (req, res, next) => {
   try {
     const list = await Reservation.find({ hotelID: req.params.hotelId });
-    res.status(200).json(list);
+    res.status(HTTPStatus.OK).json(list);
   } catch (err) {
     next(err);
   }
@@ -174,7 +174,7 @@ export const updateReservation = async (req, res, next) => {
       { $set: req.body },
       { new: true }
     )
-    res.status(200).json(reservation)
+    res.status(HTTPStatus.ACCEPTED).json(reservation)
   } catch (err) {
     next(err);
   }
@@ -183,7 +183,7 @@ export const updateReservation = async (req, res, next) => {
 export const deleteOneReservation = async (req, res, next) => {
   try {
     await Reservation.findByIdAndDelete(req.params.reservationId)
-    res.status(200).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       message: 'Reservation deleted successfully'
     })
   } catch (err) {
@@ -199,7 +199,7 @@ export const deleteHotelReservation = async (req, res, next) => {
         return Reservation.findByIdAndDelete(item._id)
       })
     )
-    res.status(200).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       message: 'Hotel delete reservation successful'
     })
   } catch (err) {
@@ -235,7 +235,7 @@ export const assignReservation = async (req, res, next) => {
     )
     try {
       await handleBookingDates()
-      res.status(200).json({
+      res.status(HTTPStatus.ACCEPTED).json({
         msg: 'Assign successfully'
       })
     } catch (err) {
@@ -273,8 +273,8 @@ export const removeReservation = async (req, res, next) => {
     )
     try {
       await handleRemoveDates()
-      res.status(200).json({
-        msg: 'Assign successfully'
+      res.status(HTTPStatus.ACCEPTED).json({
+        msg: 'Remove successfully'
       })
     } catch (err) {
       next(err);
@@ -319,7 +319,7 @@ export const getUserReservations = async (req, res, next) => {
       };
     })
 
-    res.json(result);
+    res.status(HTTPStatus.OK).json(result);
   } catch (err) {
     next(err);
   }
@@ -328,7 +328,7 @@ export const getUserReservations = async (req, res, next) => {
 export const getUserReservationsCount = async (req, res, next) => {
   try {
     const reservationList = await Reservation.find({ userID: req.params.userId })
-    res.status(200).json({ count: reservationList.length });
+    res.status(HTTPStatus.OK).json({ count: reservationList.length });
   } catch (err) {
     next(err);
   }
@@ -364,7 +364,7 @@ export const getActivity = async (req, res, next) => {
         result.stay.push(item)
       }
     })
-    res.status(200).json(result);
+    res.status(HTTPStatus.OK).json(result);
   } catch (err) {
     next(err);
   }
@@ -404,7 +404,7 @@ export const getHotelActivity = async (req, res, next) => {
         result.stay.push(item)
       }
     })
-    res.status(200).json(result);
+    res.status(HTTPStatus.OK).json(result);
   } catch (err) {
     next(err);
   }

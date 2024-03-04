@@ -1,3 +1,4 @@
+import { HTTPStatus } from "../constants/Constants.js";
 import Comment from "../models/Comment.model.js"
 import Hotel from "../models/Hotel.model.js";
 import { createError } from "../utils/error.js";
@@ -10,7 +11,7 @@ export const getHotelComments = async (req, res, next) => {
         return Comment.findById(comment);
       })
     )
-    res.status(200).json(list);
+    res.status(HTTPStatus.OK).json(list);
   } catch (err) {
     next(err);
   }
@@ -30,7 +31,7 @@ export const createComment = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-    res.status(200).json(savedComment)
+    res.status(HTTPStatus.CREATED).json(savedComment)
   } catch (err) {
     next(err);
   }
@@ -51,7 +52,7 @@ export const deleteComment = async (req, res, next) => {
         } catch (err) {
           next(err);
         }
-        res.status(200).json({
+        res.status(HTTPStatus.ACCEPTED).json({
           message: 'Comment deleted successfully'
         })
       } catch (err) {
@@ -59,7 +60,7 @@ export const deleteComment = async (req, res, next) => {
       }
     }
 
-    return next(createError(403, 'You only delete your own comment!'));
+    return next(createError(HTTPStatus.UNAUTHORIZED, 'You only delete your own comment!'));
   } catch (err) {
     next(err);
   }

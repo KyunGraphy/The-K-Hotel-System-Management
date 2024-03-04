@@ -1,3 +1,4 @@
+import { HTTPStatus } from '../constants/Constants.js';
 import Hotel from '../models/Hotel.model.js';
 import Room from '../models/Room.model.js';
 import User from '../models/User.model.js';
@@ -7,7 +8,7 @@ export const createHotel = async (req, res, next) => {
 
   try {
     const savedHotel = await newHotel.save();
-    res.status(200).json(savedHotel);
+    res.status(HTTPStatus.CREATED).json(savedHotel);
   } catch (err) {
     next(err);
   }
@@ -20,7 +21,7 @@ export const updateHotel = async (req, res, next) => {
       { $set: req.body },
       { new: true }
     )
-    res.status(200).json(updatedHotel);
+    res.status(HTTPStatus.ACCEPTED).json(updatedHotel);
   } catch (err) {
     next(err);
   }
@@ -29,7 +30,7 @@ export const updateHotel = async (req, res, next) => {
 export const getOneHotels = async (req, res, next) => {
   try {
     const hotel = await Hotel.findById(req.params.hotelId);
-    res.status(200).json(hotel);
+    res.status(HTTPStatus.OK).json(hotel);
   } catch (err) {
     next(err);
   }
@@ -38,7 +39,7 @@ export const getOneHotels = async (req, res, next) => {
 export const getAllHotels = async (req, res, next) => {
   try {
     const hotels = await Hotel.find();
-    res.status(200).json(hotels);
+    res.status(HTTPStatus.OK).json(hotels);
   } catch (err) {
     next(err);
   }
@@ -52,7 +53,7 @@ export const getHotelRooms = async (req, res, next) => {
         return Room.findById(room);
       })
     )
-    res.status(200).json(list);
+    res.status(HTTPStatus.OK).json(list);
   } catch (err) {
     next(err);
   }
@@ -69,7 +70,7 @@ export const getSearchRooms = async (req, res, next) => {
     const searchList = list.filter(room => {
       return room.number.toString().includes(req.params.search)
     })
-    res.status(200).json(searchList);
+    res.status(HTTPStatus.OK).json(searchList);
   } catch (err) {
     next(err);
   }
@@ -83,7 +84,7 @@ export const getHotelStaffs = async (req, res, next) => {
       staffs.map(id => User.findById(id)),
     );
 
-    res.status(200).send(staffsList);
+    res.status(HTTPStatus.OK).send(staffsList);
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,7 @@
 import express from 'express';
 import { login, register, logout, newStaff, changePassword } from '../controllers/auth.controller.js';
 import { verifyAdmin, verifyToken } from '../middlewares/jwt.js';
+import { HTTPStatus } from '../constants/Constants.js';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get('/logout', logout);
 router.put('/changePassword', verifyToken, changePassword);
 
 router.get('/verifyToken', verifyToken, (req, res) => {
-  res.status(200).json({
+  res.status(HTTPStatus.OK).json({
     msg: 'Verified token successfully',
   });
 });

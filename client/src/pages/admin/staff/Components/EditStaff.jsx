@@ -99,6 +99,7 @@ const EditStaff = ({ editStaff, setEditStaff, staff, hotel }) => {
         const res = await axios.put(`/users/${staff._id}`, otherDetails)
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data })
         window.location.reload();
+        setSuccessMsg('Update successful')
       } catch (err) {
         setErrMsg('Something went wrong!');
       }

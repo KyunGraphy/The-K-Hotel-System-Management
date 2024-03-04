@@ -1,3 +1,4 @@
+import { HTTPStatus } from '../constants/Constants.js';
 import Facility from '../models/Facility.model.js';
 import Hotel from '../models/Hotel.model.js';
 import Room from '../models/Room.model.js';
@@ -6,7 +7,7 @@ import { createError } from "../utils/error.js";
 export const getAllRooms = async (req, res, next) => {
   try {
     const rooms = await Room.find();
-    res.status(200).json(rooms);
+    res.status(HTTPStatus.OK).json(rooms);
   } catch (err) {
     next(err);
   }
@@ -15,7 +16,7 @@ export const getAllRooms = async (req, res, next) => {
 export const getOneRoom = async (req, res, next) => {
   try {
     const room = await Room.findById(req.params.roomId);
-    res.status(200).json(room);
+    res.status(HTTPStatus.OK).json(room);
   } catch (err) {
     next(err);
   }
@@ -33,7 +34,7 @@ export const createRooms = async (req, res, next) => {
 
     // Catch exceptions if room number is already exists
     if (roomsNum.includes(Number(req.body.number))) {
-      return next(createError(403, 'Room number is already existed!'))
+      return next(createError(HTTPStatus.NOT_ACCEPT, 'Room number is already existed!'))
     }
 
     // Create new room
@@ -45,7 +46,7 @@ export const createRooms = async (req, res, next) => {
       { $push: { rooms: savedRoom._id } },
     )
 
-    res.status(200).json(savedRoom);
+    res.status(HTTPStatus.CREATED).json(savedRoom);
   } catch (err) {
     next(err);
   }
@@ -63,7 +64,7 @@ export const updateRooms = async (req, res, next) => {
       )
 
       if (roomsNum.includes(req.body.number)) {
-        return next(createError(403, 'Room number is already existed!'))
+        return next(createError(HTTPStatus.FORBIDDEN, 'Room number is already existed!'))
       }
     }
 
@@ -72,7 +73,7 @@ export const updateRooms = async (req, res, next) => {
       { $set: req.body },
       { new: true }
     )
-    res.status(200).json(updatedRoom)
+    res.status(HTTPStatus.ACCEPTED).json(updatedRoom)
   } catch (err) {
     next(err);
   }
@@ -88,9 +89,9 @@ export const toggleStatusRooms = async (req, res) => {
       { $set: { status } },
       { new: true }
     )
-    res.status(200).json(updatedRoom)
+    res.status(HTTPStatus.ACCEPTED).json(updatedRoom)
   } catch (err) {
-    res.status(403).json({
+    res.status(HTTPStatus.FORBIDDEN).json({
       message: 'Something error: ' + err.message
     })
   }
@@ -107,7 +108,7 @@ export const deleteRooms = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-    res.status(200).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       message: 'Room deleted successfully'
     })
   } catch (err) {
@@ -150,7 +151,7 @@ export const updateFacility = async (req, res, next) => {
         },
         { new: true },
       )
-      res.status(201).json({
+      res.status(HTTPStatus.ACCEPTED).json({
         msg: 'Facility updated successfully',
       })
     } else {
@@ -170,7 +171,7 @@ export const updateFacility = async (req, res, next) => {
         { new: true },
       )
     }
-    res.status(200).json({
+    res.status(HTTPStatus.ACCEPTED).json({
       message: "Room's facility updated successfully",
     })
   } catch (err) {

@@ -1,5 +1,6 @@
 "use strict";
 import nodemailer from 'nodemailer';
+import { HTTPStatus } from '../constants/Constants.js';
 
 export const bookingSuccessMailer = (reservation) => {
   const output = `
@@ -112,7 +113,6 @@ export const bookingSuccessMailer = (reservation) => {
   // setup email data with unicode symbols
   var mailOptions = {
     from: '"The K Hotel" <kientrung1387@gmail.com>', // sender address
-    // to: 'kientrung1388@gmail.com',
     to: reservation.email,
     subject: 'The K Hotel - Booking Successfully', // Subject line
     text: 'Hello world?', // plain text body
@@ -123,15 +123,15 @@ export const bookingSuccessMailer = (reservation) => {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      res.json({
+      res.status(HTTPStatus.ACCEPTED).json({
         layout: false,
         title: "Something went wrong",
         msg: 'Error... Please do it again'
       });
     } else {
-      res.json({
+      res.status(HTTPStatus.NOT_ACCEPT).json({
         layout: false,
-        title: "Forgot Password",
+        title: "Booking successfully",
         msg: 'Booking successfully... Please check your email address'
       });
     }
