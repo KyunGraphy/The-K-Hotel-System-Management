@@ -12,7 +12,6 @@ import List from "./pages/list/List";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import ReservationMana from "./pages/admin/reservation/ReservationMana";
-import PageError from "./pages/admin/notFound/PageError.jsx";
 import StaffMana from "./pages/admin/staff/StaffMana";
 import Business from "./pages/admin/business/Business";
 import Finance from "./pages/admin/finance/Finance";
@@ -29,6 +28,8 @@ import Payment from "./pages/hotel/Payment.jsx";
 import BookingSuccess from "./pages/hotel/BookingSuccess.jsx";
 import ProcurementComponent from "./pages/admin/procurement/index.jsx";
 import ClientReservation from "./pages/reservation/ClientReservation.jsx";
+import NotFound from "./pages/errors/NotFound.jsx";
+import Forbidden from "./pages/errors/Forbidden.jsx";
 
 // ----------------------------------------------------------------
 function App() {
@@ -62,8 +63,12 @@ function App() {
           <Route path="finance" element={<Finance />} />
           <Route path="procurement" element={<ProcurementComponent />} />
 
-          <Route path=":id" element={<PageError />} />
+          <Route path=":id" element={<NotFound />} />
         </Route>
+
+        {/* Error page handler */}
+        <Route path="/forbidden" element={<Forbidden />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

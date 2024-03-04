@@ -1,6 +1,6 @@
 import './admin.css'
 import { Outlet, useNavigate } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Box,
   styled,
@@ -18,10 +18,11 @@ import {
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
+import { CssBaseline } from '@mui/material'
 
+import { AuthContext } from '../../contexts/AuthContext.js';
 import ScrollTop from '../../components/scrollTop/ScrollTop'
 import Navbar from '../../components/navbar/Navbar'
-import { CssBaseline } from '@mui/material'
 import { MANAGEMENT_ITEMS } from '../../constants/Constant'
 import Footer from '../../components/footer/Footer'
 
@@ -78,6 +79,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Admin = () => {
   const [open, setOpen] = useState(false);
   const [showGoToTop, setShowGoToTop] = useState();
+
+  const { user } = useContext(AuthContext)
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -92,6 +95,14 @@ const Admin = () => {
       window.removeEventListener('scroll', handleShowScrollToTop);
     }
   }, [])
+
+  useEffect(() => {
+    if (user?.isAdmin !== true) {
+      navigate('/forbidden')
+    }
+
+  }, [navigate, user])
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
