@@ -33,6 +33,23 @@ const Cart = ({ cartLoading, cartList, reFetch, cartReFetch }) => {
     setLoading(false)
   }
 
+  const handlePurchaseOrder = async (item) => {
+    setLoading(true)
+    try {
+      if (item) {
+        await axios.put(`/request/purchaseOrder/${item._id}`, item)
+      } else {
+        await axios.put(`/request/purchaseOrder`)
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    reFetch()
+    cartReFetch()
+    setLoading(false)
+  }
+
   return (
     <Grid sx={{
       width: '360px',
@@ -69,15 +86,26 @@ const Cart = ({ cartLoading, cartList, reFetch, cartReFetch }) => {
                     <Typography variant="overline" display="block" gutterBottom><strong>Type:</strong> {(item.isFromShop ? 'Shop items' : 'Requested')}</Typography>
                     <Typography variant="subtitle1" display="block" gutterBottom><strong style={{ color: '#e76f51' }}>Total:</strong> {(item.unitPurchasePrice * item.quantity).toFixed(2)}$</Typography>
                   </Box>
-                  <ion-icon name="remove-circle-outline"
-                    style={{
-                      margin: '0.5em 0.5em 0.5em 0',
-                      fontSize: '24px',
-                      color: 'chocolate',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => handleRemoveOrderItem(item)}
-                  ></ion-icon>
+                  <Box sx={{ display: 'flex' }}>
+                    <ion-icon name="add-circle-outline"
+                      style={{
+                        margin: '0.5em 0.5em 0.5em 0',
+                        fontSize: '24px',
+                        color: 'green',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handlePurchaseOrder(item)}
+                    ></ion-icon>
+                    <ion-icon name="remove-circle-outline"
+                      style={{
+                        margin: '0.5em 0.5em 0.5em 0',
+                        fontSize: '24px',
+                        color: 'chocolate',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => handleRemoveOrderItem(item)}
+                    ></ion-icon>
+                  </Box>
                 </Box>
               </Box>
             </Box>
@@ -90,7 +118,7 @@ const Cart = ({ cartLoading, cartList, reFetch, cartReFetch }) => {
           <Typography sx={{ color: '#384e71', fontWeight: '700', textAlign: 'center', fontSize: 18 }}><i>{cartList.length} items</i></Typography>
         </Box>
         <Box sx={{ textAlign: 'center' }}>
-          <Button variant="contained" color="success">
+          <Button variant="contained" color="success" onClick={() => handlePurchaseOrder()}>
             Purchase
           </Button>
         </Box>

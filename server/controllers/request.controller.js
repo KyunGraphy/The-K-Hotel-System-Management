@@ -81,7 +81,7 @@ export const removeOrder = async (req, res, next) => {
       msg: 'Order deleted successfully',
     })
   } else {
-    await Request.findByIdAndUpdate(
+    const updateRequest = await Request.findByIdAndUpdate(
       req.params.id,
       {
         $set: {
@@ -90,8 +90,57 @@ export const removeOrder = async (req, res, next) => {
       },
       { new: true }
     )
-    res.status(HTTPStatus.ACCEPTED).json({
-      msg: 'Order deleted successfully',
-    })
+    res.status(HTTPStatus.ACCEPTED).json(updateRequest)
   }
 }
+
+export const purchaseItem = async (req, res, next) => {
+  try {
+    if (req.body.isService) {
+      const service = await Service.findById(req.body.itemId)
+      await Promise.all([
+        Service.findByIdAndUpdate(
+          req.body.itemId,
+          {
+            $set: {
+              amount: service.amount + Number(req.body.quantity),
+            }
+          },
+        ),
+        Request.findByIdAndDelete(req.body._id),
+      ])
+    } else {
+      const facility = await Facility.findById(req.body.itemId)
+      await Promise.all([
+        Facility.findByIdAndUpdate(
+          req.body.itemId,
+          {
+            $set: {
+              amount: facility.amount + Number(req.body.quantity),
+            }
+          },
+        ),
+        Request.findByIdAndDelete(req.body._id),
+      ])
+    }
+
+    res.status(HTTPStatus.ACCEPTED).json(req.body)
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const purchaseAll = async (req, res, next) => {
+  try {
+    const requestsCart = await Request.find({ inCart: true, })
+
+    // Promise All from requestsCart.map
+    // // remove from request queue (by _id)
+    // // service ? add to service quantity : add to facility quantity (by itemId + quantity)
+    // // create new Bill
+
+    res.status(HTTPStatus.ACCEPTED).json(requestsCart)
+  } catch (err) {
+    next(err);
+  }
+};
