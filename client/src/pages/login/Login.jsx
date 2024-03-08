@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import axios from "axios";
 import './login.css';
 import { Toastify } from '../../components/toastify/Toastify';
+import Forgot from './Forgot';
 
 // ----------------------------------------------------------------
 const USERNAME = 'Username';
@@ -22,6 +23,18 @@ const Login = () => {
   const navigate = useNavigate()
   const { loading, error, dispatch } = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false)
+
+  const [open, setOpen] = useState(false);
+  const [newPasswordForm, setNewPasswordForm] = useState(0)
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setNewPasswordForm(0)
+  };
 
   useEffect(() => {
     function handlePress(e) {
@@ -126,7 +139,7 @@ const Login = () => {
             </div>
             <div className="rememberForgot">
               <label><input type="checkbox" /> {REMEMBER_ME}</label>
-              <Link to='#'>{FORGOT_PASSWORD}</Link>
+              <Link to='#' onClick={handleClickOpen}>{FORGOT_PASSWORD}</Link>
             </div>
             <button
               type="submit"
@@ -148,6 +161,12 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Forgot
+        open={open}
+        handleClose={handleClose}
+        newPasswordForm={newPasswordForm}
+        setNewPasswordForm={setNewPasswordForm}
+      />
     </div>
   )
 }
