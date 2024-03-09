@@ -38,7 +38,7 @@ const Login = () => {
 
   useEffect(() => {
     function handlePress(e) {
-      if (e.keyCode === 13) {
+      if (e.keyCode === 13 && !open) {
         handleLogin()
       }
     }

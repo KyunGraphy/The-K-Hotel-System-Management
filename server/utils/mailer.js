@@ -24,7 +24,7 @@ export const bookingSuccessMailer = (reservation) => {
                 cursor: pointer;
                 width: 60px;
                 height: 60px;
-                background: url(https://scontent.xx.fbcdn.net/v/t1.15752-9/409963123_399921459061779_6508682817760566410_n.png?_nc_cat=101&ccb=1-7&_nc_sid=510075&_nc_ohc=ItfQXpC9H9gAX-Q5-dw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT91CG1WruBHhjI9fRNdpff_wo1DEVfPSOsa1IyphMzcw&oe=65B63984) no-repeat;
+                background: url(https://st2.depositphotos.com/3096625/8105/v/450/depositphotos_81057362-stock-illustration-k-letter-mockup-logo.jpg) no-repeat;
                 background-size: cover;
                 background-position: center;
                 border-radius: 15px 32px;
@@ -119,7 +119,7 @@ export const sendOTPMailer = (user, OTP, receiver) => {
                 cursor: pointer;
                 width: 60px;
                 height: 60px;
-                background: url(https://scontent.xx.fbcdn.net/v/t1.15752-9/409963123_399921459061779_6508682817760566410_n.png?_nc_cat=101&ccb=1-7&_nc_sid=510075&_nc_ohc=ItfQXpC9H9gAX-Q5-dw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT91CG1WruBHhjI9fRNdpff_wo1DEVfPSOsa1IyphMzcw&oe=65B63984) no-repeat;
+                background: url(https://st2.depositphotos.com/3096625/8105/v/450/depositphotos_81057362-stock-illustration-k-letter-mockup-logo.jpg) no-repeat;
                 background-size: cover;
                 background-position: center;
                 border-radius: 15px 32px;

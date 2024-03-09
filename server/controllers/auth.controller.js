@@ -157,14 +157,14 @@ export const verifyUser = async (req, res, next) => {
     if (!user) {
       return next(createError(HTTPStatus.NOT_ACCEPT, 'User not found. Please try again!'));
     }
+    const { password, isAdmin, ...others } = user
 
     // Handle Send OTP via email address
     OTP = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000;
     sendOTPMailer(user, OTP, req.body.email)
 
-    res.status(HTTPStatus.ACCEPTED).json({
-      OTP,
-      user,
+    return res.status(HTTPStatus.ACCEPTED).json({
+      user: others._doc,
     })
   } catch (err) {
     next(err);
@@ -172,21 +172,30 @@ export const verifyUser = async (req, res, next) => {
 };
 
 export const verifyOTP = (req, res, next) => {
-  if (req.body.OTP !== OTP) {
-    next(createError(HTTPStatus.NOT_ACCEPT, 'Incorrect OTP'))
+  if (Number(req.body.OTP) !== OTP) {
+    return next(createError(HTTPStatus.NOT_ACCEPT, 'Incorrect OTP'))
   } else {
-    res.status(HTTPStatus.ACCEPTED).json({
+    return res.status(HTTPStatus.ACCEPTED).json({
       msg: 'Accept request'
     })
   }
 };
 
-export const changePw = async (req, res, next) => {
+export const newPassword = async (req, res, next) => {
   try {
-    console.log(req.body);
-    res.status(HTTPStatus.ACCEPTED).json({
-      msg: 'Accept request',
-    });
+    if (req.body.newPw !== req.body.confirmPw) {
+      return next(createError(HTTPStatus.NOT_ACCEPT, 'Confirm password does not match password field!'))
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.newPw, salt);
+
+    const updateUser = await User.findByIdAndUpdate(
+      req.body.user._id,
+      { $set: { password: hash } },
+      { new: true }
+    );
+    return res.status(HTTPStatus.ACCEPTED).json(updateUser);
   } catch (err) {
     next(err);
   }
