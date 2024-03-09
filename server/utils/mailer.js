@@ -1,6 +1,7 @@
 "use strict";
 import nodemailer from 'nodemailer';
 import { HTTPStatus } from '../constants/Constants.js';
+import { createError } from './error.js';
 
 export const bookingSuccessMailer = (reservation) => {
   const output = `
@@ -94,6 +95,53 @@ export const bookingSuccessMailer = (reservation) => {
         </button>
       `
 
+  sendEmail('The K Hotel - Booking Successfully', output, reservation.email)
+};
+
+export const sendOTPMailer = (user, OTP, receiver) => {
+  const output = `
+        <div style='
+          min-width: 100%;
+          height: 80px;
+          background-color: #384e71;
+        '>
+          <div style='
+            width: 80%;
+            padding: 10px 40px;
+            display: flex;
+            text-align: center;
+          '>
+            <a href='http://localhost:3000/'>
+              <span style="
+                display: block;
+                font-weight: bold;
+                font-size: 20px;
+                cursor: pointer;
+                width: 60px;
+                height: 60px;
+                background: url(https://scontent.xx.fbcdn.net/v/t1.15752-9/409963123_399921459061779_6508682817760566410_n.png?_nc_cat=101&ccb=1-7&_nc_sid=510075&_nc_ohc=ItfQXpC9H9gAX-Q5-dw&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdT91CG1WruBHhjI9fRNdpff_wo1DEVfPSOsa1IyphMzcw&oe=65B63984) no-repeat;
+                background-size: cover;
+                background-position: center;
+                border-radius: 15px 32px;
+              "></span>
+            </a>
+            <div style='color: white; padding: 10px 0 10px 240px; text-align: right;'>
+              <span style='display: block'><b>Email:</b> kientrung1387@gmail.com</span>
+              <span style='display: block'><b>Phone number:</b> 0933592344</span>
+            </div>
+          </div>
+        </div>
+        <h3 style='marginY: 8px'>✅ Hi ${user.name}!</h3>
+        <h3 style='text-transform: uppercase;'>The OTP code below is used to authenticate the user in recovering the password.</h3>
+        <h3 style='text-transform: uppercase;'>Please keep it confidential and do not share it with anyone.</h3>
+        <h1 style='color: #384e71'>${OTP}</h1>
+      `
+
+  sendEmail('The K Hotel - Recover account OTP', output, receiver)
+}
+
+// HANDLE SEND EMAIL
+function sendEmail(emailTitle, emailContent, receiver) {
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -113,27 +161,18 @@ export const bookingSuccessMailer = (reservation) => {
   // setup email data with unicode symbols
   var mailOptions = {
     from: '"The K Hotel" <kientrung1387@gmail.com>', // sender address
-    to: reservation.email,
-    subject: 'The K Hotel - Booking Successfully', // Subject line
+    to: receiver,
+    subject: emailTitle, // Subject line
     text: 'Hello world?', // plain text body
-    html: output // html body
+    html: emailContent // html body
   };
 
   // async..await is not allowed in global scope, must use a wrapper
   // send mail with defined transport object
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      res.status(HTTPStatus.ACCEPTED).json({
-        layout: false,
-        title: "Something went wrong",
-        msg: 'Error... Please do it again'
-      });
-    } else {
-      res.status(HTTPStatus.NOT_ACCEPT).json({
-        layout: false,
-        title: "Booking successfully",
-        msg: 'Booking successfully... Please check your email address'
-      });
+      return next(createError(HTTPStatus.NOT_ACCEPT, 'Something went wrong'))
     }
+    return next()
   });
-};
+}

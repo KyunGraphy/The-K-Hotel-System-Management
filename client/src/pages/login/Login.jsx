@@ -1,7 +1,7 @@
+import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from '../../contexts/AuthContext';
-import axios from "axios";
 import './login.css';
 import { Toastify } from '../../components/toastify/Toastify';
 import Forgot from './Forgot';

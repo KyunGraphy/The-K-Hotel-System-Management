@@ -1,24 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Slide, TextField } from '@mui/material'
 import { MuiOtpInput } from 'mui-one-time-password-input'
+import axios from 'axios';
+import { Toastify } from '../../components/toastify/Toastify';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const Forgot = ({ open, handleClose, newPasswordForm, setNewPasswordForm }) => {
-  const [otp, setOtp] = React.useState('')
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
+  const [otp, setOtp] = useState('')
+  const [errMsg, setErrMsg] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (newValue) => {
     setOtp(newValue)
   }
 
-  const handleAgree = () => {
-    setNewPasswordForm(1)
+  const handleVerifyUser = async () => {
+    setLoading(true)
+    try {
+      await axios.post("/auth/verifyUser", {
+        email,
+        username,
+      })
+      setLoading(false)
+      setNewPasswordForm(1)
+    } catch (err) {
+      setErrMsg(err.response.data.message)
+      setTimeout(function () {
+        setErrMsg('');
+      }, 10000)
+      setLoading(false)
+    }
   };
 
   return (
     <Grid>
+      {errMsg && <Toastify msg={errMsg} type="error" />}
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -46,6 +67,7 @@ const Forgot = ({ open, handleClose, newPasswordForm, setNewPasswordForm }) => {
                 fullWidth
                 variant="standard"
                 autoComplete='off'
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 autoFocus
@@ -58,11 +80,12 @@ const Forgot = ({ open, handleClose, newPasswordForm, setNewPasswordForm }) => {
                 fullWidth
                 variant="standard"
                 autoComplete='off'
+                onChange={(e) => setUsername(e.target.value)}
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={() => { setNewPasswordForm(1) }}>Next</Button>
+              <Button onClick={handleClose} disabled={loading}>Cancel</Button>
+              <Button onClick={handleVerifyUser} disabled={loading}>Next</Button>
             </DialogActions>
           </React.Fragment>
         )}
@@ -81,6 +104,7 @@ const Forgot = ({ open, handleClose, newPasswordForm, setNewPasswordForm }) => {
               />
             </DialogContent>
             <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={handleClose}>Re-send</Button>
               <Button onClick={() => { setNewPasswordForm(2) }}>Next</Button>
             </DialogActions>
@@ -121,7 +145,7 @@ const Forgot = ({ open, handleClose, newPasswordForm, setNewPasswordForm }) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleAgree}>Next</Button>
+              <Button onClick={null}>Next</Button>
             </DialogActions>
           </React.Fragment>
         )}
