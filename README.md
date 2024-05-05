@@ -2,16 +2,32 @@
 <img align="center" src="https://raw.githubusercontent.com/KyunGraphy/The-K-Hotel-System-Management/main/client/public/logo.jpg" height="100" />
 
 ## Getting Started
-First, run the application:
+#### React version 18.x
+#### Node version 18.x
+
+## Cloning repository
+```bash
+git clone https://github.com/KyunGraphy/The-K-Hotel-System-Management.git
+```
 
 Remember to install all the necessary libraries before running the program. (Encourage opening 2 terminal browsers for client and server)
+
+## Set up .env files
+```bash
+MONGO =
+JWT_KEY =
+
+CLOUD_NAME =
+CLOUD_KEY =
+CLOUD_KEY_SECRET =
+```
 
 ### Client
 ```bash
 cd client
 ```
 
-Install all the client libraries
+Install client packages
 ```bash
 npm install
 # or
@@ -32,7 +48,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 cd server
 ```
 
-Install all the server libraries
+Install server packages
 ```bash
 npm install
 # or
@@ -47,6 +63,10 @@ yarn start
 ```
 
 Server started on [http://localhost:8800](http://localhost:8800).
+
+## Login account information for admin
+- **Username:** admin1
+- **Password:** 1234
 
 ## Learn More
 
